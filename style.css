@@ -279,7 +279,7 @@ body.a11y-readable-font * {
    ============================== */
 .a11y-widget {
     position: fixed;
-    bottom: 110px;
+    bottom: 180px;
     left: 30px;
     z-index: 998;
 }

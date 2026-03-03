@@ -1,4 +1,71 @@
+// ==============================
+// Preloader
+// ==============================
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        setTimeout(() => preloader.classList.add('hidden'), 1600);
+        setTimeout(() => { if (preloader.parentNode) preloader.remove(); }, 2200);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ==============================
+    // Typing Animation
+    // ==============================
+    const typingEl = document.getElementById('typingText');
+    if (typingEl) {
+        const phrases = [
+            'ניר חמו | מאמן כושר אישי מקצועי',
+            '13+ שנות ניסיון | 500+ מתאמנים',
+            'סטודיו בקריות | אימונים בעפולה',
+            'פגישת היכרות + בדיקת גוף - חינם!'
+        ];
+        let phraseIdx = 0, charIdx = 0, deleting = false;
+
+        function typeLoop() {
+            const current = phrases[phraseIdx];
+            if (!deleting) {
+                typingEl.textContent = current.substring(0, charIdx + 1);
+                charIdx++;
+                if (charIdx === current.length) {
+                    deleting = true;
+                    setTimeout(typeLoop, 2200);
+                    return;
+                }
+                setTimeout(typeLoop, 60);
+            } else {
+                typingEl.textContent = current.substring(0, charIdx - 1);
+                charIdx--;
+                if (charIdx === 0) {
+                    deleting = false;
+                    phraseIdx = (phraseIdx + 1) % phrases.length;
+                    setTimeout(typeLoop, 400);
+                    return;
+                }
+                setTimeout(typeLoop, 30);
+            }
+        }
+        setTimeout(typeLoop, 2000);
+    }
+
+    // ==============================
+    // Sticky Mobile CTA
+    // ==============================
+    const stickyCta = document.getElementById('stickyCta');
+    if (stickyCta) {
+        let stickyShown = false;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600 && !stickyShown) {
+                stickyCta.classList.add('visible');
+                stickyShown = true;
+            } else if (window.scrollY <= 600 && stickyShown) {
+                stickyCta.classList.remove('visible');
+                stickyShown = false;
+            }
+        }, { passive: true });
+    }
 
     // ==============================
     // Promo bar & navbar positioning
@@ -430,6 +497,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+    // ==============================
+    // Live viewers counter
+    // ==============================
+    const liveViewers = document.getElementById('liveViewers');
+    const viewerCount = document.getElementById('viewerCount');
+
+    if (liveViewers && viewerCount) {
+        const baseViewers = Math.floor(Math.random() * 5) + 8;
+        viewerCount.textContent = baseViewers;
+
+        setTimeout(() => {
+            liveViewers.classList.add('visible');
+        }, 4000);
+
+        setInterval(() => {
+            const current = parseInt(viewerCount.textContent);
+            const change = Math.random() < 0.5 ? 1 : -1;
+            const newCount = Math.max(5, Math.min(18, current + change));
+            viewerCount.textContent = newCount;
+        }, 8000 + Math.random() * 7000);
+    }
 
     // ==============================
     // Promo bar hide on scroll

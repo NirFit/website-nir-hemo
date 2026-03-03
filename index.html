@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-logo">NIR<span>FIT</span></div>
+        <div class="preloader-bar"><div class="preloader-progress"></div></div>
+    </div>
+</div>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -223,7 +230,7 @@
                 "name": "כמה עולה אימון אישי אצל ניר חמו?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "ניר חמו מציע חבילת התנסות (10 אימונים), חבילת מחויבות (20 אימונים - הכי משתלמת), וחבילת טרנספורמציה (30 אימונים). כל החבילות תקפות ל-6 חודשים עם 100% החזר כספי על אימונים שלא בוצעו."
+                    "text": "ניר חמו מציע 3 מסלולים: מתחיל (10 אימונים), מתקדם (20 אימונים), ומסור (30 אימונים). כל המסלולים כוללים את אותם שירותים - ההבדל הוא רק בכמות האימונים. כל החבילות תקפות ל-6 חודשים. לא מרוצים? החזר כספי מלא."
                 }
             },
             {
@@ -263,7 +270,7 @@
                 "name": "האם יש מדיניות החזר כספי?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "כן, 100% החזר כספי על אימונים שלא בוצעו, ללא שאלות. כל החבילות תקפות ל-6 חודשים."
+                    "text": "כן, במידה ולא מרוצים - החזר כספי מלא, ללא שאלות. כל החבילות תקפות ל-6 חודשים."
                 }
             }
         ]
@@ -364,7 +371,6 @@
                 <li><a href="#results">תוצאות</a></li>
                 <li><a href="#testimonials">המלצות</a></li>
                 <li><a href="#pricing">מחירון</a></li>
-                <li><a href="#gallery">גלריה</a></li>
                 <li><a href="#contact" class="nav-cta"><i class="fas fa-calendar-check"></i> קבעו פגישה חינם</a></li>
             </ul>
         </div>
@@ -386,9 +392,9 @@
                 <i class="fas fa-gift"></i> פגישת היכרות + בדיקת גוף מקיפה - חינם!
             </div>
             <h1>הגוף שלך.<br><span class="gradient-text">הכוח שלך.</span></h1>
-            <p class="hero-subtitle">ניר חמו | מאמן כושר אישי מקצועי</p>
+            <p class="hero-subtitle"><span class="typing-text" id="typingText"></span><span class="typing-cursor">|</span></p>
             <p class="hero-text">
-                13+ שנות ניסיון. 500+ מתאמנים שהצליחו. סטודיו בקריות ואימונים אישיים בעפולה.<br>
+                13+ שנות ניסיון. 220+ ביקורות מרוצות. 2 סניפים - קריות ועפולה.<br>
                 בוא לפגישת היכרות חינמית - נבדוק את הגוף שלך ונבנה תוכנית שתביא תוצאות.
             </p>
             <div class="hero-buttons">
@@ -431,22 +437,56 @@
         </div>
     </section>
 
+    <!-- Social Proof Ticker -->
+    <div class="social-ticker">
+        <div class="ticker-track" id="tickerTrack">
+            <div class="ticker-item"><i class="fas fa-star" style="color: #ffc107;"></i> ⭐ 5 כוכבים מ-220+ ביקורות</div>
+            <div class="ticker-item"><i class="fas fa-trophy" style="color: var(--primary);"></i> 13+ שנות ניסיון מקצועי</div>
+            <div class="ticker-item"><i class="fas fa-users" style="color: var(--accent);"></i> 500+ מתאמנים שהצליחו</div>
+            <div class="ticker-item"><i class="fas fa-map-marker-alt" style="color: var(--success);"></i> 2 סניפים - קריות ועפולה</div>
+            <div class="ticker-item"><i class="fas fa-certificate" style="color: var(--primary);"></i> מאמן מוסמך ומנוסה</div>
+            <div class="ticker-item"><i class="fas fa-heart" style="color: #ff4081;"></i> חוויה נעימה ומקצועית</div>
+            <div class="ticker-item"><i class="fas fa-shield-halved" style="color: var(--accent);"></i> 100% החזר כספי - ללא סיכון</div>
+        </div>
+    </div>
+
     <!-- About Section -->
     <section class="section about" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-image">
                     <div class="about-image-wrapper">
-                        <div class="about-image-real">
-                            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=800&fit=crop&crop=center" alt="ניר חמו - מאמן כושר אישי מקצועי" loading="lazy">
-                        </div>
-                        <div class="about-experience-badge">
-                            <span class="badge-number">13+</span>
-                            <span class="badge-text">שנות ניסיון</span>
-                        </div>
-                        <div class="about-clients-badge">
-                            <span class="badge-number">500+</span>
-                            <span class="badge-text">מתאמנים</span>
+                        <div class="about-visual-card">
+                            <div class="visual-card-bg"></div>
+                            <div class="visual-card-content">
+                                <div class="visual-icon-main">
+                                    <i class="fas fa-dumbbell"></i>
+                                </div>
+                                <div class="visual-brand">NIRFIT</div>
+                                <div class="visual-stats-grid">
+                                    <div class="visual-stat">
+                                        <i class="fas fa-star"></i>
+                                        <span class="visual-stat-number">220+</span>
+                                        <span class="visual-stat-label">ביקורות</span>
+                                    </div>
+                                    <div class="visual-stat">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span class="visual-stat-number">13</span>
+                                        <span class="visual-stat-label">שנות ניסיון</span>
+                                    </div>
+                                    <div class="visual-stat">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span class="visual-stat-number">2</span>
+                                        <span class="visual-stat-label">סניפים</span>
+                                    </div>
+                                    <div class="visual-stat">
+                                        <i class="fas fa-clock"></i>
+                                        <span class="visual-stat-number">45</span>
+                                        <span class="visual-stat-label">דקות אימון</span>
+                                    </div>
+                                </div>
+                                <div class="visual-tagline">הגוף שלך. הכוח שלך.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -458,7 +498,7 @@
                         שמי ניר חמו, ואני מאמן כושר אישי עם תשוקה אמיתית לעזור לאנשים לשנות את חייהם דרך פעילות גופנית ותזונה נכונה.
                     </p>
                     <p>
-                        עם ניסיון של למעלה מ-13 שנים בענף הכושר ומעל 500 מתאמנים שליוויתי, אני מתמחה באימונים אישיים מותאמים במיוחד. 
+                        עם ניסיון של למעלה מ-13 שנים בענף הכושר ומעל 220 ביקורות מרוצות, אני מתמחה באימונים אישיים מותאמים במיוחד. 
                         אני מפעיל סטודיו מאובזר בקריות ומעביר אימונים אישיים בעפולה ברחוב יהושע חנקין 14.
                     </p>
                     <p>
@@ -524,13 +564,13 @@
                 </div>
                 <div class="why-me-item">
                     <div class="why-me-icon"><i class="fas fa-shield-halved"></i></div>
-                    <h3>100% החזר כספי</h3>
-                    <p>אימונים שלא בוצעו מוחזרים במלואם. בלי שאלות</p>
+                    <h3>לא מרוצה? כסף חזרה</h3>
+                    <p>במידה ולא מרוצים - החזר כספי מלא. בלי שאלות, בלי סיפורים</p>
                 </div>
                 <div class="why-me-item">
-                    <div class="why-me-icon"><i class="fas fa-camera"></i></div>
-                    <h3>תיעוד התהליך</h3>
-                    <p>תמונות לפני ואחרי, מדידות ועדכונים יומיים</p>
+                    <div class="why-me-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>מעקב חודשי מסודר</h3>
+                    <p>סדרת בדיקות כלליות כל חודש - משקל, היקפים, אחוזי שומן ושריר, כושר גופני</p>
                 </div>
             </div>
         </div>
@@ -596,13 +636,37 @@
                         <div class="cta-card-badge">חינם לגמרי!</div>
                         <h3>פגישת היכרות</h3>
                         <div class="cta-card-includes">
-                            <div class="include-item"><i class="fas fa-check-circle"></i> בדיקת משקל ואחוזי שומן</div>
-                            <div class="include-item"><i class="fas fa-check-circle"></i> בדיקת אחוזי שריר</div>
-                            <div class="include-item"><i class="fas fa-check-circle"></i> מדידת היקפים</div>
-                            <div class="include-item"><i class="fas fa-check-circle"></i> בדיקת כושר גופני</div>
-                            <div class="include-item"><i class="fas fa-check-circle"></i> סקירת בדיקות רפואיות</div>
-                            <div class="include-item"><i class="fas fa-check-circle"></i> בדיקות אסתטיות</div>
-                            <div class="include-item"><i class="fas fa-check-circle"></i> תוכנית פעולה ראשונית</div>
+                            <div class="include-category">
+                                <div class="include-category-title"><i class="fas fa-body-text"></i> הרכב גוף</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> משקל</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> BMI</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> אחוז שומן הגוף</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> אחוז שריר</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> שומן ויסרלי</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> חילוף חומרים בסיסי</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> גיל הגוף</div>
+                            </div>
+                            <div class="include-category">
+                                <div class="include-category-title"><i class="fas fa-ruler"></i> מדידת היקפים</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> כתפיים</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> זרוע</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> אמה</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> חזה</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> בטן</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> מותניים</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> ישבן</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> ירך</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> שוק</div>
+                            </div>
+                            <div class="include-category">
+                                <div class="include-category-title"><i class="fas fa-heart-pulse"></i> מדדים רפואיים</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> רוויון חמצן (SPO2)</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> דופק (PRbpm)</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> אינדקס פרפוזיה (PI)</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> לחץ דם סיסטולי</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> לחץ דם דיאסטולי</div>
+                                <div class="include-item"><i class="fas fa-check-circle"></i> דופק במנוחה</div>
+                            </div>
                         </div>
                         <div class="cta-card-price">
                             <span class="price-old">₪350</span>
@@ -611,13 +675,7 @@
                         <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" class="btn btn-primary btn-block btn-lg btn-glow" target="_blank">
                             <i class="fab fa-whatsapp"></i> קבעו פגישה עכשיו
                         </a>
-                        <p class="cta-card-note"><i class="fas fa-lock"></i> ללא התחייבות • ללא כרטיס אשראי</p>
-                        <div class="cta-card-spots">
-                            <div class="spots-indicator">
-                                <div class="spots-bar"><div class="spots-fill" style="width: 75%"></div></div>
-                            </div>
-                            <span class="spots-text"><i class="fas fa-fire"></i> נותרו <strong>3 מקומות</strong> השבוע</span>
-                        </div>
+                        <p class="cta-card-note"><i class="fas fa-lock"></i> ללא התחייבות • ללא עלות</p>
                     </div>
                 </div>
             </div>
@@ -749,6 +807,202 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Not Alone - Comparison Table -->
+    <section class="section comparison" id="comparison">
+        <div class="container">
+            <div class="section-label text-center">השוואה</div>
+            <h2 class="section-title text-center">למה <span class="text-primary">לא לבד?</span></h2>
+            <div class="title-line center"></div>
+            <p class="section-subtitle">ההבדל בין אימון לבד לבין אימון עם מאמן אישי מקצועי</p>
+
+            <div class="comparison-table">
+                <div class="comparison-column alone">
+                    <div class="comparison-header">
+                        <div class="comparison-icon"><i class="fas fa-user"></i></div>
+                        <h3>אימון לבד</h3>
+                    </div>
+                    <div class="comparison-items">
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>תוכנית אימון גנרית מהאינטרנט</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>סיכון גבוה לפציעות</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>אין מעקב על ביצוע נכון</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>ירידה במוטיבציה אחרי 2-3 שבועות</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>תזונה לא מותאמת = תוצאות איטיות</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>אין מישהו שידחוף אותך קדימה</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>קל לדלג על אימונים</span>
+                        </div>
+                        <div class="comparison-item negative">
+                            <i class="fas fa-xmark"></i>
+                            <span>אין מדידות והשוואות</span>
+                        </div>
+                    </div>
+                    <div class="comparison-result">
+                        <span class="comparison-emoji">😞</span>
+                        <p>תוצאות? אולי... תוך שנה</p>
+                    </div>
+                </div>
+
+                <div class="comparison-vs">
+                    <span>VS</span>
+                </div>
+
+                <div class="comparison-column with-nir">
+                    <div class="comparison-header">
+                        <div class="comparison-icon"><i class="fas fa-medal"></i></div>
+                        <h3>אימון עם ניר</h3>
+                        <div class="comparison-recommended">מומלץ</div>
+                    </div>
+                    <div class="comparison-items">
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>תוכנית אימון מותאמת <strong>אישית</strong> אליך</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>ביצוע מדויק = אפס פציעות</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>תיקון טכניקה בזמן אמת</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>מוטיבציה גבוהה <strong>לכל אורך הדרך</strong></span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>תפריט תזונתי מותאם = תוצאות מהירות</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>ליווי יומי בווטסאפ + דחיפה</span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>מחויבות = <strong>אתה מגיע לכל אימון</strong></span>
+                        </div>
+                        <div class="comparison-item positive">
+                            <i class="fas fa-check"></i>
+                            <span>מדידות חודשיות + תמונות השוואה</span>
+                        </div>
+                    </div>
+                    <div class="comparison-result">
+                        <span class="comparison-emoji">💪</span>
+                        <p>תוצאות ב-6-8 שבועות!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-cta">
+                <a href="#free-consultation" class="btn btn-primary btn-lg btn-glow">
+                    <i class="fas fa-calendar-check"></i> קבעו פגישת היכרות חינם ותראו את ההבדל
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transformation Timeline -->
+    <section class="section transformation" id="transformation">
+        <div class="container">
+            <div class="section-label text-center">המסע שלך</div>
+            <h2 class="section-title text-center">מה קורה <span class="text-primary">בכל שלב?</span></h2>
+            <div class="title-line center"></div>
+            <p class="section-subtitle">ציר הזמן של השינוי - מה תרגישו ותראו בכל תקופה</p>
+
+            <div class="transform-timeline">
+                <div class="transform-step" data-step="week1">
+                    <div class="transform-time">
+                        <div class="transform-time-icon"><i class="fas fa-seedling"></i></div>
+                        <span>שבוע 1-2</span>
+                    </div>
+                    <div class="transform-card">
+                        <h3>ההתחלה</h3>
+                        <div class="transform-feelings">
+                            <div class="feeling"><i class="fas fa-bolt"></i> עליה באנרגיה</div>
+                            <div class="feeling"><i class="fas fa-bed"></i> שינה טובה יותר</div>
+                            <div class="feeling"><i class="fas fa-face-smile"></i> מצב רוח משופר</div>
+                        </div>
+                        <p>הגוף מתחיל להסתגל. תרגישו כאבי שרירים (סימן טוב!) ועליה באנרגיה. השינה משתפרת ומצב הרוח עולה.</p>
+                    </div>
+                </div>
+
+                <div class="transform-step" data-step="month1">
+                    <div class="transform-time">
+                        <div class="transform-time-icon"><i class="fas fa-fire"></i></div>
+                        <span>חודש 1</span>
+                    </div>
+                    <div class="transform-card">
+                        <h3>ההתמדה</h3>
+                        <div class="transform-feelings">
+                            <div class="feeling"><i class="fas fa-tshirt"></i> בגדים מתחילים להתרופף</div>
+                            <div class="feeling"><i class="fas fa-dumbbell"></i> עליה בכוח</div>
+                            <div class="feeling"><i class="fas fa-heart-pulse"></i> סיבולת משופרת</div>
+                        </div>
+                        <p>הבגדים מתחילים להתרופף. האימונים נהיים קלים יותר ואתם מרימים יותר משקל. הסביבה מתחילה לשים לב.</p>
+                    </div>
+                </div>
+
+                <div class="transform-step" data-step="month2">
+                    <div class="transform-time">
+                        <div class="transform-time-icon"><i class="fas fa-chart-line"></i></div>
+                        <span>חודש 2-3</span>
+                    </div>
+                    <div class="transform-card featured">
+                        <h3>הטרנספורמציה</h3>
+                        <div class="transform-feelings">
+                            <div class="feeling"><i class="fas fa-weight-scale"></i> ירידה משמעותית במשקל</div>
+                            <div class="feeling"><i class="fas fa-arrows-up-down"></i> שינוי ניכר בהיקפים</div>
+                            <div class="feeling"><i class="fas fa-eye"></i> "וואו, נראה לך מעולה!"</div>
+                        </div>
+                        <p>פה קורה הקסם. שינוי דרמטי בהרכב הגוף - ירידה באחוזי שומן, עליה בשריר. כולם שואלים מה עשית. תמונות ההשוואה מדברות בעד עצמן.</p>
+                    </div>
+                </div>
+
+                <div class="transform-step" data-step="month6">
+                    <div class="transform-time">
+                        <div class="transform-time-icon"><i class="fas fa-trophy"></i></div>
+                        <span>חודש 6+</span>
+                    </div>
+                    <div class="transform-card">
+                        <h3>אורח חיים חדש</h3>
+                        <div class="transform-feelings">
+                            <div class="feeling"><i class="fas fa-heart"></i> בריאות מעולה</div>
+                            <div class="feeling"><i class="fas fa-brain"></i> ביטחון עצמי</div>
+                            <div class="feeling"><i class="fas fa-infinity"></i> הרגל לכל החיים</div>
+                        </div>
+                        <p>זה כבר לא "דיאטה" או "תקופת אימונים" - זה אורח חיים. בדיקות דם משופרות, אנרגיה מטורפת, וגוף שאתם גאים בו.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="transform-cta">
+                <p>מוכנים להתחיל את המסע?</p>
+                <a href="#free-consultation" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket"></i> הצעד הראשון - פגישת היכרות חינם
+                </a>
             </div>
         </div>
     </section>
@@ -955,32 +1209,32 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>התנסות</h3>
+                        <h3>מתחיל</h3>
                         <div class="pricing-sessions">10 אימונים</div>
                     </div>
                     <div class="pricing-body">
                         <ul class="pricing-features">
                             <li><i class="fas fa-check"></i> 10 אימונים אישיים</li>
-                            <li><i class="fas fa-check"></i> פגישת היכרות + בדיקת גוף</li>
+                            <li><i class="fas fa-check"></i> פגישת היכרות + בדיקת גוף מקיפה</li>
                             <li><i class="fas fa-check"></i> תוכנית אימון מותאמת</li>
-                            <li><i class="fas fa-check"></i> מעקב התקדמות</li>
-                            <li class="disabled"><i class="fas fa-times"></i> ליווי תזונתי</li>
-                            <li class="disabled"><i class="fas fa-times"></i> מעקב יומי</li>
+                            <li><i class="fas fa-check"></i> מעקב התקדמות מלא</li>
+                            <li><i class="fas fa-check"></i> ליווי תזונתי</li>
+                            <li><i class="fas fa-check"></i> מעקב יומי בווטסאפ</li>
                         </ul>
                         <a href="#contact" class="btn btn-outline btn-block">לפרטים נוספים</a>
                     </div>
                 </div>
 
                 <div class="pricing-card featured">
-                    <div class="pricing-badge">הכי משתלם</div>
+                    <div class="pricing-badge">הכי פופולרי</div>
                     <div class="pricing-header">
-                        <h3>מחויבות</h3>
+                        <h3>מתקדם</h3>
                         <div class="pricing-sessions">20 אימונים</div>
                     </div>
                     <div class="pricing-body">
                         <ul class="pricing-features">
                             <li><i class="fas fa-check"></i> 20 אימונים אישיים</li>
-                            <li><i class="fas fa-check"></i> פגישת היכרות + בדיקת גוף</li>
+                            <li><i class="fas fa-check"></i> פגישת היכרות + בדיקת גוף מקיפה</li>
                             <li><i class="fas fa-check"></i> תוכנית אימון מותאמת</li>
                             <li><i class="fas fa-check"></i> מעקב התקדמות מלא</li>
                             <li><i class="fas fa-check"></i> ליווי תזונתי</li>
@@ -992,17 +1246,17 @@
 
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>טרנספורמציה</h3>
+                        <h3>מסור</h3>
                         <div class="pricing-sessions">30 אימונים</div>
                     </div>
                     <div class="pricing-body">
                         <ul class="pricing-features">
                             <li><i class="fas fa-check"></i> 30 אימונים אישיים</li>
                             <li><i class="fas fa-check"></i> פגישת היכרות + בדיקת גוף מקיפה</li>
-                            <li><i class="fas fa-check"></i> תוכנית אימון + תזונה</li>
+                            <li><i class="fas fa-check"></i> תוכנית אימון מותאמת</li>
                             <li><i class="fas fa-check"></i> מעקב התקדמות מלא</li>
-                            <li><i class="fas fa-check"></i> ליווי תזונתי צמוד</li>
-                            <li><i class="fas fa-check"></i> תמיכה וליווי 24/7</li>
+                            <li><i class="fas fa-check"></i> ליווי תזונתי</li>
+                            <li><i class="fas fa-check"></i> מעקב יומי בווטסאפ</li>
                         </ul>
                         <a href="#contact" class="btn btn-outline btn-block">לפרטים נוספים</a>
                     </div>
@@ -1012,7 +1266,7 @@
             <div class="pricing-guarantee">
                 <i class="fas fa-shield-halved"></i>
                 <div>
-                    <p><strong>100% החזר כספי</strong> על אימונים שלא בוצעו. בלי שאלות, בלי סיפורים.</p>
+                    <p><strong>לא מרוצים? החזר כספי מלא.</strong> פשוט ככה, בלי שאלות ובלי סיפורים.</p>
                     <span class="guarantee-sub">+ פגישת היכרות חינם לכל מסלול</span>
                 </div>
             </div>
@@ -1063,7 +1317,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>כן! בחבילות המחויבות והטרנספורמציה יש ליווי תזונתי מלא הכולל תפריט מותאם אישית, מעקב שבועי, 
+                        <p>כן! כל המסלולים כוללים ליווי תזונתי מלא הכולל תפריט מותאם אישית, מעקב שבועי, 
                         טיפים ומתכונים. כי תזונה נכונה היא 70% מההצלחה.</p>
                     </div>
                 </div>
@@ -1158,60 +1412,6 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="section gallery" id="gallery">
-        <div class="container">
-            <div class="section-label text-center">גלריה</div>
-            <h2 class="section-title text-center">רגעים מ<span class="text-primary">האימונים</span></h2>
-            <div class="title-line center"></div>
-            <p class="section-subtitle">אווירת האימונים בסטודיו - אנרגיה, מקצועיות ותוצאות</p>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item gallery-large">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=600&fit=crop&crop=center" alt="סטודיו כושר מקצועי" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>הסטודיו שלנו</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&h=400&fit=crop&crop=center" alt="אימון כוח" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>אימון כוח</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=400&h=400&fit=crop&crop=center" alt="אימון פונקציונלי" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>אימון פונקציונלי</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=400&h=400&fit=crop&crop=center" alt="ציוד מקצועי" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>ציוד מקצועי</span>
-                    </div>
-                </div>
-                <div class="gallery-item gallery-large">
-                    <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&h=600&fit=crop&crop=center" alt="אימון אישי" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>אימון אישי</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?w=400&h=400&fit=crop&crop=center" alt="תזונה נכונה" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>תזונה נכונה</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&h=400&fit=crop&crop=center" alt="תוצאות מדהימות" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span>תוצאות מדהימות</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- CTA Section -->
     <section class="section cta-section">
@@ -1395,6 +1595,28 @@
         <i class="fab fa-whatsapp"></i>
         <span class="whatsapp-tooltip">פגישת היכרות חינם!</span>
     </a>
+
+    <!-- Live Viewers Counter -->
+    <div class="live-viewers" id="liveViewers">
+        <div class="live-dot"></div>
+        <span><strong id="viewerCount">0</strong> אנשים צופים בדף הזה עכשיו</span>
+    </div>
+
+    <!-- Sticky Mobile CTA -->
+    <div class="sticky-cta" id="stickyCta">
+        <a href="tel:0542063967" class="sticky-cta-btn sticky-cta-phone">
+            <i class="fas fa-phone"></i>
+            <span>התקשרו</span>
+        </a>
+        <a href="#free-consultation" class="sticky-cta-btn sticky-cta-main">
+            <i class="fas fa-calendar-check"></i>
+            <span>פגישת היכרות חינם</span>
+        </a>
+        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" class="sticky-cta-btn sticky-cta-wa" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            <span>וואטסאפ</span>
+        </a>
+    </div>
 
     <script src="security.js"></script>
     <script src="script.js"></script>

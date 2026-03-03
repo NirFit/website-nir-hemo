@@ -1,0 +1,6 @@
+# NIRFIT Security Contact
+# If you find a security vulnerability, please contact us.
+
+Contact: https://wa.me/972542063967
+Preferred-Languages: he, en
+Expires: 2027-03-03T00:00:00.000Z

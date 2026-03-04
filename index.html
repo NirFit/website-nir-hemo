@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-<!-- Preloader -->
-<div class="preloader" id="preloader">
-    <div class="preloader-inner">
-        <div class="preloader-logo">NIR<span>FIT</span></div>
-        <div class="preloader-bar"><div class="preloader-progress"></div></div>
-    </div>
-</div>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- Security Headers (X-Frame-Options & frame-ancestors set via .htaccess HTTP headers) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; form-action 'self' https://wa.me; base-uri 'self'; upgrade-insecure-requests;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://api.web3forms.com; form-action 'self' https://wa.me https://api.web3forms.com; base-uri 'self'; upgrade-insecure-requests;">
 
     <title>ניר חמו | מאמן כושר אישי מקצועי - קריות ועפולה | פגישת היכרות חינם</title>
-    <meta name="description" content="ניר חמו - מאמן כושר אישי מקצועי בקריות ובעפולה. פגישת היכרות + בדיקת גוף מקיפה ללא עלות! אימונים אישיים, תוכניות מותאמות, ליווי תזונתי. הצטרפו ל-220+ מתאמנים מרוצים.">
+    <meta name="description" content="ניר חמו - מאמן כושר אישי מקצועי בקריות ובעפולה. פגישת היכרות + בדיקת גוף מקיפה ללא עלות! אימונים אישיים, תוכניות מותאמות, ליווי תזונתי. הצטרפו ל-770 לקוחות מרוצים.">
     <meta name="keywords" content="מאמן כושר אישי, מאמן כושר קריות, מאמן כושר עפולה, אימון אישי קריות, אימון אישי עפולה, ניר חמו, NIRFIT, אימון כושר, תוכנית אימונים, ייעוץ תזונתי, ירידה במשקל, בניית שריר, מאמן כושר בצפון, בדיקות גוף, טרנספורמציה גופנית, מאמן כושר מוסמך, סטודיו כושר קריות, כושר אישי עפולה, תוכנית טרנספורמציה, ליווי תזונתי">
     <meta name="author" content="ניר חמו - NIRFIT">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -39,7 +32,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.nirfit.co.il/">
     <meta property="og:title" content="ניר חמו - מאמן כושר אישי בקריות ובעפולה | NIRFIT">
-    <meta property="og:description" content="מאמן כושר אישי מוסמך עם 13+ שנות ניסיון. אימונים אישיים, תוכניות טרנספורמציה, ליווי תזונתי. 220+ ביקורות מרוצות בקריות ובעפולה. פגישת היכרות חינם!">
+    <meta property="og:description" content="מאמן כושר אישי מוסמך עם 13+ שנות ניסיון. אימונים אישיים, תוכניות טרנספורמציה, ליווי תזונתי. 770 לקוחות מרוצים בקריות ובעפולה. פגישת היכרות חינם!">
     <meta property="og:image" content="https://www.nirfit.co.il/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -51,7 +44,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://www.nirfit.co.il/">
     <meta name="twitter:title" content="ניר חמו - מאמן כושר אישי בקריות ובעפולה | NIRFIT">
-    <meta name="twitter:description" content="מאמן כושר אישי מוסמך עם 13+ שנות ניסיון. 220+ ביקורות מרוצות. פגישת היכרות חינם!">
+    <meta name="twitter:description" content="מאמן כושר אישי מוסמך עם 13+ שנות ניסיון. 770 לקוחות מרוצים. פגישת היכרות חינם!">
     <meta name="twitter:image" content="https://www.nirfit.co.il/og-image.jpg">
     <meta name="twitter:image:alt" content="ניר חמו - מאמן כושר אישי NIRFIT">
 
@@ -94,13 +87,12 @@
         "address": [
             {
                 "@type": "PostalAddress",
-                "addressLocality": "הקריות",
+                "addressLocality": "קריית ביאליק",
                 "addressRegion": "חיפה",
                 "addressCountry": "IL"
             },
             {
                 "@type": "PostalAddress",
-                "streetAddress": "יהושע חנקין 14",
                 "addressLocality": "עפולה",
                 "addressRegion": "צפון",
                 "addressCountry": "IL"
@@ -115,14 +107,14 @@
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-                "opens": "08:00",
-                "closes": "20:00"
+                "opens": "06:00",
+                "closes": "23:00"
             },
             {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": "Friday",
-                "opens": "08:00",
-                "closes": "12:00"
+                "opens": "06:00",
+                "closes": "16:00"
             }
         ],
         "founder": {
@@ -175,7 +167,7 @@
             "ratingValue": "5",
             "bestRating": "5",
             "worstRating": "1",
-            "ratingCount": "220",
+            "ratingCount": "770",
             "reviewCount": "5"
         },
         "review": [
@@ -238,7 +230,7 @@
                 "name": "איפה ניר חמו מעביר אימונים?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "סטודיו מאובזר בקריות, וסניף בעפולה ברחוב יהושע חנקין 14. שעות פעילות: ראשון-חמישי 08:00-20:00, שישי 08:00-12:00."
+                    "text": "סטודיו לאימון אישי בקריית ביאליק, ואימון אישי בחדר כושר בעפולה. שעות פעילות: ראשון-חמישי 06:00-23:00, שישי 06:00-16:00."
                 }
             },
             {
@@ -254,7 +246,7 @@
                 "name": "האם ניר חמו מציע ליווי תזונתי?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "כן! תפריט מותאם אישית, הדרכת תזונה, מעקב שבועי, טיפים ומתכונים. זמין כשירות עצמאי או כחלק מחבילות האימון."
+                    "text": "כן! תפריט מותאם אישית, הדרכת תזונה, מעקב יומי, טיפים ומתכונים. זמין כשירות עצמאי או כחלק מחבילות האימון."
                 }
             },
             {
@@ -290,6 +282,14 @@
     </script>
 </head>
 <body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-logo">NIR<span>FIT</span></div>
+            <div class="preloader-bar"><div class="preloader-progress"></div></div>
+        </div>
+    </div>
 
     <a href="#main-content" class="skip-to-content">דלג לתוכן הראשי</a>
 
@@ -368,9 +368,9 @@
                 <li><a href="#about">אודות</a></li>
                 <li><a href="#free-consultation">פגישת היכרות</a></li>
                 <li><a href="#services">שירותים</a></li>
-                <li><a href="#results">תוצאות</a></li>
+                <li><a href="#results">עובדות</a></li>
                 <li><a href="#testimonials">המלצות</a></li>
-                <li><a href="#pricing">מחירון</a></li>
+                <li><a href="#pricing">תוכניות</a></li>
                 <li><a href="#contact" class="nav-cta"><i class="fas fa-calendar-check"></i> קבעו פגישה חינם</a></li>
             </ul>
         </div>
@@ -394,7 +394,7 @@
             <h1>הגוף שלך.<br><span class="gradient-text">הכוח שלך.</span></h1>
             <p class="hero-subtitle"><span class="typing-text" id="typingText"></span><span class="typing-cursor">|</span></p>
             <p class="hero-text">
-                13+ שנות ניסיון. 220+ ביקורות מרוצות. 2 סניפים - קריות ועפולה.<br>
+                13+ שנות ניסיון. 770 לקוחות מרוצים. 2 סניפים - קריות ועפולה.<br>
                 בוא לפגישת היכרות חינמית - נבדוק את הגוף שלך ונבנה תוכנית שתביא תוצאות.
             </p>
             <div class="hero-buttons">
@@ -402,15 +402,15 @@
                     <i class="fas fa-calendar-check"></i>
                     פגישת היכרות חינם
                 </a>
-                <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" class="btn btn-whatsapp btn-lg" target="_blank">
+                <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-whatsapp btn-lg" target="_blank">
                     <i class="fab fa-whatsapp"></i>
                     שלחו הודעה
                 </a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number" data-target="220">0</span><span class="stat-plus">+</span>
-                    <span class="stat-label">ביקורות מרוצות</span>
+                    <span class="stat-number" data-target="770">0</span>
+                    <span class="stat-label">לקוחות מרוצים</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
@@ -419,14 +419,14 @@
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-number" data-target="95">0</span><span class="stat-plus">%</span>
-                    <span class="stat-label">שיעור שימור</span>
+                    <span class="stat-number" data-target="96">0</span><span class="stat-plus">%</span>
+                    <span class="stat-label">אחוזי הצלחה</span>
                 </div>
             </div>
             <div class="hero-trust">
                 <span><i class="fas fa-shield-halved"></i> מאמן מוסמך</span>
                 <span><i class="fas fa-star"></i> דירוג 5 כוכבים</span>
-                <span><i class="fas fa-map-marker-alt"></i> קריות & עפולה</span>
+                <span><i class="fas fa-map-marker-alt"></i> 2 סניפים - קריות & עפולה</span>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -439,14 +439,17 @@
 
     <!-- Social Proof Ticker -->
     <div class="social-ticker">
-        <div class="ticker-track" id="tickerTrack">
-            <div class="ticker-item"><i class="fas fa-star" style="color: #ffc107;"></i> ⭐ 5 כוכבים מ-220+ ביקורות</div>
-            <div class="ticker-item"><i class="fas fa-trophy" style="color: var(--primary);"></i> 13+ שנות ניסיון מקצועי</div>
-            <div class="ticker-item"><i class="fas fa-users" style="color: var(--accent);"></i> 500+ מתאמנים שהצליחו</div>
-            <div class="ticker-item"><i class="fas fa-map-marker-alt" style="color: var(--success);"></i> 2 סניפים - קריות ועפולה</div>
-            <div class="ticker-item"><i class="fas fa-certificate" style="color: var(--primary);"></i> מאמן מוסמך ומנוסה</div>
-            <div class="ticker-item"><i class="fas fa-heart" style="color: #ff4081;"></i> חוויה נעימה ומקצועית</div>
-            <div class="ticker-item"><i class="fas fa-shield-halved" style="color: var(--accent);"></i> 100% החזר כספי - ללא סיכון</div>
+        <div class="ticker-track" id="tickerTrack" aria-hidden="true">
+            <span class="ticker-item"><i class="fas fa-star" style="color: #ffc107;"></i> 5 כוכבים מ-770 לקוחות מרוצים</span>
+            <span class="ticker-item"><i class="fas fa-trophy" style="color: var(--primary);"></i> 13+ שנות ניסיון מקצועי</span>
+            <span class="ticker-item"><i class="fas fa-users" style="color: var(--accent);"></i> 770 לקוחות מרוצים</span>
+            <span class="ticker-item"><i class="fas fa-map-marker-alt" style="color: var(--success);"></i> 2 סניפים - קריית ביאליק ועפולה</span>
+            <span class="ticker-item"><i class="fas fa-certificate" style="color: var(--primary);"></i> מאמן מוסמך ומנוסה</span>
+            <span class="ticker-item"><i class="fas fa-heart" style="color: #ff4081;"></i> חוויה נעימה ומקצועית</span>
+            <span class="ticker-item"><i class="fas fa-shield-halved" style="color: var(--accent);"></i> לא מרוצים? החזר כספי מלא</span>
+            <span class="ticker-item"><i class="fas fa-dumbbell" style="color: var(--primary);"></i> 45 דקות אימון אינטנסיבי</span>
+            <span class="ticker-item"><i class="fas fa-clock" style="color: var(--accent);"></i> א'-ה' 06:00-23:00</span>
+            <span class="ticker-item"><i class="fas fa-gift" style="color: #ffc107;"></i> פגישת היכרות + בדיקת גוף חינם</span>
         </div>
     </div>
 
@@ -466,8 +469,8 @@
                                 <div class="visual-stats-grid">
                                     <div class="visual-stat">
                                         <i class="fas fa-star"></i>
-                                        <span class="visual-stat-number">220+</span>
-                                        <span class="visual-stat-label">ביקורות</span>
+                                        <span class="visual-stat-number">770</span>
+                                        <span class="visual-stat-label">לקוחות מרוצים</span>
                                     </div>
                                     <div class="visual-stat">
                                         <i class="fas fa-calendar-check"></i>
@@ -498,8 +501,8 @@
                         שמי ניר חמו, ואני מאמן כושר אישי עם תשוקה אמיתית לעזור לאנשים לשנות את חייהם דרך פעילות גופנית ותזונה נכונה.
                     </p>
                     <p>
-                        עם ניסיון של למעלה מ-13 שנים בענף הכושר ומעל 220 ביקורות מרוצות, אני מתמחה באימונים אישיים מותאמים במיוחד. 
-                        אני מפעיל סטודיו מאובזר בקריות ומעביר אימונים אישיים בעפולה ברחוב יהושע חנקין 14.
+                        עם ניסיון של למעלה מ-13 שנים בענף הכושר ומעל 770 לקוחות מרוצים, אני מתמחה באימונים אישיים מותאמים במיוחד. 
+                        אני מפעיל סטודיו לאימון אישי בקריית ביאליק ומעביר אימונים אישיים בחדר כושר בעפולה.
                     </p>
                     <p>
                         <strong>מה שמבדיל אותי ממאמנים אחרים?</strong> אצלי הכל מתחיל מ<strong>חוויה נעימה ומועילה</strong>. 
@@ -547,7 +550,7 @@
     <!-- Why Me - Visual Banner -->
     <section class="section why-me-banner" id="why-me">
         <div class="why-me-bg">
-            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&h=600&fit=crop&crop=center" alt="סטודיו כושר" loading="lazy">
+            <img src="https://images.pexels.com/photos/5327523/pexels-photo-5327523.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop" alt="סטודיו כושר" loading="lazy">
         </div>
         <div class="why-me-overlay"></div>
         <div class="container">
@@ -570,7 +573,7 @@
                 <div class="why-me-item">
                     <div class="why-me-icon"><i class="fas fa-clipboard-check"></i></div>
                     <h3>מעקב חודשי מסודר</h3>
-                    <p>סדרת בדיקות כלליות כל חודש - משקל, היקפים, אחוזי שומן ושריר, כושר גופני</p>
+                    <p>כל חודש סדרת בדיקות: משקל, היקפים, אחוזי שומן ושריר, וכושר גופני – כדי לראות את ההתקדמות בצורה ברורה</p>
                 </div>
             </div>
         </div>
@@ -615,18 +618,11 @@
                                 <p>מבחן כושר קצר שיראה לנו את נקודת ההתחלה שלך - <strong>כוח, סיבולת, גמישות ויציבה</strong>. ככה נדע בדיוק מאיפה מתחילים ומה צריך לחזק.</p>
                             </div>
                         </div>
-                        <div class="consult-step">
-                            <div class="consult-step-number">5</div>
-                            <div class="consult-step-content">
-                                <h3><i class="fas fa-clipboard-check"></i> בדיקות אסתטיות</h3>
-                                <p>הערכה ויזואלית של <strong>יציבה, סימטריה ומבנה גוף</strong>. נזהה אזורים שדורשים חיזוק או שיפור ונתעד תמונות השוואה למעקב.</p>
-                            </div>
-                        </div>
                         <div class="consult-step highlight">
                             <div class="consult-step-number"><i class="fas fa-gift"></i></div>
                             <div class="consult-step-content">
-                                <h3><i class="fas fa-route"></i> תוכנית פעולה מותאמת</h3>
-                                <p>בסוף הפגישה תקבלו <strong>תוכנית פעולה ראשונית</strong> עם המלצות לאימון ותזונה - גם אם תחליטו לא להמשיך איתי. בלי שום התחייבות!</p>
+                                <h3><i class="fas fa-clipboard-list"></i> סיכום כללי</h3>
+                                <p><strong>מזה אומר?</strong> נסכם יחד את כל הממצאים מהבדיקות - הרכב גוף, היקפים, כושר גופני - וניתן לכם <strong>המלצות ראשוניות</strong> לאימון ותזונה. תקבלו תמונה ברורה מאיפה אתם מתחילים ומה הצעדים הבאים, גם אם תחליטו לא להמשיך איתי. בלי שום התחייבות!</p>
                             </div>
                         </div>
                     </div>
@@ -672,7 +668,7 @@
                             <span class="price-old">₪350</span>
                             <span class="price-new">חינם</span>
                         </div>
-                        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" class="btn btn-primary btn-block btn-lg btn-glow" target="_blank">
+                        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-primary btn-block btn-lg btn-glow" target="_blank">
                             <i class="fab fa-whatsapp"></i> קבעו פגישה עכשיו
                         </a>
                         <p class="cta-card-note"><i class="fas fa-lock"></i> ללא התחייבות • ללא עלות</p>
@@ -692,68 +688,42 @@
             
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-card-image">
-                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop&crop=center" alt="אימון אישי" loading="lazy">
-                    </div>
                     <div class="service-icon">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-fire-flame-curved"></i>
                     </div>
                     <h3>אימון אישי</h3>
-                    <p>אימון אחד על אחד, מותאם בדיוק לגוף שלך, למטרות שלך ולקצב שלך. 45 דקות אינטנסיביות שמביאות תוצאות.</p>
+                    <p>אימון אחד על אחד, מותאם לגוף שלך, למטרות שלך ולקצב שלך. 45 דקות אינטנסיביות שמביאות תוצאות.</p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> תוכנית מותאמת אישית</li>
-                        <li><i class="fas fa-check"></i> מעקב והתאמה שוטפים</li>
+                        <li><i class="fas fa-check"></i> אימונים אישיים 45 דקות</li>
+                        <li><i class="fas fa-check"></i> תוכנית אימון מותאמת</li>
+                        <li><i class="fas fa-check"></i> מעקב התקדמות שוטף</li>
                         <li><i class="fas fa-check"></i> גמישות בשעות</li>
                     </ul>
                 </div>
 
-                <div class="service-card featured">
-                    <div class="service-badge">הכי פופולרי</div>
-                    <div class="service-card-image">
-                        <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&h=250&fit=crop&crop=center" alt="תוכנית טרנספורמציה" loading="lazy">
-                    </div>
-                    <div class="service-icon">
-                        <i class="fas fa-fire-flame-curved"></i>
-                    </div>
-                    <h3>תוכנית טרנספורמציה</h3>
-                    <p>אימונים + ליווי תזונתי + מעקב יומי. התוכנית המקיפה ביותר, שמביאה את התוצאות הכי דרמטיות.</p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> אימונים אישיים</li>
-                        <li><i class="fas fa-check"></i> תפריט תזונתי מותאם</li>
-                        <li><i class="fas fa-check"></i> מעקב יומי בווטסאפ</li>
-                        <li><i class="fas fa-check"></i> בדיקות גוף חודשיות</li>
-                    </ul>
-                </div>
-
                 <div class="service-card">
-                    <div class="service-card-image">
-                        <img src="https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=400&h=250&fit=crop&crop=center" alt="בדיקות גוף מקיפות" loading="lazy">
-                    </div>
                     <div class="service-icon">
                         <i class="fas fa-heartbeat"></i>
                     </div>
                     <h3>בדיקות גוף מקיפות</h3>
-                    <p>סדרת בדיקות מקצועיות שנותנות תמונה מלאה על מצב הגוף שלך - נקודת ההתחלה לכל תהליך.</p>
+                    <p>סדרת בדיקות מקצועיות שנותנות תמונה מלאה על מצב הגוף שלך – הרכב גוף, היקפים, כושר ובריאות. נקודת ההתחלה לכל תהליך.</p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> הרכב גוף - אחוזי שומן ושריר</li>
+                        <li><i class="fas fa-check"></i> הרכב גוף – אחוזי שומן ושריר</li>
                         <li><i class="fas fa-check"></i> מדידת היקפים ומשקל</li>
                         <li><i class="fas fa-check"></i> בדיקת כושר גופני ובריאות</li>
-                        <li><i class="fas fa-check"></i> ניתוח תוצאות ובניית תוכנית</li>
+                        <li><i class="fas fa-check"></i> ניתוח תוצאות ותיעוד למעקב</li>
                     </ul>
                 </div>
 
                 <div class="service-card">
-                    <div class="service-card-image">
-                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop&crop=center" alt="ייעוץ תזונתי" loading="lazy">
-                    </div>
                     <div class="service-icon">
                         <i class="fas fa-apple-whole"></i>
                     </div>
                     <h3>ייעוץ תזונתי</h3>
-                    <p>תפריט תזונתי מותאם אישית, הדרכה וליווי שוטף. כי תזונה נכונה היא 70% מההצלחה.</p>
+                    <p>תפריט תזונתי מותאם אישית, הדרכה וליווי שוטף. תזונה נכונה היא 70% מההצלחה.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> תפריט מותאם אישית</li>
-                        <li><i class="fas fa-check"></i> מעקב שבועי</li>
+                        <li><i class="fas fa-check"></i> מעקב יומי בתזונה</li>
                         <li><i class="fas fa-check"></i> טיפים ומתכונים</li>
                     </ul>
                 </div>
@@ -906,12 +876,12 @@
                         </div>
                         <div class="comparison-item positive">
                             <i class="fas fa-check"></i>
-                            <span>מדידות חודשיות + תמונות השוואה</span>
+                            <span>מדידות חודשיות</span>
                         </div>
                     </div>
                     <div class="comparison-result">
                         <span class="comparison-emoji">💪</span>
-                        <p>תוצאות ב-6-8 שבועות!</p>
+                        <p>תוצאה בטוחה!</p>
                     </div>
                 </div>
             </div>
@@ -936,7 +906,7 @@
                 <div class="transform-step" data-step="week1">
                     <div class="transform-time">
                         <div class="transform-time-icon"><i class="fas fa-seedling"></i></div>
-                        <span>שבוע 1-2</span>
+                        <span>חודש ראשון</span>
                     </div>
                     <div class="transform-card">
                         <h3>ההתחלה</h3>
@@ -952,7 +922,7 @@
                 <div class="transform-step" data-step="month1">
                     <div class="transform-time">
                         <div class="transform-time-icon"><i class="fas fa-fire"></i></div>
-                        <span>חודש 1</span>
+                        <span>1 - 3 חודשים</span>
                     </div>
                     <div class="transform-card">
                         <h3>ההתמדה</h3>
@@ -968,23 +938,23 @@
                 <div class="transform-step" data-step="month2">
                     <div class="transform-time">
                         <div class="transform-time-icon"><i class="fas fa-chart-line"></i></div>
-                        <span>חודש 2-3</span>
+                        <span>3 - 6 חודשים</span>
                     </div>
-                    <div class="transform-card featured">
+                    <div class="transform-card">
                         <h3>הטרנספורמציה</h3>
                         <div class="transform-feelings">
                             <div class="feeling"><i class="fas fa-weight-scale"></i> ירידה משמעותית במשקל</div>
                             <div class="feeling"><i class="fas fa-arrows-up-down"></i> שינוי ניכר בהיקפים</div>
                             <div class="feeling"><i class="fas fa-eye"></i> "וואו, נראה לך מעולה!"</div>
                         </div>
-                        <p>פה קורה הקסם. שינוי דרמטי בהרכב הגוף - ירידה באחוזי שומן, עליה בשריר. כולם שואלים מה עשית. תמונות ההשוואה מדברות בעד עצמן.</p>
+                        <p>פה קורה הקסם. שינוי דרמטי בהרכב הגוף - ירידה באחוזי שומן, עליה בשריר. כולם שואלים מה עשית.</p>
                     </div>
                 </div>
 
                 <div class="transform-step" data-step="month6">
                     <div class="transform-time">
                         <div class="transform-time-icon"><i class="fas fa-trophy"></i></div>
-                        <span>חודש 6+</span>
+                        <span>6+</span>
                     </div>
                     <div class="transform-card">
                         <h3>אורח חיים חדש</h3>
@@ -1011,16 +981,16 @@
     <section class="section results" id="results">
         <div class="container">
             <div class="section-label text-center">מספרים אמיתיים</div>
-            <h2 class="section-title text-center">למה <span class="text-primary">בוחרים בי</span></h2>
+            <h2 class="section-title text-center"><span class="text-primary">עובדות</span></h2>
             <div class="title-line center"></div>
             <p class="section-subtitle">13 שנים בשטח, 2 סניפים, ומאות מתאמנים שסומכים עליי</p>
             
             <div class="results-grid">
                 <div class="result-card">
                     <div class="result-icon"><i class="fas fa-star"></i></div>
-                    <div class="result-number" data-target="220">0</div>
-                    <div class="result-unit">+</div>
-                    <div class="result-text">ביקורות מרוצות באינטרנט</div>
+                    <div class="result-number" data-target="770">0</div>
+                    <div class="result-unit">&nbsp;</div>
+                    <div class="result-text">לקוחות מרוצים באינטרנט</div>
                 </div>
                 <div class="result-card">
                     <div class="result-icon"><i class="fas fa-calendar-check"></i></div>
@@ -1184,6 +1154,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-badge"><i class="fas fa-circle-check"></i> מאומת</span>
+                        </div>
+                        <p class="testimonial-text">"התחלתי לאמן עם ניר לפני שנה וזו הייתה ההחלטה הכי טובה שעשיתי. הוא בנה לי תוכנית מדויקת, ליווה אותי בתזונה, והתוצאות מדברות בעד עצמן. <strong>עליתי 8 קילו של שריר נקי!</strong>"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">ר.ג</div>
+                            <div class="author-info">
+                                <strong>רון ג.</strong>
+                                <span>קריית ים • עלייה במסת שריר</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="slider-controls">
                     <button class="slider-btn prev" id="prevBtn" aria-label="הקודם">
@@ -1202,7 +1189,7 @@
     <section class="section pricing" id="pricing">
         <div class="container">
             <div class="section-label text-center">חבילות</div>
-            <h2 class="section-title text-center">בחרו את <span class="text-primary">המסלול</span></h2>
+            <h2 class="section-title text-center"><span class="text-primary">תוכניות</span></h2>
             <div class="title-line center"></div>
             <p class="section-subtitle">כל המסלולים כוללים פגישת היכרות חינם + בדיקת גוף מקיפה<br>כל החבילות תקפות ל-6 חודשים</p>
             
@@ -1225,8 +1212,7 @@
                     </div>
                 </div>
 
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">הכי פופולרי</div>
+                <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>מתקדם</h3>
                         <div class="pricing-sessions">20 אימונים</div>
@@ -1288,7 +1274,7 @@
                     </button>
                     <div class="faq-answer">
                         <p>פגישת ההיכרות כוללת שיחת היכרות, בדיקת נתוני גוף מקיפה (משקל, אחוזי שומן, אחוזי שריר, היקפים), 
-                        סקירת בדיקות רפואיות, בדיקת כושר גופני, הערכה אסתטית ותוכנית פעולה ראשונית. הכל ללא עלות וללא התחייבות!</p>
+                        סקירת בדיקות רפואיות, בדיקת כושר גופני וסיכום כללי עם המלצות ראשוניות. הכל ללא עלות וללא התחייבות!</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1317,7 +1303,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>כן! כל המסלולים כוללים ליווי תזונתי מלא הכולל תפריט מותאם אישית, מעקב שבועי, 
+                        <p>כן! כל המסלולים כוללים ליווי תזונתי מלא הכולל תפריט מותאם אישית, מעקב יומי, 
                         טיפים ומתכונים. כי תזונה נכונה היא 70% מההצלחה.</p>
                     </div>
                 </div>
@@ -1337,8 +1323,8 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>שעות הפעילות הן ראשון-חמישי 08:00-20:00 ושישי 08:00-12:00. אני מתאים את שעות האימונים 
-                        ללוח הזמנים שלך - כולל שעות בוקר, צהריים וערב.</p>
+                        <p>שעות הפעילות הן ראשון-חמישי 06:00-23:00 ושישי 06:00-16:00. שבת סגור. אני מתאים את שעות האימונים 
+                        ללוח הזמנים שלך - כולל שעות בוקר מוקדם, צהריים וערב מאוחר.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1373,40 +1359,31 @@
             
             <div class="locations-grid">
                 <div class="location-card">
-                    <div class="location-card-image">
-                        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&h=300&fit=crop&crop=center" alt="סטודיו קריות" loading="lazy">
-                    </div>
                     <div class="location-icon">
                         <i class="fas fa-building"></i>
                     </div>
-                    <h3>סטודיו קריות</h3>
+                    <h3>סטודיו לאימון אישי - קריית ביאליק</h3>
                     <p class="location-desc">סטודיו מאובזר עם ציוד מקצועי, אווירה אנרגטית ותנאים מושלמים לאימון.</p>
                     <div class="location-details">
-                        <div class="detail"><i class="fas fa-map-marker-alt"></i> הקריות</div>
-                        <div class="detail"><i class="fas fa-clock"></i> א'-ה' 08:00-20:00</div>
-                        <div class="detail"><i class="fas fa-clock"></i> ו' 08:00-12:00</div>
+                        <div class="detail"><i class="fas fa-map-marker-alt"></i> קריית ביאליק</div>
+                        <div class="detail"><i class="fas fa-clock"></i> א'-ה' 06:00-23:00</div>
+                        <div class="detail"><i class="fas fa-clock"></i> ו' 06:00-16:00</div>
                         <div class="detail"><i class="fas fa-car"></i> חניה חינם</div>
                     </div>
                 </div>
 
                 <div class="location-card">
-                    <div class="location-card-image">
-                        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=300&fit=crop&crop=center" alt="אימונים בעפולה" loading="lazy">
-                    </div>
                     <div class="location-icon">
                         <i class="fas fa-location-dot"></i>
                     </div>
-                    <h3>אימונים בעפולה</h3>
-                    <p class="location-desc">אימונים אישיים בעפולה, ברחוב יהושע חנקין 14. סביבה מקצועית ונוחה.</p>
+                    <h3>אימון אישי בחדר כושר - עפולה</h3>
+                    <p class="location-desc">אימונים אישיים בחדר כושר בעפולה. סביבה מקצועית ונוחה.</p>
                     <div class="location-details">
-                        <div class="detail"><i class="fas fa-map-marker-alt"></i> יהושע חנקין 14, עפולה</div>
-                        <div class="detail"><i class="fas fa-clock"></i> א'-ה' 08:00-20:00</div>
-                        <div class="detail"><i class="fas fa-clock"></i> ו' 08:00-12:00</div>
+                        <div class="detail"><i class="fas fa-map-marker-alt"></i> עפולה</div>
+                        <div class="detail"><i class="fas fa-clock"></i> א'-ה' 06:00-23:00</div>
+                        <div class="detail"><i class="fas fa-clock"></i> ו' 06:00-16:00</div>
                         <div class="detail"><i class="fas fa-car"></i> חניה חינם</div>
                     </div>
-                    <a href="https://waze.com/ul?ll=32.6039162,35.294021&z=17" target="_blank" class="btn btn-outline btn-sm">
-                        <i class="fas fa-diamond-turn-right"></i> נווט עם Waze
-                    </a>
                 </div>
             </div>
         </div>
@@ -1416,7 +1393,7 @@
     <!-- CTA Section -->
     <section class="section cta-section">
         <div class="cta-bg-image">
-            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920&h=800&fit=crop&crop=center" alt="" loading="lazy">
+            <img src="https://images.pexels.com/photos/8436624/pexels-photo-8436624.jpeg?auto=compress&cs=tinysrgb&w=1920&h=800&fit=crop" alt="אימון כושר" loading="lazy">
         </div>
         <div class="cta-bg-overlay"></div>
         <div class="container">
@@ -1424,7 +1401,7 @@
                 <h2>מוכן <span class="text-primary">לשינוי?</span></h2>
                 <p>הצעד הראשון הוא תמיד הקשה ביותר, אבל אתה לא לבד.<br>פגישת ההיכרות חינמית - אין לך מה להפסיד.</p>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" class="btn btn-primary btn-lg btn-glow" target="_blank">
+                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-primary btn-lg btn-glow" target="_blank">
                         <i class="fab fa-whatsapp"></i> קבעו פגישת היכרות חינם
                     </a>
                 </div>
@@ -1442,7 +1419,7 @@
             
             <div class="contact-grid">
                 <div class="contact-info">
-                    <div class="contact-item">
+                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="contact-item" target="_blank">
                         <div class="contact-icon">
                             <i class="fab fa-whatsapp"></i>
                         </div>
@@ -1450,8 +1427,8 @@
                             <h4>ווטסאפ</h4>
                             <p>הדרך הכי מהירה ליצור קשר</p>
                         </div>
-                    </div>
-                    <div class="contact-item">
+                    </a>
+                    <a href="tel:972542063967" class="contact-item">
                         <div class="contact-icon">
                             <i class="fas fa-phone"></i>
                         </div>
@@ -1459,36 +1436,17 @@
                             <h4>טלפון</h4>
                             <p>התקשרו בשעות הפעילות</p>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-instagram"></i>
-                        </div>
-                        <div>
-                            <h4>אינסטגרם</h4>
-                            <p>עקבו לתוכן ועדכונים</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div>
-                            <h4>הזמנת אימון</h4>
-                            <a href="https://lee.co.il/b/N7q9x" target="_blank">הזמינו דרך האפליקציה</a>
-                        </div>
-                    </div>
-
+                    </a>
                     <div class="contact-hours">
                         <h4><i class="fas fa-clock"></i> שעות פעילות</h4>
                         <div class="hours-list">
                             <div class="hours-row">
                                 <span>ראשון - חמישי</span>
-                                <span>08:00 - 20:00</span>
+                                <span>06:00 - 23:00</span>
                             </div>
                             <div class="hours-row">
                                 <span>שישי</span>
-                                <span>08:00 - 12:00</span>
+                                <span>06:00 - 16:00</span>
                             </div>
                             <div class="hours-row closed">
                                 <span>שבת</span>
@@ -1498,7 +1456,9 @@
                     </div>
                 </div>
 
-                <form class="contact-form" id="contactForm">
+                <!-- Web3Forms: קבלו מפתח גישה חינמי ב- https://app.web3forms.com/ והחליפו למטה -->
+                <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" id="formAccessKey" value="034c1fc6-f603-4be5-bb6f-1af3ba60a99a">
                     <div class="form-row">
                         <div class="form-group">
                             <input type="text" name="name" placeholder="שם מלא" required>
@@ -1513,8 +1473,8 @@
                         <div class="form-group">
                             <select name="location" required>
                                 <option value="" disabled selected>מיקום מועדף</option>
-                                <option value="krayot">סטודיו קריות</option>
-                                <option value="afula">עפולה</option>
+                                <option value="krayot">סטודיו קריית ביאליק</option>
+                                <option value="afula">חדר כושר עפולה</option>
                                 <option value="both">שניהם</option>
                             </select>
                             <i class="fas fa-map-marker-alt"></i>
@@ -1554,12 +1514,6 @@
                 <div class="footer-brand">
                     <a href="#hero" class="logo">NIR<span>FIT</span></a>
                     <p>מאמן כושר אישי מקצועי בקריות ובעפולה.<br>ביחד נגיע לתוצאות.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://wa.me/972542063967" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
                 </div>
                 <div class="footer-links">
                     <h4>ניווט מהיר</h4>
@@ -1568,7 +1522,7 @@
                         <li><a href="#free-consultation">פגישת היכרות</a></li>
                         <li><a href="#services">שירותים</a></li>
                         <li><a href="#testimonials">המלצות</a></li>
-                        <li><a href="#pricing">מחירון</a></li>
+                        <li><a href="#pricing">תוכניות</a></li>
                         <li><a href="#faq">שאלות נפוצות</a></li>
                         <li><a href="#contact">צור קשר</a></li>
                     </ul>
@@ -1576,8 +1530,8 @@
                 <div class="footer-contact">
                     <h4>צרו קשר</h4>
                     <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i> קריות & עפולה</div>
-                    <div class="footer-contact-item"><i class="fas fa-clock"></i> א'-ה' 08:00-20:00</div>
-                    <div class="footer-contact-item"><i class="fas fa-clock"></i> ו' 08:00-12:00</div>
+                    <div class="footer-contact-item"><i class="fas fa-clock"></i> א'-ה' 06:00-23:00</div>
+                    <div class="footer-contact-item"><i class="fas fa-clock"></i> ו' 06:00-16:00</div>
                     <a href="#free-consultation" class="btn btn-primary btn-sm" style="margin-top: 16px;">
                         <i class="fas fa-calendar-check"></i> פגישה חינם
                     </a>
@@ -1590,7 +1544,7 @@
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" 
+    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" 
        class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
         <span class="whatsapp-tooltip">פגישת היכרות חינם!</span>
@@ -1612,7 +1566,7 @@
             <i class="fas fa-calendar-check"></i>
             <span>פגישת היכרות חינם</span>
         </a>
-        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A4%D7%92%D7%99%D7%E9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9D" class="sticky-cta-btn sticky-cta-wa" target="_blank">
+        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="sticky-cta-btn sticky-cta-wa" target="_blank">
             <i class="fab fa-whatsapp"></i>
             <span>וואטסאפ</span>
         </a>

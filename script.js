@@ -247,37 +247,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const dotsContainer = document.getElementById('sliderDots');
     const cards = track.querySelectorAll('.testimonial-card');
     let currentSlide = 0;
-    const totalSlides = cards.length;
+    const totalCards = cards.length;
     let autoSlideInterval;
 
-    for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('slider-dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
-        dotsContainer.appendChild(dot);
+    function getVisibleCards() {
+        if (window.innerWidth <= 600) return 1;
+        if (window.innerWidth <= 992) return 2;
+        return 3;
+    }
+
+    function getGap() {
+        if (window.innerWidth <= 600) return 0;
+        return 24;
+    }
+
+    function getTotalPositions() {
+        return Math.max(1, totalCards - getVisibleCards() + 1);
+    }
+
+    function buildDots() {
+        dotsContainer.innerHTML = '';
+        const positions = getTotalPositions();
+        for (let i = 0; i < positions; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('slider-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
     }
 
     const updateSlider = () => {
-        track.style.transform = `translateX(${currentSlide * 100}%)`;
+        const visible = getVisibleCards();
+        const gap = getGap();
+        const cardWidth = (track.offsetWidth - gap * (visible - 1)) / visible;
+        const offset = currentSlide * (cardWidth + gap);
+        track.style.transform = `translateX(${offset}px)`;
         dotsContainer.querySelectorAll('.slider-dot').forEach((dot, i) => {
             dot.classList.toggle('active', i === currentSlide);
         });
     };
 
     const goToSlide = (index) => {
-        currentSlide = index;
+        const maxPos = getTotalPositions() - 1;
+        currentSlide = Math.min(index, maxPos);
         updateSlider();
         resetAutoSlide();
     };
 
     const nextSlide = () => {
-        currentSlide = (currentSlide + 1) % totalSlides;
+        const maxPos = getTotalPositions() - 1;
+        currentSlide = currentSlide >= maxPos ? 0 : currentSlide + 1;
         updateSlider();
     };
 
     const prevSlide = () => {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        const maxPos = getTotalPositions() - 1;
+        currentSlide = currentSlide <= 0 ? maxPos : currentSlide - 1;
         updateSlider();
     };
 
@@ -286,7 +312,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startAutoSlide = () => { autoSlideInterval = setInterval(nextSlide, 5000); };
     const resetAutoSlide = () => { clearInterval(autoSlideInterval); startAutoSlide(); };
+
+    buildDots();
     startAutoSlide();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            currentSlide = Math.min(currentSlide, getTotalPositions() - 1);
+            buildDots();
+            updateSlider();
+        }, 200);
+    });
 
     let touchStartX = 0;
     track.addEventListener('touchstart', (e) => {
@@ -424,16 +462,16 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> שולח...';
+        submitBtn.disabled = true;
+
         const formData = new FormData(contactForm);
-        const name = formData.get('name');
-        const phone = formData.get('phone');
-        const location = formData.get('location');
-        const goal = formData.get('goal');
-        const message = formData.get('message');
 
         const locationMap = {
-            'krayot': 'סטודיו קריות',
-            'afula': 'עפולה',
+            'krayot': 'סטודיו קריית ביאליק',
+            'afula': 'חדר כושר עפולה',
             'both': 'שניהם'
         };
 
@@ -446,30 +484,57 @@ document.addEventListener('DOMContentLoaded', () => {
             'other': 'אחר'
         };
 
-        let whatsappMsg = `היי ניר!\n`;
-        whatsappMsg += `שמי ${name}\n`;
-        whatsappMsg += `טלפון: ${phone}\n`;
-        if (location) whatsappMsg += `מיקום מועדף: ${locationMap[location] || location}\n`;
-        if (goal) whatsappMsg += `מטרה: ${goalMap[goal] || goal}\n`;
-        if (message) whatsappMsg += `\n${message}`;
-        whatsappMsg += `\n\nאשמח לקבוע פגישת היכרות חינם!`;
+        const location = formData.get('location');
+        const goal = formData.get('goal');
+        if (location) formData.set('location', locationMap[location] || location);
+        if (goal) formData.set('goal', goalMap[goal] || goal);
+        formData.append('subject', 'פנייה חדשה מהאתר - NIRFIT');
 
-        const encodedMsg = encodeURIComponent(whatsappMsg);
-        window.open(`https://wa.me/972000000000?text=${encodedMsg}`, '_blank');
+        const accessKey = formData.get('access_key');
+        if (!accessKey || accessKey === 'YOUR_ACCESS_KEY_HERE') {
+            submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> יש להגדיר מפתח גישה';
+            submitBtn.style.background = '#e74c3c';
+            submitBtn.style.borderColor = '#e74c3c';
+            submitBtn.disabled = false;
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '';
+                submitBtn.style.borderColor = '';
+            }, 3000);
+            return;
+        }
 
-        contactForm.reset();
-
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
-        submitBtn.style.background = '#25d366';
-        submitBtn.style.borderColor = '#25d366';
-
-        setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.style.background = '';
-            submitBtn.style.borderColor = '';
-        }, 3000);
+        fetch(contactForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                contactForm.reset();
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
+                submitBtn.style.background = '#25d366';
+                submitBtn.style.borderColor = '#25d366';
+            } else {
+                submitBtn.innerHTML = '<i class="fas fa-times"></i> שגיאה, נסו שוב';
+                submitBtn.style.background = '#e74c3c';
+                submitBtn.style.borderColor = '#e74c3c';
+            }
+        })
+        .catch(() => {
+            submitBtn.innerHTML = '<i class="fas fa-times"></i> שגיאה, נסו שוב';
+            submitBtn.style.background = '#e74c3c';
+            submitBtn.style.borderColor = '#e74c3c';
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '';
+                submitBtn.style.borderColor = '';
+            }, 3000);
+        });
     });
 
     // ==============================
@@ -537,5 +602,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         lastScroll = window.scrollY;
     }, { passive: true });
+
+    // ==============================
+    // Infinite Ticker (seamless loop via CSS animation)
+    // ==============================
+    const tickerTrack = document.getElementById('tickerTrack');
+    if (tickerTrack) {
+        const items = Array.from(tickerTrack.children);
+        items.forEach(item => tickerTrack.appendChild(item.cloneNode(true)));
+
+        const totalItems = tickerTrack.children.length;
+        const duration = Math.max(20, totalItems * 1.5);
+        tickerTrack.style.setProperty('--ticker-duration', duration + 's');
+    }
 
 });

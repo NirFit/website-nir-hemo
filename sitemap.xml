@@ -4,16 +4,16 @@
     
     <!-- Homepage -->
     <url>
-        <loc>https://www.nirfit.co.il/</loc>
+        <loc>https://nirfit.co.il/</loc>
         <lastmod>2026-03-03</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
-        <xhtml:link rel="alternate" hreflang="he" href="https://www.nirfit.co.il/"/>
+        <xhtml:link rel="alternate" hreflang="he" href="https://nirfit.co.il/"/>
     </url>
 
     <!-- Privacy Policy -->
     <url>
-        <loc>https://www.nirfit.co.il/privacy.html</loc>
+        <loc>https://nirfit.co.il/privacy.html</loc>
         <lastmod>2026-03-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
@@ -21,7 +21,7 @@
 
     <!-- Terms of Service -->
     <url>
-        <loc>https://www.nirfit.co.il/terms.html</loc>
+        <loc>https://nirfit.co.il/terms.html</loc>
         <lastmod>2026-03-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
@@ -29,7 +29,7 @@
 
     <!-- Accessibility Statement -->
     <url>
-        <loc>https://www.nirfit.co.il/accessibility.html</loc>
+        <loc>https://nirfit.co.il/accessibility.html</loc>
         <lastmod>2026-03-03</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>

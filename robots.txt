@@ -1,5 +1,5 @@
 # robots.txt for NIRFIT - ניר חמו מאמן כושר אישי
-# https://www.nirfit.co.il/
+# https://nirfit.co.il/
 
 User-agent: *
 Allow: /
@@ -7,7 +7,7 @@ Disallow: /private/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://www.nirfit.co.il/sitemap.xml
+Sitemap: https://nirfit.co.il/sitemap.xml
 
 # Crawl-delay (optional, for polite crawling)
 Crawl-delay: 1

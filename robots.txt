@@ -8,6 +8,3 @@ Disallow: /admin/
 
 # Sitemap location
 Sitemap: https://nirfit.co.il/sitemap.xml
-
-# Crawl-delay (optional, for polite crawling)
-Crawl-delay: 1

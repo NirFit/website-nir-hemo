@@ -527,6 +527,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.success) {
                 contactForm.reset();
+                contactForm.classList.add('hidden');
+                const successMsg = document.getElementById('formSuccessMessage');
+                if (successMsg) {
+                    successMsg.classList.add('visible');
+                    successMsg.setAttribute('aria-hidden', 'false');
+                }
                 submitBtn.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
                 submitBtn.style.background = '#25d366';
                 submitBtn.style.borderColor = '#25d366';

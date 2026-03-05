@@ -527,6 +527,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.success) {
                 contactForm.reset();
+                // GA4 conversion tracking - fires on successful form submission
+                                    gtag('event', 'close_convert_lead', {
+                                                            'event_category': 'lead',
+                                                                                    'event_label': 'contact_form'
+                                                                                                        });
                 contactForm.classList.add('hidden');
                 const successMsg = document.getElementById('formSuccessMessage');
                 if (successMsg) {

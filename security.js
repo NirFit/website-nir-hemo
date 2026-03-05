@@ -94,7 +94,7 @@
                 /eval\s*\(/gi,
                 /expression\s*\(/gi,
                 /url\s*\(/gi,
-                /&#/gi,
+                /&#[0-9x]/gi,
                 /\.\.\//g,
                 /<img[^>]+onerror/gi,
                 /document\.(cookie|write|location)/gi,

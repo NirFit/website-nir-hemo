@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const promoBar = document.getElementById('promoBar');
     const navbar = document.getElementById('navbar');
 
-    if (promoBar) {
+    if (promoBar && navbar) {
         navbar.classList.add('has-promo');
     }
 
@@ -84,19 +84,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const cookieAccept = document.getElementById('cookieAccept');
     const cookieDecline = document.getElementById('cookieDecline');
 
-    if (!localStorage.getItem('cookieConsent')) {
-        setTimeout(() => {
-            cookieBanner.classList.add('visible');
-        }, 2000);
+    if (cookieBanner && cookieAccept && cookieDecline) {
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieBanner.classList.add('visible');
+            }, 2000);
+        }
+
+        const closeCookieBanner = (consent) => {
+            localStorage.setItem('cookieConsent', consent);
+            cookieBanner.classList.remove('visible');
+        };
+
+        cookieAccept.addEventListener('click', () => closeCookieBanner('accepted'));
+        cookieDecline.addEventListener('click', () => closeCookieBanner('essential'));
     }
-
-    const closeCookieBanner = (consent) => {
-        localStorage.setItem('cookieConsent', consent);
-        cookieBanner.classList.remove('visible');
-    };
-
-    cookieAccept.addEventListener('click', () => closeCookieBanner('accepted'));
-    cookieDecline.addEventListener('click', () => closeCookieBanner('essential'));
 
     // ==============================
     // Accessibility Widget
@@ -106,19 +108,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const a11yClose = document.getElementById('a11yClose');
     let fontSizeLevel = 0;
 
-    a11yToggle.addEventListener('click', () => {
-        a11yPanel.classList.toggle('visible');
-    });
+    if (a11yToggle && a11yPanel && a11yClose) {
+        a11yToggle.addEventListener('click', () => {
+            a11yPanel.classList.toggle('visible');
+        });
 
-    a11yClose.addEventListener('click', () => {
-        a11yPanel.classList.remove('visible');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.a11y-widget')) {
+        a11yClose.addEventListener('click', () => {
             a11yPanel.classList.remove('visible');
-        }
-    });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.a11y-widget')) {
+                a11yPanel.classList.remove('visible');
+            }
+        });
+    }
 
     document.querySelectorAll('.a11y-option').forEach(option => {
         option.addEventListener('click', () => {
@@ -154,10 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navbar scroll effect
     // ==============================
     const handleScroll = () => {
-        if (window.scrollY > 80) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (navbar) {
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
     };
 
@@ -169,19 +175,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
 
-    navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navToggle.classList.remove('active');
-            navLinks.classList.remove('active');
-            document.body.style.overflow = '';
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
-    });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
 
     // ==============================
     // Smooth scroll for anchor links
@@ -245,11 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dotsContainer = document.getElementById('sliderDots');
-    const cards = track.querySelectorAll('.testimonial-card');
+    const cards = track ? track.querySelectorAll('.testimonial-card') : [];
     let currentSlide = 0;
     const totalCards = cards.length;
     let autoSlideInterval;
 
+    if (track && prevBtn && nextBtn && dotsContainer && totalCards > 0) {
     function getVisibleCards() {
         if (window.innerWidth <= 600) return 1;
         if (window.innerWidth <= 992) return 2;
@@ -338,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetAutoSlide();
         }
     }, { passive: true });
+    }
 
     // ==============================
     // Scroll reveal animation
@@ -437,13 +447,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.faq-question').forEach(question => {
         question.addEventListener('click', () => {
             const item = question.parentElement;
-            const answer = item.querySelector('.faq-answer');
+            const answer = item?.querySelector('.faq-answer');
+            if (!answer) return;
             const isActive = item.classList.contains('active');
 
             document.querySelectorAll('.faq-item').forEach(otherItem => {
                 otherItem.classList.remove('active');
-                otherItem.querySelector('.faq-answer').style.maxHeight = '0';
-                otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                const otherAnswer = otherItem.querySelector('.faq-answer');
+                const otherQuestion = otherItem.querySelector('.faq-question');
+                if (otherAnswer) otherAnswer.style.maxHeight = '0';
+                if (otherQuestion) otherQuestion.setAttribute('aria-expanded', 'false');
             });
 
             if (!isActive) {
@@ -459,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==============================
     const contactForm = document.getElementById('contactForm');
 
+    if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -536,6 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 3000);
         });
     });
+    }
 
     // ==============================
     // Active nav link on scroll
@@ -543,6 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('section[id]');
 
     const updateActiveNav = () => {
+        if (!navLinks) return;
         const scrollPos = window.scrollY + 150;
 
         sections.forEach(section => {

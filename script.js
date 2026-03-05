@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
     prevBtn.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
 
-    const startAutoSlide = () => { autoSlideInterval = setInterval(nextSlide, 5000); };
+    const startAutoSlide = () => { autoSlideInterval = setInterval(nextSlide, 12000); };
     const resetAutoSlide = () => { clearInterval(autoSlideInterval); startAutoSlide(); };
 
     buildDots();
@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==============================
     const revealElements = () => {
         const elements = document.querySelectorAll(
-            '.service-card, .result-card, .method-step, .location-card, .pricing-card, .contact-item, .about-content, .about-image-wrapper, .consult-step, .faq-item, .calc-card, .consultation-cta-card, .gallery-item, .why-me-item'
+            '.service-card, .location-card, .pricing-card, .pricing-table-wrap, .contact-item, .about-content, .consult-step, .faq-item, .calc-card, .consultation-cta-card, .gallery-item, .why-me-item, .target-card'
         );
 
         elements.forEach(el => {
@@ -586,28 +586,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateActiveNav, { passive: true });
 
     // ==============================
-    // Live viewers counter
-    // ==============================
-    const liveViewers = document.getElementById('liveViewers');
-    const viewerCount = document.getElementById('viewerCount');
-
-    if (liveViewers && viewerCount) {
-        const baseViewers = Math.floor(Math.random() * 5) + 8;
-        viewerCount.textContent = baseViewers;
-
-        setTimeout(() => {
-            liveViewers.classList.add('visible');
-        }, 4000);
-
-        setInterval(() => {
-            const current = parseInt(viewerCount.textContent);
-            const change = Math.random() < 0.5 ? 1 : -1;
-            const newCount = Math.max(5, Math.min(18, current + change));
-            viewerCount.textContent = newCount;
-        }, 8000 + Math.random() * 7000);
-    }
-
-    // ==============================
     // Promo bar hide on scroll
     // ==============================
     let lastScroll = 0;
@@ -624,18 +602,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         lastScroll = window.scrollY;
     }, { passive: true });
-
-    // ==============================
-    // Infinite Ticker (seamless loop via CSS animation)
-    // ==============================
-    const tickerTrack = document.getElementById('tickerTrack');
-    if (tickerTrack) {
-        const items = Array.from(tickerTrack.children);
-        items.forEach(item => tickerTrack.appendChild(item.cloneNode(true)));
-
-        const totalItems = tickerTrack.children.length;
-        const duration = Math.max(20, totalItems * 1.5);
-        tickerTrack.style.setProperty('--ticker-duration', duration + 's');
-    }
 
 });

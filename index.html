@@ -304,56 +304,61 @@
     <a href="#main-content" class="skip-to-content">דלג לתוכן הראשי</a>
 
     <!-- Cookie Consent Banner -->
-    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="הודעת קוקיז">
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="הודעת עוגיות">
         <div class="cookie-content">
             <div class="cookie-text">
-                <i class="fas fa-cookie-bite"></i>
-                <p>אתר זה משתמש בעוגיות לצורך שיפור חוויית הגלישה. המשך הגלישה מהווה הסכמה לשימוש בעוגיות.</p>
+                <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+                <p>אתר זה משתמש בעוגיות לצורך שיפור חוויית הגלישה. לפרטים נוספים ראו <a href="privacy.html">מדיניות הפרטיות</a>. המשך הגלישה מהווה הסכמה לשימוש בעוגיות.</p>
             </div>
             <div class="cookie-buttons">
-                <button class="btn btn-primary btn-sm" id="cookieAccept">מסכים/ה</button>
-                <button class="btn btn-outline btn-sm" id="cookieDecline">רק הכרחיות</button>
+                <button class="btn btn-primary btn-sm" id="cookieAccept" type="button" aria-label="מסכים לשימוש בעוגיות">מסכים/ה</button>
+                <button class="btn btn-outline btn-sm" id="cookieDecline" type="button" aria-label="קבל רק עוגיות הכרחיות">רק הכרחיות</button>
             </div>
         </div>
     </div>
 
-    <!-- Accessibility Widget -->
-    <div class="a11y-widget" id="a11yWidget">
-        <button class="a11y-toggle" id="a11yToggle" aria-label="תפריט נגישות" title="נגישות">
-            <i class="fas fa-universal-access"></i>
+    <!-- Accessibility Widget - ת"י 5568 / WCAG 2.1 AA -->
+    <div class="a11y-widget" id="a11yWidget" role="complementary" aria-label="תפריט התאמות נגישות">
+        <button class="a11y-toggle" id="a11yToggle" aria-label="פתח תפריט נגישות - התאמות להקלת הגלישה" aria-expanded="false" aria-haspopup="true" aria-controls="a11yPanel" title="נגישות - התאמות לפי תקן ת&quot;י 5568">
+            <i class="fas fa-universal-access" aria-hidden="true"></i>
         </button>
-        <div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="אפשרויות נגישות">
+        <div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="true" aria-labelledby="a11yPanelTitle" aria-describedby="a11yPanelDesc" aria-hidden="true">
             <div class="a11y-header">
-                <h3>נגישות</h3>
-                <button class="a11y-close" id="a11yClose" aria-label="סגור תפריט נגישות">&times;</button>
+                <h3 id="a11yPanelTitle">התאמות נגישות</h3>
+                <button class="a11y-close" id="a11yClose" aria-label="סגור תפריט נגישות" type="button">&times;</button>
             </div>
+            <p id="a11yPanelDesc" class="sr-only">תפריט להתאמות נגישות לפי תקן ישראלי ת&quot;י 5568. ניתן להגדיל גופן, לשנות ניגודיות ולהדגיש קישורים.</p>
             <div class="a11y-options">
-                <button class="a11y-option" data-action="fontIncrease" aria-label="הגדל גופן">
-                    <i class="fas fa-font"></i>
+                <button class="a11y-option" data-action="fontIncrease" aria-label="הגדל גופן" type="button">
+                    <i class="fas fa-font" aria-hidden="true"></i>
                     <span>הגדל גופן</span>
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus" aria-hidden="true"></i>
                 </button>
-                <button class="a11y-option" data-action="fontDecrease" aria-label="הקטן גופן">
-                    <i class="fas fa-font fa-sm"></i>
+                <button class="a11y-option" data-action="fontDecrease" aria-label="הקטן גופן" type="button">
+                    <i class="fas fa-font fa-sm" aria-hidden="true"></i>
                     <span>הקטן גופן</span>
-                    <i class="fas fa-minus"></i>
+                    <i class="fas fa-minus" aria-hidden="true"></i>
                 </button>
-                <button class="a11y-option" data-action="contrast" aria-label="ניגודיות גבוהה">
-                    <i class="fas fa-circle-half-stroke"></i>
+                <button class="a11y-option" data-action="contrast" aria-label="הפעל ניגודיות גבוהה" type="button">
+                    <i class="fas fa-circle-half-stroke" aria-hidden="true"></i>
                     <span>ניגודיות גבוהה</span>
                 </button>
-                <button class="a11y-option" data-action="links" aria-label="הדגש קישורים">
-                    <i class="fas fa-link"></i>
+                <button class="a11y-option" data-action="links" aria-label="הדגש קישורים" type="button">
+                    <i class="fas fa-link" aria-hidden="true"></i>
                     <span>הדגש קישורים</span>
                 </button>
-                <button class="a11y-option" data-action="readable" aria-label="גופן קריא">
-                    <i class="fas fa-glasses"></i>
+                <button class="a11y-option" data-action="readable" aria-label="החלף לגופן קריא" type="button">
+                    <i class="fas fa-glasses" aria-hidden="true"></i>
                     <span>גופן קריא</span>
                 </button>
-                <button class="a11y-option" data-action="reset" aria-label="איפוס">
-                    <i class="fas fa-rotate-left"></i>
+                <button class="a11y-option" data-action="reset" aria-label="איפוס כל ההתאמות" type="button">
+                    <i class="fas fa-rotate-left" aria-hidden="true"></i>
                     <span>איפוס הגדרות</span>
                 </button>
+                <a href="accessibility.html" class="a11y-option a11y-link" aria-label="הצהרת נגישות - מידע על הנגשת האתר">
+                    <i class="fas fa-file-lines" aria-hidden="true"></i>
+                    <span>הצהרת נגישות</span>
+                </a>
             </div>
         </div>
     </div>
@@ -369,7 +374,7 @@
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#hero" class="logo">NIR<span>FIT</span></a>
-            <button class="nav-toggle" id="navToggle" aria-label="תפריט">
+            <button class="nav-toggle" id="navToggle" aria-label="פתח תפריט ניווט" aria-expanded="false" aria-controls="navLinks" type="button">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -416,7 +421,7 @@
                     <i class="fas fa-list-check"></i>
                     מה כולל האימון?
                 </a>
-                <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-whatsapp btn-lg" target="_blank">
+                <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-whatsapp"></i>
                     שלחו הודעה
                 </a>
@@ -635,7 +640,7 @@
                             <span class="price-old">₪350</span>
                             <span class="price-new">חינם</span>
                         </div>
-                        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-primary btn-block btn-lg btn-glow" target="_blank">
+                        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-primary btn-block btn-lg btn-glow" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-whatsapp"></i> קבעו פגישה עכשיו
                         </a>
                         <a href="#services" class="btn btn-outline btn-block" style="margin-top: 12px;">
@@ -859,7 +864,7 @@
             <div class="title-line center"></div>
             <p class="section-subtitle">הסיפורים האמיתיים של אנשים אמיתיים שהצליחו</p>
             <div class="reviews-cta">
-                <a href="https://www.google.com/search?q=NIRFIT+ניר+חמו+מאמן+כושר+קריות+ביקורות" class="btn btn-outline btn-sm" target="_blank" rel="noopener">
+                <a href="https://www.google.com/search?q=NIRFIT+ניר+חמו+מאמן+כושר+קריות+ביקורות" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-google"></i> קראו ביקורות בגוגל
                 </a>
             </div>
@@ -968,13 +973,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="slider-controls">
-                    <button class="slider-btn prev" id="prevBtn" aria-label="הקודם">
-                        <i class="fas fa-chevron-right"></i>
+                <div class="slider-controls" role="group" aria-label="ניווט המלצות">
+                    <button class="slider-btn prev" id="prevBtn" aria-label="המלצה קודמת" type="button">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
                     </button>
-                    <div class="slider-dots" id="sliderDots"></div>
-                    <button class="slider-btn next" id="nextBtn" aria-label="הבא">
-                        <i class="fas fa-chevron-left"></i>
+                    <div class="slider-dots" id="sliderDots" role="tablist" aria-label="בחירת המלצה"></div>
+                    <button class="slider-btn next" id="nextBtn" aria-label="המלצה הבאה" type="button">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
@@ -1170,7 +1175,7 @@
                 <h2>מוכן <span class="text-primary">לשינוי?</span></h2>
                 <p>הצעד הראשון הוא תמיד הקשה ביותר, אבל אתה לא לבד.<br>פגישת ההיכרות חינמית - אין לך מה להפסיד.</p>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-primary btn-lg btn-glow" target="_blank">
+                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="btn btn-primary btn-lg btn-glow" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-whatsapp"></i> קבעו פגישת היכרות חינם
                     </a>
                 </div>
@@ -1201,14 +1206,16 @@
                         <div class="calc-inputs">
                             <div class="calc-group">
                                 <label for="calcHeight">גובה (ס"מ)</label>
-                                <input type="number" id="calcHeight" placeholder="170" min="100" max="250">
+                                <input type="number" id="calcHeight" placeholder="170" min="100" max="250" aria-describedby="calcHeightDesc">
+                                <span id="calcHeightDesc" class="sr-only">הזינו גובה בסנטימטרים, בין 100 ל-250</span>
                             </div>
                             <div class="calc-group">
                                 <label for="calcWeight">משקל (ק"ג)</label>
-                                <input type="number" id="calcWeight" placeholder="70" min="30" max="300">
+                                <input type="number" id="calcWeight" placeholder="70" min="30" max="300" aria-describedby="calcWeightDesc">
+                                <span id="calcWeightDesc" class="sr-only">הזינו משקל בקילוגרמים, בין 30 ל-300</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block" id="calcBtn">
+                        <button class="btn btn-primary btn-block" id="calcBtn" type="button" aria-label="חשבו את מדד ה-BMI">
                             <i class="fas fa-calculator"></i> חשבו BMI
                         </button>
                         <div class="calc-result" id="calcResult" style="display:none;">
@@ -1238,7 +1245,7 @@
             
             <div class="contact-grid">
                 <div class="contact-info">
-                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="contact-item" target="_blank">
+                    <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="contact-item" target="_blank" rel="noopener noreferrer">
                         <div class="contact-icon">
                             <i class="fab fa-whatsapp"></i>
                         </div>
@@ -1284,30 +1291,34 @@
                         <p>ניצור איתכם קשר בהקדם. תודה שפניתם ל-NIRFIT.</p>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" aria-label="טופס יצירת קשר">
                     <input type="hidden" name="access_key" id="formAccessKey" value="034c1fc6-f603-4be5-bb6f-1af3ba60a99a">
                     <div class="form-row">
                         <div class="form-group">
-                            <input type="text" name="name" placeholder="שם מלא" required>
-                            <i class="fas fa-user"></i>
+                            <label for="contactName" class="sr-only">שם מלא</label>
+                            <input type="text" name="name" id="contactName" placeholder="שם מלא" required aria-required="true" autocomplete="name">
+                            <i class="fas fa-user" aria-hidden="true"></i>
                         </div>
                         <div class="form-group">
-                            <input type="tel" name="phone" placeholder="מספר טלפון" required>
-                            <i class="fas fa-phone"></i>
+                            <label for="contactPhone" class="sr-only">מספר טלפון</label>
+                            <input type="tel" name="phone" id="contactPhone" placeholder="מספר טלפון" required aria-required="true" autocomplete="tel">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <select name="location" required>
+                            <label for="contactLocation" class="sr-only">מיקום מועדף - שדה חובה</label>
+                            <select name="location" id="contactLocation" required aria-required="true">
                                 <option value="" disabled selected>מיקום מועדף</option>
                                 <option value="krayot">סטודיו קריית ביאליק</option>
                                 <option value="afula">חדר כושר עפולה</option>
                                 <option value="both">שניהם</option>
                             </select>
-                            <i class="fas fa-map-marker-alt"></i>
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                         </div>
                         <div class="form-group">
-                            <select name="goal">
+                            <label for="contactGoal" class="sr-only">מה המטרה שלך? - אופציונלי</label>
+                            <select name="goal" id="contactGoal">
                                 <option value="" disabled selected>מה המטרה שלך?</option>
                                 <option value="weight-loss">ירידה במשקל</option>
                                 <option value="muscle">בניית שריר</option>
@@ -1316,17 +1327,22 @@
                                 <option value="post-birth">חזרה אחרי לידה</option>
                                 <option value="other">אחר</option>
                             </select>
-                            <i class="fas fa-bullseye"></i>
+                            <i class="fas fa-bullseye" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea name="message" placeholder="ספרו לי קצת על עצמכם ועל המטרות שלכם..." rows="4"></textarea>
-                        <i class="fas fa-comment"></i>
+                        <label for="contactMessage" class="sr-only">הודעה - ספרו על עצמכם והמטרות</label>
+                        <textarea name="message" id="contactMessage" placeholder="ספרו לי קצת על עצמכם ועל המטרות שלכם..." rows="4"></textarea>
+                        <i class="fas fa-comment" aria-hidden="true"></i>
+                    </div>
+                    <div class="form-group form-consent">
+                        <input type="checkbox" name="privacy_consent" id="privacyConsent" required aria-required="true" aria-describedby="consentDesc">
+                        <label for="privacyConsent" id="consentDesc">אני מסכים/ה לעיבוד הפרטים שלי בהתאם ל<a href="privacy.html">מדיניות הפרטיות</a> של האתר</label>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block btn-lg">
                         <i class="fas fa-paper-plane"></i> שלחו פרטים לפגישת היכרות חינם
                     </button>
-                    <p class="form-note"><i class="fas fa-lock"></i> הפרטים שלכם מאובטחים ולא יועברו לצד שלישי</p>
+                    <p class="form-note"><i class="fas fa-lock" aria-hidden="true"></i> הפרטים שלכם מאובטחים ולא יועברו לצד שלישי. <a href="privacy.html">מדיניות פרטיות</a></p>
                 </form>
                 </div>
             </div>
@@ -1381,22 +1397,22 @@
 
     <!-- WhatsApp Float Button -->
     <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" 
-       class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+       class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="שלחו הודעה בוואטסאפ - פגישת היכרות חינם">
         <i class="fab fa-whatsapp"></i>
         <span class="whatsapp-tooltip">פגישת היכרות חינם!</span>
     </a>
 
     <!-- Sticky Mobile CTA -->
-    <div class="sticky-cta" id="stickyCta">
-        <a href="tel:0542063967" class="sticky-cta-btn sticky-cta-phone">
-            <i class="fas fa-phone"></i>
+    <div class="sticky-cta" id="stickyCta" role="navigation" aria-label="פעולות מהירות">
+        <a href="tel:0542063967" class="sticky-cta-btn sticky-cta-phone" aria-label="התקשרו אלינו">
+            <i class="fas fa-phone" aria-hidden="true"></i>
             <span>התקשרו</span>
         </a>
-        <a href="#free-consultation" class="sticky-cta-btn sticky-cta-main">
-            <i class="fas fa-calendar-check"></i>
+        <a href="#free-consultation" class="sticky-cta-btn sticky-cta-main" aria-label="קבעו פגישת היכרות חינם">
+            <i class="fas fa-calendar-check" aria-hidden="true"></i>
             <span>פגישת היכרות חינם</span>
         </a>
-        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="sticky-cta-btn sticky-cta-wa" target="_blank">
+        <a href="https://wa.me/972542063967?text=%D7%94%D7%99%D7%99%20%D7%A0%D7%99%D7%A8!%20%F0%9F%91%8B%20%D7%91%D7%90%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%A9%D7%9C%D7%9A%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%9F%2F%D7%AA%20%D7%91%D7%A4%D7%92%D7%99%D7%A9%D7%AA%20%D7%94%D7%99%D7%9B%D7%A8%D7%95%D7%AA%20%D7%97%D7%99%D7%A0%D7%9E%D7%99%D7%AA" class="sticky-cta-btn sticky-cta-wa" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-whatsapp"></i>
             <span>וואטסאפ</span>
         </a>

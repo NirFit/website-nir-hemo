@@ -25,6 +25,44 @@
 </head>
 <body>
 
+    <a href="#main-content" class="skip-to-content">דלג לתוכן הראשי</a>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="הודעת עוגיות">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+                <p>אתר זה משתמש בעוגיות לצורך שיפור חוויית הגלישה. לפרטים נוספים ראו <a href="privacy.html">מדיניות הפרטיות</a>. המשך הגלישה מהווה הסכמה לשימוש בעוגיות.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button class="btn btn-primary btn-sm" id="cookieAccept" type="button" aria-label="מסכים לשימוש בעוגיות">מסכים/ה</button>
+                <button class="btn btn-outline btn-sm" id="cookieDecline" type="button" aria-label="קבל רק עוגיות הכרחיות">רק הכרחיות</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Widget - ת"י 5568 -->
+    <div class="a11y-widget" id="a11yWidget" role="complementary" aria-label="תפריט התאמות נגישות">
+        <button class="a11y-toggle" id="a11yToggle" aria-label="פתח תפריט נגישות" aria-expanded="false" aria-haspopup="true" aria-controls="a11yPanel" title="נגישות">
+            <i class="fas fa-universal-access" aria-hidden="true"></i>
+        </button>
+        <div class="a11y-panel" id="a11yPanel" role="dialog" aria-modal="true" aria-labelledby="a11yPanelTitle" aria-hidden="true">
+            <div class="a11y-header">
+                <h3 id="a11yPanelTitle">התאמות נגישות</h3>
+                <button class="a11y-close" id="a11yClose" aria-label="סגור תפריט נגישות" type="button">&times;</button>
+            </div>
+            <div class="a11y-options">
+                <button class="a11y-option" data-action="fontIncrease" aria-label="הגדל גופן" type="button"><i class="fas fa-font" aria-hidden="true"></i><span>הגדל גופן</span><i class="fas fa-plus" aria-hidden="true"></i></button>
+                <button class="a11y-option" data-action="fontDecrease" aria-label="הקטן גופן" type="button"><i class="fas fa-font fa-sm" aria-hidden="true"></i><span>הקטן גופן</span><i class="fas fa-minus" aria-hidden="true"></i></button>
+                <button class="a11y-option" data-action="contrast" aria-label="ניגודיות גבוהה" type="button"><i class="fas fa-circle-half-stroke" aria-hidden="true"></i><span>ניגודיות גבוהה</span></button>
+                <button class="a11y-option" data-action="links" aria-label="הדגש קישורים" type="button"><i class="fas fa-link" aria-hidden="true"></i><span>הדגש קישורים</span></button>
+                <button class="a11y-option" data-action="readable" aria-label="גופן קריא" type="button"><i class="fas fa-glasses" aria-hidden="true"></i><span>גופן קריא</span></button>
+                <button class="a11y-option" data-action="reset" aria-label="איפוס" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i><span>איפוס הגדרות</span></button>
+                <a href="accessibility.html" class="a11y-option a11y-link" aria-label="הצהרת נגישות"><i class="fas fa-file-lines" aria-hidden="true"></i><span>הצהרת נגישות</span></a>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar scrolled">
         <div class="container nav-container">
             <a href="index.html" class="logo">NIR<span>FIT</span></a>
@@ -32,7 +70,7 @@
         </div>
     </nav>
 
-    <main class="legal-page">
+    <main class="legal-page" id="main-content">
         <div class="container">
             <h1>הצהרת נגישות</h1>
             <p class="legal-updated">עודכן לאחרונה: מרץ 2026</p>
@@ -55,7 +93,7 @@
                     <li><strong>גופן קריא:</strong> האתר משתמש בגופן Heebo הקריא, בגודל מתאים</li>
                     <li><strong>תגיות ARIA:</strong> שימוש בתגיות ARIA לשיפור הנגישות עבור טכנולוגיות מסייעות</li>
                     <li><strong>טפסים נגישים:</strong> שדות הטופס כוללים תוויות (labels) ו-placeholders ברורים</li>
-                    <li><strong>תפריט נגישות:</strong> כפתור נגישות מאפשר התאמות כגון הגדלת/הקטנת גופן, ניגודיות גבוהה, הדגשת קישורים וגופן קריא</li>
+                    <li><strong>תפריט נגישות:</strong> כפתור נגישות קבוע בכל דפי האתר (ת"י 5568) מאפשר התאמות: הגדלת/הקטנת גופן, ניגודיות גבוהה, הדגשת קישורים, גופן קריא, וקישור להצהרת נגישות. נגיש במקלדת (Tab, Enter, Escape) ומותאם לקוראי מסך</li>
                 </ul>
             </section>
 
@@ -118,5 +156,6 @@
             </div>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

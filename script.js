@@ -101,25 +101,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==============================
-    // Accessibility Widget
+    // Accessibility Widget - ת"י 5568
     // ==============================
     const a11yToggle = document.getElementById('a11yToggle');
     const a11yPanel = document.getElementById('a11yPanel');
     const a11yClose = document.getElementById('a11yClose');
     let fontSizeLevel = 0;
 
+    const openA11yPanel = () => {
+        if (!a11yPanel || !a11yToggle) return;
+        a11yPanel.classList.add('visible');
+        a11yPanel.setAttribute('aria-hidden', 'false');
+        a11yToggle.setAttribute('aria-expanded', 'true');
+        a11yToggle.setAttribute('aria-label', 'סגור תפריט נגישות');
+    };
+
+    const closeA11yPanel = () => {
+        if (!a11yPanel || !a11yToggle) return;
+        a11yPanel.classList.remove('visible');
+        a11yPanel.setAttribute('aria-hidden', 'true');
+        a11yToggle.setAttribute('aria-expanded', 'false');
+        a11yToggle.setAttribute('aria-label', 'פתח תפריט נגישות - התאמות להקלת הגלישה');
+        a11yToggle.focus();
+    };
+
     if (a11yToggle && a11yPanel && a11yClose) {
         a11yToggle.addEventListener('click', () => {
-            a11yPanel.classList.toggle('visible');
+            const isOpen = a11yPanel.classList.contains('visible');
+            isOpen ? closeA11yPanel() : openA11yPanel();
         });
 
-        a11yClose.addEventListener('click', () => {
-            a11yPanel.classList.remove('visible');
+        a11yClose.addEventListener('click', closeA11yPanel);
+
+        a11yPanel.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeA11yPanel();
         });
 
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.a11y-widget')) {
-                a11yPanel.classList.remove('visible');
+                if (a11yPanel.classList.contains('visible')) closeA11yPanel();
             }
         });
     }
@@ -177,8 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (navToggle && navLinks) {
         navToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.contains('active');
             navToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', !isOpen);
+            navToggle.setAttribute('aria-label', isOpen ? 'פתח תפריט ניווט' : 'סגור תפריט ניווט');
             document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
 
@@ -278,8 +301,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dotsContainer.innerHTML = '';
         const positions = getTotalPositions();
         for (let i = 0; i < positions; i++) {
-            const dot = document.createElement('div');
+            const dot = document.createElement('button');
+            dot.type = 'button';
             dot.classList.add('slider-dot');
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', `המלצה ${i + 1} מתוך ${positions}`);
+            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
             if (i === 0) dot.classList.add('active');
             dot.addEventListener('click', () => goToSlide(i));
             dotsContainer.appendChild(dot);
@@ -294,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         track.style.transform = `translateX(${offset}px)`;
         dotsContainer.querySelectorAll('.slider-dot').forEach((dot, i) => {
             dot.classList.toggle('active', i === currentSlide);
+            dot.setAttribute('aria-selected', i === currentSlide ? 'true' : 'false');
         });
     };
 

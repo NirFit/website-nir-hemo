@@ -619,6 +619,71 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateActiveNav, { passive: true });
 
     // ==============================
+    // Button Click Tracking (GA4)
+    // ==============================
+    function trackClick(category, label, extraParams) {
+        if (typeof gtag === 'function') {
+            gtag('event', 'button_click', Object.assign({
+                event_category: category,
+                event_label: label
+            }, extraParams || {}));
+        }
+    }
+
+    // Track all CTA buttons by href and class
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a, button');
+        if (!link) return;
+
+        const href = link.getAttribute('href') || '';
+        const text = link.textContent.trim();
+        const section = link.closest('section, nav, footer, .sticky-cta, .promo-bar');
+        const location = section ? (section.id || section.className.split(' ')[0]) : 'unknown';
+
+        // WhatsApp clicks
+        if (href.includes('wa.me') || href.includes('whatsapp')) {
+            trackClick('whatsapp', 'whatsapp_click', { link_location: location });
+            return;
+        }
+
+        // Phone call clicks
+        if (href.startsWith('tel:')) {
+            trackClick('phone', 'phone_call_click', { link_location: location });
+            return;
+        }
+
+        // Free consultation CTA (Calendly / booking links)
+        if (href.includes('calendly') || (text.includes('פגישת היכרות') || text.includes('קבעו פגישה'))) {
+            trackClick('cta', 'free_consultation_click', { link_location: location });
+            return;
+        }
+
+        // Google reviews link
+        if (href.includes('google') && href.includes('review')) {
+            trackClick('social', 'google_reviews_click', { link_location: location });
+            return;
+        }
+
+        // BMI Calculator button
+        if (link.id === 'calcBtn') {
+            trackClick('engagement', 'bmi_calculator_click');
+            return;
+        }
+
+        // Contact form submit
+        if (link.type === 'submit' && link.closest('#contactForm')) {
+            trackClick('conversion', 'contact_form_submit');
+            return;
+        }
+
+        // Promo bar link
+        if (link.closest('.promo-bar') || link.closest('#promoBar')) {
+            trackClick('cta', 'promo_bar_click', { link_text: text });
+            return;
+        }
+    });
+
+    // ==============================
     // Promo bar hide on scroll
     // ==============================
     let lastScroll = 0;

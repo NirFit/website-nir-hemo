@@ -652,14 +652,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Contact form submit (must come before free consultation check)
+        if (link.type === 'submit' && link.closest('#contactForm')) {
+            trackClick('conversion', 'contact_form_submit');
+            return;
+        }
+
         // Free consultation CTA (Calendly / booking links)
-        if (href.includes('calendly') || (text.includes('פגישת היכרות') || text.includes('קבעו פגישה'))) {
+        if (href.includes('calendly') || text.includes('פגישת היכרות') || text.includes('קבעו פגישה')) {
             trackClick('cta', 'free_consultation_click', { link_location: location });
             return;
         }
 
         // Google reviews link
-        if (href.includes('google') && href.includes('review')) {
+        if (href.includes('google') && (href.includes('review') || href.includes('ביקורות') || text.includes('ביקורות'))) {
             trackClick('social', 'google_reviews_click', { link_location: location });
             return;
         }
@@ -667,12 +673,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // BMI Calculator button
         if (link.id === 'calcBtn') {
             trackClick('engagement', 'bmi_calculator_click');
-            return;
-        }
-
-        // Contact form submit
-        if (link.type === 'submit' && link.closest('#contactForm')) {
-            trackClick('conversion', 'contact_form_submit');
             return;
         }
 

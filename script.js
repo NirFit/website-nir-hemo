@@ -78,14 +78,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==============================
-    // Cookie Consent
+    // Preserve gclid across the session
+    // ==============================
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const gclid = urlParams.get('gclid');
+        if (gclid) {
+            localStorage.setItem('gclid', gclid);
+            localStorage.setItem('gclid_ts', Date.now());
+        }
+    })();
+
+    // ==============================
+    // Cookie Consent + Consent Mode v2
     // ==============================
     const cookieBanner = document.getElementById('cookieBanner');
     const cookieAccept = document.getElementById('cookieAccept');
     const cookieDecline = document.getElementById('cookieDecline');
 
+    // Restore consent state for returning visitors
+    const savedConsent = localStorage.getItem('cookieConsent');
+    if (typeof gtag === 'function') {
+        if (savedConsent === 'accepted') {
+            gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted',
+                'analytics_storage': 'granted'
+            });
+        }
+    }
+
     if (cookieBanner && cookieAccept && cookieDecline) {
-        if (!localStorage.getItem('cookieConsent')) {
+        if (!savedConsent) {
             setTimeout(() => {
                 cookieBanner.classList.add('visible');
             }, 2000);
@@ -96,8 +121,29 @@ document.addEventListener('DOMContentLoaded', () => {
             cookieBanner.classList.remove('visible');
         };
 
-        cookieAccept.addEventListener('click', () => closeCookieBanner('accepted'));
-        cookieDecline.addEventListener('click', () => closeCookieBanner('essential'));
+        cookieAccept.addEventListener('click', () => {
+            closeCookieBanner('accepted');
+            if (typeof gtag === 'function') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+                });
+            }
+        });
+
+        cookieDecline.addEventListener('click', () => {
+            closeCookieBanner('essential');
+            if (typeof gtag === 'function') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
+            }
+        });
     }
 
     // ==============================
@@ -555,11 +601,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.success) {
                 contactForm.reset();
-                // GA4 conversion tracking - fires on successful form submission
-                                    gtag('event', 'close_convert_lead', {
-                                                            'event_category': 'lead',
-                                                                                    'event_label': 'contact_form'
-                                                                                                        });
+                // GA4 + Google Ads conversion tracking - fires on successful form submission
+                if (typeof gtag === 'function') {
+                    gtag('event', 'close_convert_lead', {
+                        'event_category': 'lead',
+                        'event_label': 'contact_form',
+                        'send_to': ['G-F41R697N61', 'AW-933342010']
+                    });
+                }
                 contactForm.classList.add('hidden');
                 const successMsg = document.getElementById('formSuccessMessage');
                 if (successMsg) {
@@ -636,4 +685,34 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScroll = window.scrollY;
     }, { passive: true });
 
+
+    // ==============================
+    // WhatsApp click tracking
+    // ==============================
+    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+        link.addEventListener('click', () => {
+            if (typeof gtag === 'function') {
+                gtag('event', 'close_convert_lead', {
+                    'event_category': 'lead',
+                    'event_label': 'whatsapp_click',
+                    'send_to': ['G-F41R697N61', 'AW-933342010']
+                });
+            }
+        });
+    });
+
+    // ==============================
+    // Phone click tracking
+    // ==============================
+    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+        link.addEventListener('click', () => {
+            if (typeof gtag === 'function') {
+                gtag('event', 'close_convert_lead', {
+                    'event_category': 'lead',
+                    'event_label': 'phone_click',
+                    'send_to': ['G-F41R697N61', 'AW-933342010']
+                });
+            }
+        });
+    });
 });

@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!savedConsent) {
             setTimeout(() => {
                 cookieBanner.classList.add('visible');
-            }, 2000);
+            }, 500);
         }
 
         const closeCookieBanner = (consent) => {

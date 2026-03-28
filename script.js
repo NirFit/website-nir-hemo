@@ -608,6 +608,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         'event_label': 'contact_form',
                         'send_to': ['G-F41R697N61', 'AW-933342010']
                     });
+                    // Google Ads Specific Conversion
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-933342010/' + '1pMZCKfLr5EcELrWhr0D'
+                    });
                 }
                 contactForm.classList.add('hidden');
                 const successMsg = document.getElementById('formSuccessMessage');
@@ -696,6 +700,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     'event_category': 'lead',
                     'event_label': 'whatsapp_click',
                     'send_to': ['G-F41R697N61', 'AW-933342010']
+                });
+                // Google Ads Specific Conversion
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-933342010/' + 'V4FuCNuUsJEcELrWhr0D'
                 });
             }
         });

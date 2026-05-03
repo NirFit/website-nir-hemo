@@ -665,6 +665,16 @@ textarea:focus-visible {
     animation: fadeInUp 0.8s ease 0.2s both;
 }
 
+.hero-slogan {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--text-light);
+    opacity: 0.85;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease 0.3s both;
+}
+
 .hero-subtitle {
     font-size: clamp(1.1rem, 2.5vw, 1.5rem);
     color: var(--text-muted);

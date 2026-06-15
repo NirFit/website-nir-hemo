@@ -720,6 +720,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     'event_label': 'phone_click',
                     'send_to': ['G-F41R697N61', 'AW-933342010']
                 });
+                // Google Ads Specific Conversion (Phone Click)
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-933342010/' + 'nnPNCKTBu78cELrWhr0D'
+                });
             }
         });
     });

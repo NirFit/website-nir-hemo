@@ -3,19 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מעבר לוואטסאפ | NIRFIT - ניר חמו</title>
+    <title>שיחה בוואטסאפ עם ניר חמו | NIRFIT - אימון אישי</title>
+    <meta name="description" content="דברו עם ניר חמו, מאמן כושר אישי, בוואטסאפ ותאמו פגישת היכרות ובדיקת גוף ללא עלות. אימון אישי 1:1 בעפולה ובקריות.">
     <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://nirfit.co.il/">
-    <!-- Instant redirect to WhatsApp chat with Nir (pre-filled message) -->
-    <script>
-        (function () {
-            var phone = "972542063967";
-            var text = "היי ניר! 👋 הגעתי מהמודעה בגוגל, מעוניין/ת בפגישת היכרות חינם";
-            window.location.replace("https://wa.me/" + phone + "?text=" + encodeURIComponent(text));
-        })();
-    </script>
-    <!-- Fallback if JavaScript is disabled -->
-    <meta http-equiv="refresh" content="0; url=https://wa.me/972542063967">
     <style>
         * { box-sizing: border-box; }
         body {
@@ -30,37 +21,48 @@
             text-align: center;
             padding: 24px;
         }
-        .box { max-width: 420px; }
-        .logo { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 20px; }
+        .box { max-width: 440px; }
+        .logo { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 24px; }
         .logo span { color: #ff6b35; }
-        .spinner {
-            width: 46px; height: 46px;
-            border: 4px solid rgba(255,255,255,.15);
-            border-top-color: #25D366;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .wa-icon {
+            width: 78px; height: 78px;
             margin: 0 auto 22px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.3rem;
+            box-shadow: 0 8px 28px rgba(37,211,102,.35);
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        p { color: #bdbdbd; line-height: 1.7; font-size: 1.05rem; margin: 0 0 24px; }
+        h1 { font-size: 1.7rem; font-weight: 800; margin: 0 0 14px; }
+        p { color: #c9c9c9; line-height: 1.75; font-size: 1.08rem; margin: 0 0 28px; }
+        p strong { color: #fff; }
         .wa-btn {
             display: inline-flex; align-items: center; gap: 10px;
             background: #25D366; color: #fff; text-decoration: none;
-            font-weight: 700; font-size: 1.1rem;
-            padding: 14px 30px; border-radius: 50px;
-            transition: transform .15s ease;
+            font-weight: 700; font-size: 1.15rem;
+            padding: 16px 36px; border-radius: 50px;
+            transition: transform .15s ease, box-shadow .15s ease;
+            box-shadow: 0 6px 20px rgba(37,211,102,.3);
         }
-        .wa-btn:hover { transform: translateY(-2px); }
+        .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(37,211,102,.45); }
+        .home-link {
+            display: block; margin-top: 26px;
+            color: #8a8a8a; text-decoration: none; font-size: .95rem;
+        }
+        .home-link:hover { color: #ff6b35; }
     </style>
 </head>
 <body>
     <div class="box">
         <div class="logo">NIR<span>FIT</span></div>
-        <div class="spinner" aria-hidden="true"></div>
-        <p>מעבירים אותך לשיחה בוואטסאפ עם ניר...<br>אם זה לא קרה אוטומטית, לחצו על הכפתור:</p>
+        <div class="wa-icon" aria-hidden="true">💬</div>
+        <h1>בואו נדבר בוואטסאפ</h1>
+        <p>שלחו לי הודעה ונתאם <strong>פגישת היכרות ובדיקת גוף — ללא עלות</strong>.<br>
+           אימון אישי 1:1, תהליך מותאם אישית ומעקב צמוד לאורך כל הדרך.</p>
         <a class="wa-btn" id="waLink" href="https://wa.me/972542063967" target="_blank" rel="noopener noreferrer">
-            פתיחת וואטסאפ 💬
+            פתיחת שיחה בוואטסאפ 💬
         </a>
+        <a class="home-link" href="https://nirfit.co.il/">חזרה לאתר NIRFIT ←</a>
     </div>
     <script>
         (function () {

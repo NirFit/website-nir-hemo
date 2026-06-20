@@ -698,8 +698,30 @@ textarea:focus-visible {
     gap: 16px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+.hero-microtrust {
+    display: flex;
+    justify-content: center;
+    gap: 10px 24px;
+    flex-wrap: wrap;
+    margin: 0 auto 44px;
+    animation: fadeInUp 0.8s ease 0.7s both;
+}
+
+.hero-microtrust span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.hero-microtrust i {
+    color: var(--primary);
 }
 
 .hero-stats {

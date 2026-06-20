@@ -603,6 +603,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactForm.reset();
                 // GA4 + Google Ads conversion tracking - fires on successful form submission
                 if (typeof gtag === 'function') {
+                    // Enhanced Conversions for Leads - normalized phone (E.164) for cookieless matching
+                    try {
+                        var _phone = (formData.get('phone') || '').toString();
+                        var _e164 = _phone.replace(/\D/g, '');
+                        if (_e164.indexOf('972') === 0) { _e164 = '+' + _e164; }
+                        else if (_e164.charAt(0) === '0') { _e164 = '+972' + _e164.slice(1); }
+                        else if (_e164) { _e164 = '+972' + _e164; }
+                        if (_e164.length >= 12) { gtag('set', 'user_data', { 'phone_number': _e164 }); }
+                    } catch (e) {}
                     gtag('event', 'close_convert_lead', {
                         'event_category': 'lead',
                         'event_label': 'contact_form',
@@ -610,7 +619,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     // Google Ads Specific Conversion
                     gtag('event', 'conversion', {
-                        'send_to': 'AW-933342010/' + '1pMZCKfLr5EcELrWhr0D'
+                        'send_to': 'AW-933342010/' + '1pMZCKfLr5EcELrWhr0D',
+                        'value': 40.0,
+                        'currency': 'ILS'
                     });
                 }
                 contactForm.classList.add('hidden');
@@ -694,18 +705,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // WhatsApp click tracking
     // ==============================
     document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-        link.addEventListener('click', () => {
-            if (typeof gtag === 'function') {
-                gtag('event', 'close_convert_lead', {
-                    'event_category': 'lead',
-                    'event_label': 'whatsapp_click',
-                    'send_to': ['G-F41R697N61', 'AW-933342010']
-                });
-                // Google Ads Specific Conversion
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-933342010/' + 'V4FuCNuUsJEcELrWhr0D'
-                });
-            }
+        link.addEventListener('click', function () {
+            if (typeof gtag !== 'function') return;
+            var _src = this.classList.contains('whatsapp-float') ? 'wa_float'
+                     : this.classList.contains('sticky-cta-wa') ? 'wa_sticky'
+                     : 'wa_section';
+            gtag('event', 'close_convert_lead', {
+                'event_category': 'lead',
+                'event_label': _src,
+                'send_to': ['G-F41R697N61', 'AW-933342010']
+            });
+            // Google Ads Specific Conversion
+            gtag('event', 'conversion', {
+                'send_to': 'AW-933342010/' + 'V4FuCNuUsJEcELrWhr0D',
+                'value': 30.0,
+                'currency': 'ILS'
+            });
         });
     });
 
@@ -713,18 +728,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Phone click tracking
     // ==============================
     document.querySelectorAll('a[href^="tel:"]').forEach(link => {
-        link.addEventListener('click', () => {
-            if (typeof gtag === 'function') {
-                gtag('event', 'close_convert_lead', {
-                    'event_category': 'lead',
-                    'event_label': 'phone_click',
-                    'send_to': ['G-F41R697N61', 'AW-933342010']
-                });
-                // Google Ads Specific Conversion (Phone Click)
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-933342010/' + 'nnPNCKTBu78cELrWhr0D'
-                });
-            }
+        link.addEventListener('click', function (e) {
+            if (typeof gtag !== 'function') return;
+            // Wrap navigation so the conversion beacon is sent before the page unloads (mobile dialer)
+            e.preventDefault();
+            var _url = this.href;
+            var _done = false;
+            var _go = function () { if (_done) return; _done = true; window.location.href = _url; };
+            gtag('event', 'close_convert_lead', {
+                'event_category': 'lead',
+                'event_label': 'phone_click',
+                'send_to': ['G-F41R697N61', 'AW-933342010']
+            });
+            // Google Ads Specific Conversion (Phone Click)
+            gtag('event', 'conversion', {
+                'send_to': 'AW-933342010/' + 'nnPNCKTBu78cELrWhr0D',
+                'value': 25.0,
+                'currency': 'ILS',
+                'event_callback': _go
+            });
+            setTimeout(_go, 900);
         });
     });
 });

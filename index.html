@@ -322,7 +322,7 @@
         <div class="cookie-content">
             <div class="cookie-text">
                 <i class="fas fa-cookie-bite" aria-hidden="true"></i>
-                <p>אתר זה משתמש בעוגיות לצורך שיפור חוויית הגלישה. לפרטים נוספים ראו <a href="privacy.html">מדיניות הפרטיות</a>. המשך הגלישה מהווה הסכמה לשימוש בעוגיות.</p>
+                <p>אתר זה משתמש בעוגיות לצורך שיפור חוויית הגלישה. לפרטים נוספים ראו <a href="privacy.html">מדיניות הפרטיות</a>.</p>
             </div>
             <div class="cookie-buttons">
                 <button class="btn btn-primary btn-sm" id="cookieAccept" type="button" aria-label="מסכים לשימוש בעוגיות">מסכים/ה</button>
@@ -1701,12 +1701,15 @@
                         <textarea name="message" id="contactMessage" placeholder="משהו שחשוב שאדע מראש (לא חובה)" rows="2"></textarea>
                         <i class="fas fa-comment" aria-hidden="true"></i>
                     </div>
-                    <input type="hidden" name="privacy_consent" value="agreed">
+                    <div class="form-consent">
+                        <input type="checkbox" name="privacy_consent" id="privacyConsent" value="agreed" required aria-required="true">
+                        <label for="privacyConsent">קראתי ואני מאשר/ת את <a href="privacy.html" target="_blank" rel="noopener">מדיניות הפרטיות</a>, ומסכים/ה שתחזרו אליי בטלפון או בוואטסאפ בנוגע לפנייתי. <span aria-hidden="true">*</span></label>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block btn-lg">
                         <i class="fas fa-paper-plane"></i> שלחו פרטים — חוזרים אליכם עוד היום
                     </button>
                     <p class="form-note" style="color:#ff6b35;font-weight:700;margin-top:10px;"><i class="fas fa-circle-check" aria-hidden="true"></i> אחזור אליכם בוואטסאפ או טלפון לתיאום זמן שנוח לכם. ללא התחייבות, אין מכירה בלחץ.</p>
-                    <p class="form-note"><i class="fas fa-lock" aria-hidden="true"></i> בלחיצה על "שליחה" אני מאשר/ת קבלת חזרה מ-NIRFIT ומסכים/ה ל<a href="privacy.html">מדיניות הפרטיות</a>. הפרטים מאובטחים ולא יועברו לצד שלישי.</p>
+                    <p class="form-note"><i class="fas fa-lock" aria-hidden="true"></i> הפרטים מאובטחים ולא יועברו לצד שלישי.</p>
                 </form>
                 </div>
             </div>

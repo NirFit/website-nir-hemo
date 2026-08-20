@@ -1,13 +1,22 @@
 // ==============================
-// Preloader
+// Preloader — hide as soon as content is ready (critical for paid mobile traffic)
 // ==============================
-window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        setTimeout(() => preloader.classList.add('hidden'), 1600);
-        setTimeout(() => { if (preloader.parentNode) preloader.remove(); }, 2200);
+(function () {
+    const hidePreloader = () => {
+        const preloader = document.getElementById('preloader');
+        if (!preloader || preloader.classList.contains('hidden')) return;
+        preloader.classList.add('hidden');
+        setTimeout(() => { if (preloader.parentNode) preloader.remove(); }, 400);
+    };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(hidePreloader, 150));
+    } else {
+        setTimeout(hidePreloader, 150);
     }
-});
+    // Safety nets so the page is never left masked if something is slow
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, 1200);
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -55,12 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==============================
     const stickyCta = document.getElementById('stickyCta');
     if (stickyCta) {
-        let stickyShown = false;
+        const isMobile = () => window.innerWidth <= 768;
+        // On mobile the quick call / WhatsApp bar is available immediately — no need to scroll first.
+        if (isMobile()) stickyCta.classList.add('visible');
+        let stickyShown = isMobile();
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 600 && !stickyShown) {
+            if (isMobile()) {
+                if (!stickyShown) { stickyCta.classList.add('visible'); stickyShown = true; }
+                return;
+            }
+            if (window.scrollY > 300 && !stickyShown) {
                 stickyCta.classList.add('visible');
                 stickyShown = true;
-            } else if (window.scrollY <= 600 && stickyShown) {
+            } else if (window.scrollY <= 300 && stickyShown) {
                 stickyCta.classList.remove('visible');
                 stickyShown = false;
             }
@@ -745,6 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'send_to': 'AW-933342010/' + 'nnPNCKTBu78cELrWhr0D',
                 'value': 25.0,
                 'currency': 'ILS',
+                'transport_type': 'beacon',
                 'event_callback': _go
             });
             setTimeout(_go, 900);

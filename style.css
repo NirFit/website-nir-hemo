@@ -569,14 +569,9 @@ textarea:focus-visible {
     z-index: 0;
 }
 
-.hero-bg-image::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url('https://images.pexels.com/photos/5327523/pexels-photo-5327523.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover no-repeat;
-    opacity: 0.15;
-    filter: saturate(0.6);
-}
+/* Hero background image removed for mobile speed.
+   It was a 1920x1080 external photo shown at 0.15 opacity behind a 0.92 overlay —
+   a near-invisible ~200KB+ download on 90% mobile traffic. The gradient overlay below carries the look. */
 
 .hero-overlay {
     position: absolute;
@@ -1026,7 +1021,7 @@ textarea:focus-visible {
 .visual-stat-number {
     display: block;
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 900;
     color: var(--text-light);
 }
 
@@ -3436,7 +3431,7 @@ a.contact-item:hover .contact-icon {
 .typing-cursor {
     display: inline-block;
     color: var(--primary);
-    font-weight: 300;
+    font-weight: 400;
     animation: blink 0.8s step-end infinite;
     margin-right: 2px;
 }
@@ -4097,5 +4092,22 @@ a.contact-item:hover .contact-icon {
     .a11y-widget {
         bottom: calc(130px + env(safe-area-inset-bottom, 0px));
         left: 16px;
+    }
+}
+
+/* Respect users who prefer reduced motion — also cuts always-on animation cost on mobile */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .hero-bg-shapes,
+    .hero-particles,
+    .shape {
+        display: none !important;
     }
 }

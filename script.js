@@ -633,6 +633,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         'event_label': 'contact_form',
                         'send_to': ['G-F41R697N61', 'AW-933342010']
                     });
+                    // Google Ads generate_lead event - standard event for lead forms
+                    gtag('event', 'generate_lead', {
+                        'event_category': 'lead',
+                        'event_label': 'contact_form',
+                        'send_to': ['G-F41R697N61', 'AW-933342010']
+                    });
                     // Google Ads Specific Conversion
                     gtag('event', 'conversion', {
                         'send_to': 'AW-933342010/' + '1pMZCKfLr5EcELrWhr0D',
@@ -721,8 +727,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // WhatsApp click tracking
     // ==============================
     document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-        link.addEventListener('click', function () {
+        link.addEventListener('click', function (e) {
             if (typeof gtag !== 'function') return;
+            // Wrap navigation so the conversion beacon is sent before the page unloads
+            e.preventDefault();
+            var _url = this.href;
+            var _done = false;
+            var _go = function () { if (_done) return; _done = true; window.location.href = _url; };
             var _src = this.classList.contains('whatsapp-float') ? 'wa_float'
                      : this.classList.contains('sticky-cta-wa') ? 'wa_sticky'
                      : 'wa_section';
@@ -731,12 +742,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 'event_label': _src,
                 'send_to': ['G-F41R697N61', 'AW-933342010']
             });
-            // Google Ads Specific Conversion
+            // Google Ads Specific Conversion (WhatsApp Click)
             gtag('event', 'conversion', {
                 'send_to': 'AW-933342010/' + 'V4FuCNuUsJEcELrWhr0D',
                 'value': 30.0,
-                'currency': 'ILS'
+                'currency': 'ILS',
+                'transport_type': 'beacon',
+                'event_callback': _go
             });
+            setTimeout(_go, 900);
         });
     });
 

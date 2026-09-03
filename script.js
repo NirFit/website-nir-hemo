@@ -94,38 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==============================
-    // Preserve gclid across the session
-    // ==============================
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const gclid = urlParams.get('gclid');
-        if (gclid) {
-            localStorage.setItem('gclid', gclid);
-            localStorage.setItem('gclid_ts', Date.now());
-        }
-    })();
-
-    // ==============================
-    // Cookie Consent + Consent Mode v2
+    // Cookie banner (Consent Mode updates live in measurement.js)
     // ==============================
     const cookieBanner = document.getElementById('cookieBanner');
     const cookieAccept = document.getElementById('cookieAccept');
     const cookieDecline = document.getElementById('cookieDecline');
 
-    // Restore consent state for returning visitors
-    const savedConsent = localStorage.getItem('cookieConsent');
-    if (typeof gtag === 'function') {
-        if (savedConsent === 'accepted') {
-            gtag('consent', 'update', {
-                'ad_storage': 'granted',
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted',
-                'analytics_storage': 'granted'
-            });
-        }
-    }
+    if (cookieBanner && cookieAccept && cookieDecline && cookieAccept.dataset.nirfitConsentBound !== '1') {
+        cookieAccept.dataset.nirfitConsentBound = '1';
+        cookieDecline.dataset.nirfitConsentBound = '1';
 
-    if (cookieBanner && cookieAccept && cookieDecline) {
+        const savedConsent = localStorage.getItem('cookieConsent');
         if (!savedConsent) {
             setTimeout(() => {
                 cookieBanner.classList.add('visible');
@@ -135,30 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeCookieBanner = (consent) => {
             localStorage.setItem('cookieConsent', consent);
             cookieBanner.classList.remove('visible');
+            if (window.NirFitMeasurement) {
+                window.NirFitMeasurement.onConsentChange(consent);
+            }
         };
 
         cookieAccept.addEventListener('click', () => {
             closeCookieBanner('accepted');
-            if (typeof gtag === 'function') {
-                gtag('consent', 'update', {
-                    'ad_storage': 'granted',
-                    'ad_user_data': 'granted',
-                    'ad_personalization': 'granted',
-                    'analytics_storage': 'granted'
-                });
-            }
         });
 
         cookieDecline.addEventListener('click', () => {
             closeCookieBanner('essential');
-            if (typeof gtag === 'function') {
-                gtag('consent', 'update', {
-                    'ad_storage': 'denied',
-                    'ad_user_data': 'denied',
-                    'ad_personalization': 'denied',
-                    'analytics_storage': 'denied'
-                });
-            }
         });
     }
 
@@ -617,33 +583,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.success) {
                 contactForm.reset();
-                // GA4 + Google Ads conversion tracking - fires on successful form submission
-                if (typeof gtag === 'function') {
-                    // Enhanced Conversions for Leads - normalized phone (E.164) for cookieless matching
-                    try {
-                        var _phone = (formData.get('phone') || '').toString();
-                        var _e164 = _phone.replace(/\D/g, '');
-                        if (_e164.indexOf('972') === 0) { _e164 = '+' + _e164; }
-                        else if (_e164.charAt(0) === '0') { _e164 = '+972' + _e164.slice(1); }
-                        else if (_e164) { _e164 = '+972' + _e164; }
-                        if (_e164.length >= 12) { gtag('set', 'user_data', { 'phone_number': _e164 }); }
-                    } catch (e) {}
-                    gtag('event', 'close_convert_lead', {
-                        'event_category': 'lead',
-                        'event_label': 'contact_form',
-                        'send_to': ['G-F41R697N61', 'AW-933342010']
-                    });
-                    // Google Ads generate_lead event - standard event for lead forms
-                    gtag('event', 'generate_lead', {
-                        'event_category': 'lead',
-                        'event_label': 'contact_form',
-                        'send_to': ['G-F41R697N61', 'AW-933342010']
-                    });
-                    // Google Ads Specific Conversion
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-933342010/' + '1pMZCKfLr5EcELrWhr0D',
-                        'value': 40.0,
-                        'currency': 'ILS'
+                if (window.NirFitMeasurement) {
+                    window.NirFitMeasurement.trackLeadSubmit({
+                        phone: formData.get('phone'),
+                        location: formData.get('location'),
+                        goal: formData.get('goal'),
+                        pagePath: window.location.pathname
                     });
                 }
                 contactForm.classList.add('hidden');
@@ -721,64 +666,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         lastScroll = window.scrollY;
     }, { passive: true });
-
-
-    // ==============================
-    // WhatsApp click tracking
-    // ==============================
-    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-        link.addEventListener('click', function (e) {
-            if (typeof gtag !== 'function') return;
-            // Wrap navigation so the conversion beacon is sent before the page unloads
-            e.preventDefault();
-            var _url = this.href;
-            var _done = false;
-            var _go = function () { if (_done) return; _done = true; window.location.href = _url; };
-            var _src = this.classList.contains('whatsapp-float') ? 'wa_float'
-                     : this.classList.contains('sticky-cta-wa') ? 'wa_sticky'
-                     : 'wa_section';
-            gtag('event', 'close_convert_lead', {
-                'event_category': 'lead',
-                'event_label': _src,
-                'send_to': ['G-F41R697N61', 'AW-933342010']
-            });
-            // Google Ads Specific Conversion (WhatsApp Click)
-            gtag('event', 'conversion', {
-                'send_to': 'AW-933342010/' + 'V4FuCNuUsJEcELrWhr0D',
-                'value': 30.0,
-                'currency': 'ILS',
-                'transport_type': 'beacon',
-                'event_callback': _go
-            });
-            setTimeout(_go, 900);
-        });
-    });
-
-    // ==============================
-    // Phone click tracking
-    // ==============================
-    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
-        link.addEventListener('click', function (e) {
-            if (typeof gtag !== 'function') return;
-            // Wrap navigation so the conversion beacon is sent before the page unloads (mobile dialer)
-            e.preventDefault();
-            var _url = this.href;
-            var _done = false;
-            var _go = function () { if (_done) return; _done = true; window.location.href = _url; };
-            gtag('event', 'close_convert_lead', {
-                'event_category': 'lead',
-                'event_label': 'phone_click',
-                'send_to': ['G-F41R697N61', 'AW-933342010']
-            });
-            // Google Ads Specific Conversion (Phone Click)
-            gtag('event', 'conversion', {
-                'send_to': 'AW-933342010/' + 'nnPNCKTBu78cELrWhr0D',
-                'value': 25.0,
-                'currency': 'ILS',
-                'transport_type': 'beacon',
-                'event_callback': _go
-            });
-            setTimeout(_go, 900);
-        });
-    });
 });

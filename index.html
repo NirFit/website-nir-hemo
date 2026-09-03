@@ -12,6 +12,24 @@
                 'analytics_storage': 'denied',
                 'wait_for_update': 3000
             });
+            try {
+                var _nirfitConsent = localStorage.getItem('cookieConsent');
+                if (_nirfitConsent === 'accepted') {
+                    gtag('consent', 'update', {
+                        'ad_storage': 'granted',
+                        'ad_user_data': 'granted',
+                        'ad_personalization': 'granted',
+                        'analytics_storage': 'granted'
+                    });
+                } else if (_nirfitConsent === 'essential') {
+                    gtag('consent', 'update', {
+                        'ad_storage': 'denied',
+                        'ad_user_data': 'denied',
+                        'ad_personalization': 'denied',
+                        'analytics_storage': 'denied'
+                    });
+                }
+            } catch (e) {}
             gtag('set', 'ads_data_redaction', true);
             gtag('set', 'url_passthrough', true);
         </script>
@@ -1788,6 +1806,7 @@
         </a>
     </div>
 
+    <script src="measurement.js"></script>
     <script src="security.js"></script>
     <script src="script.js"></script>
 </body>

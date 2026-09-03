@@ -1,0 +1,8 @@
+{
+  "name": "nirfit-website",
+  "private": true,
+  "description": "NIRFIT website — Stage 1 measurement tests",
+  "scripts": {
+    "test": "node --test tests/measurement.test.js"
+  }
+}

@@ -7,6 +7,45 @@
     <meta name="description" content="דברו עם ניר חמו, מאמן כושר אישי, בוואטסאפ ותאמו פגישת היכרות ובדיקת גוף ללא עלות. אימון אישי 1:1 בעפולה ובקריות.">
     <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://nirfit.co.il/">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied',
+            'wait_for_update': 3000
+        });
+        try {
+            var _nirfitConsent = localStorage.getItem('cookieConsent');
+            if (_nirfitConsent === 'accepted') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted',
+                    'analytics_storage': 'granted'
+                });
+            } else if (_nirfitConsent === 'essential') {
+                gtag('consent', 'update', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
+            }
+        } catch (e) {}
+        gtag('set', 'ads_data_redaction', true);
+        gtag('set', 'url_passthrough', true);
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F41R697N61"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-F41R697N61');
+        gtag('config', 'AW-933342010');
+    </script>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -72,5 +111,6 @@
             if (link) link.href = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
         })();
     </script>
+    <script src="measurement.js"></script>
 </body>
 </html>

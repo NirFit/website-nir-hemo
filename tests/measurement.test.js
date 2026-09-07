@@ -46,7 +46,7 @@ function eventCalls(gtag, name) {
 
 function createLink(href, className, extras) {
     extras = extras || {};
-    const attrs = {};
+    const attrs = Object.assign({}, extras.attrs || {});
     const listeners = {};
     const classList = new Set((className || '').split(/\s+/).filter(Boolean));
     const el = {
@@ -58,6 +58,15 @@ function createLink(href, className, extras) {
         },
         getAttribute(key) { return attrs[key]; },
         setAttribute(key, value) { attrs[key] = String(value); },
+        closest(sel) {
+            if (sel === '[data-city]' && attrs['data-city']) return el;
+            if (sel === '[data-city]' && extras.hostCity) {
+                return {
+                    getAttribute(key) { return key === 'data-city' ? extras.hostCity : undefined; }
+                };
+            }
+            return null;
+        },
         addEventListener(type, fn) {
             listeners[type] = listeners[type] || [];
             listeners[type].push(fn);
@@ -329,6 +338,59 @@ describe('one activation = one canonical event', () => {
             querySelector(sel) { return sel === 'meta[name="geo.placename"]' ? { content: 'Krayot, Afula' } : null; }
         }), '');
     });
+
+    it('binds data-city from Afula vs Kiryat CTAs into whatsapp_click without a second Ads conversion', () => {
+        const gtag = createGtagRecorder();
+        const afula = createLink(
+            'https://wa.me/972542063967?text=afula',
+            'btn-whatsapp',
+            { attrs: { 'data-city': 'afula' } }
+        );
+        const kiryat = createLink(
+            'https://wa.me/972542063967?text=kiryat',
+            'btn-whatsapp',
+            { attrs: { 'data-city': 'kiryat-bialik' } }
+        );
+        const generic = createLink('https://wa.me/972542063967?text=hi', 'whatsapp-float');
+        const doc = createDoc([afula, kiryat, generic]);
+        measurement.init({
+            document: doc,
+            gtag,
+            navigate() {},
+            force: true,
+            fallbackMs: 0,
+            location: { search: '', pathname: '/' }
+        });
+
+        afula.click();
+        assert.equal(eventCalls(gtag, 'whatsapp_click').length, 1);
+        assert.equal(eventCalls(gtag, 'conversion').length, 1);
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[0][2].city, 'afula');
+        assert.equal(eventCalls(gtag, 'conversion')[0][2].value, undefined);
+        assert.equal(eventCalls(gtag, 'conversion')[0][2].send_to, 'AW-933342010/V4FuCNuUsJEcELrWhr0D');
+
+        kiryat.click();
+        assert.equal(eventCalls(gtag, 'whatsapp_click').length, 2);
+        assert.equal(eventCalls(gtag, 'conversion').length, 2);
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[1][2].city, 'kiryat-bialik');
+
+        generic.click();
+        assert.equal(eventCalls(gtag, 'whatsapp_click').length, 3);
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[2][2].city, undefined);
+        assert.equal(eventCalls(gtag, 'conversion').length, 3);
+    });
+
+    it('reads city from the clicked element or a data-city ancestor', () => {
+        const direct = createLink('https://wa.me/972542063967?text=afula', 'btn-whatsapp', {
+            attrs: { 'data-city': 'afula' }
+        });
+        const nested = createLink('https://wa.me/972542063967?text=kiryat', 'btn-whatsapp', {
+            hostCity: 'kiryat-bialik'
+        });
+        assert.equal(measurement.cityFromElement(direct), 'afula');
+        assert.equal(measurement.cityFromElement(nested), 'kiryat-bialik');
+        assert.equal(measurement.cityFromElement(createLink('https://wa.me/972542063967?text=hi', 'whatsapp-float')), '');
+    });
 });
 
 describe('Consent Mode v2', () => {
@@ -391,10 +453,34 @@ describe('static audit of removed duplication and fake values', () => {
         const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
         const wa = html.match(/href="https:\/\/wa\.me\/972542063967/g) || [];
         const tel = html.match(/href="tel:\+972542063967"/g) || [];
-        assert.equal(wa.length, 6);
+        assert.equal(wa.length, 8);
         assert.equal(tel.length, 4);
         assert.match(html, /id="contactForm"/);
         assert.match(html, /id="G-F41R697N61"|gtag\/js\?id=G-F41R697N61/);
         assert.match(html, /AW-933342010/);
+    });
+
+    it('homepage city WhatsApp CTAs carry exact Hebrew text and data-city without new city pages', () => {
+        const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+        const afulaText = 'היי, מתעניין/ת באימון אישי 1:1 בעפולה — פגישת היכרות ובדיקת גוף בחינם';
+        const kiryatText = 'היי, מתעניין/ת באימון אישי 1:1 בסטודיו בקריית ביאליק — פגישת היכרות ובדיקת גוף בחינם';
+
+        const hrefs = [...html.matchAll(/href="(https:\/\/wa\.me\/972542063967[^"]*)"/g)].map((m) => m[1]);
+        const decoded = hrefs.map((href) => {
+            const query = href.split('?text=')[1] || '';
+            return decodeURIComponent(query);
+        });
+
+        assert.equal(decoded.filter((text) => text === afulaText).length, 1);
+        assert.equal(decoded.filter((text) => text === kiryatText).length, 1);
+        assert.match(html, /data-city="afula"/);
+        assert.match(html, /data-city="kiryat-bialik"/);
+        assert.equal((html.match(/data-city="afula"/g) || []).length, 2);
+        assert.equal((html.match(/data-city="kiryat-bialik"/g) || []).length, 2);
+        assert.doesNotMatch(html, /href="\/afula"|href="\/kiryat-bialik"/);
+
+        const files = fs.readdirSync(root);
+        assert.equal(files.includes('afula.html'), false);
+        assert.equal(files.includes('kiryat-bialik.html'), false);
     });
 });

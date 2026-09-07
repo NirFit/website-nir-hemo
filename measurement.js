@@ -545,6 +545,7 @@
         buildWhatsAppUrl: buildWhatsAppUrl,
         messageContainsSensitiveIds: messageContainsSensitiveIds,
         getPageCity: getPageCity,
+        cityFromElement: cityFromElement,
         trackWhatsAppClick: trackWhatsAppClick,
         trackPhoneClick: trackPhoneClick,
         trackLeadSubmit: trackLeadSubmit,

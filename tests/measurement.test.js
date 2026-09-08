@@ -435,7 +435,7 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
         return match ? match[1].trim().split(/\s+/) : [];
     }
 
-    it('index.html connect-src only adds GTM and analytics.google.com hosts', () => {
+    it('index.html connect-src allows GTM, analytics.google.com, and ad.doubleclick.net', () => {
         const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
         const csp = cspContent(html);
         assert.ok(csp.includes("default-src 'self'"), 'CSP meta must remain');
@@ -449,7 +449,8 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
             'https://www.googleadservices.com',
             'https://www.google.com',
             'https://googleads.g.doubleclick.net',
-            'https://pagead2.googlesyndication.com'
+            'https://pagead2.googlesyndication.com',
+            'https://ad.doubleclick.net'
         ].forEach((host) => {
             assert.ok(hosts.includes(host), 'connect-src missing ' + host);
         });
@@ -457,7 +458,6 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
         assert.ok(hosts.includes('https://api.web3forms.com'));
         assert.equal(hosts.includes('https://www.google.co.il'), false);
         assert.equal(hosts.includes('https://google.com'), false);
-        assert.equal(hosts.includes('https://ad.doubleclick.net'), false);
     });
 
     it('legal pages without gtag do not duplicate the homepage measurement CSP', () => {

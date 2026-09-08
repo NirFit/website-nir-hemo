@@ -424,6 +424,53 @@ describe('Consent Mode v2', () => {
     });
 });
 
+describe('CSP allows GA4 and Google Ads measurement beacons', () => {
+    function cspContent(html) {
+        const match = html.match(/http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
+        return match ? match[1] : '';
+    }
+
+    function connectSrcHosts(csp) {
+        const match = csp.match(/connect-src\s+([^;]+)/i);
+        return match ? match[1].trim().split(/\s+/) : [];
+    }
+
+    it('index.html connect-src only adds GTM and analytics.google.com hosts', () => {
+        const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+        const csp = cspContent(html);
+        assert.ok(csp.includes("default-src 'self'"), 'CSP meta must remain');
+        assert.match(csp, /connect-src /);
+
+        const hosts = connectSrcHosts(csp);
+        [
+            'https://www.googletagmanager.com',
+            'https://analytics.google.com',
+            'https://www.google-analytics.com',
+            'https://www.googleadservices.com',
+            'https://www.google.com',
+            'https://googleads.g.doubleclick.net',
+            'https://pagead2.googlesyndication.com'
+        ].forEach((host) => {
+            assert.ok(hosts.includes(host), 'connect-src missing ' + host);
+        });
+        assert.ok(hosts.includes("'self'"));
+        assert.ok(hosts.includes('https://api.web3forms.com'));
+        assert.equal(hosts.includes('https://www.google.co.il'), false);
+        assert.equal(hosts.includes('https://google.com'), false);
+        assert.equal(hosts.includes('https://ad.doubleclick.net'), false);
+    });
+
+    it('legal pages without gtag do not duplicate the homepage measurement CSP', () => {
+        ['privacy.html', 'terms.html', 'accessibility.html'].forEach((name) => {
+            const html = fs.readFileSync(path.join(root, name), 'utf8');
+            assert.equal(html.includes('gtag/js?id=G-F41R697N61'), false, name + ' unexpectedly loads gtag');
+            const csp = cspContent(html);
+            assert.ok(csp.includes("default-src 'self'"), name + ' must keep CSP');
+            assert.equal(csp.includes('connect-src'), false, name + ' should not copy homepage connect-src');
+        });
+    });
+});
+
 describe('static audit of removed duplication and fake values', () => {
     it('production scripts no longer emit overlapping lead events or ₪40/30/25 values', () => {
         const files = ['script.js', 'measurement.js', 'index.html', 'whatsapp.html']

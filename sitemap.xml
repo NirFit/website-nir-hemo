@@ -5,10 +5,28 @@
     <!-- Homepage -->
     <url>
         <loc>https://nirfit.co.il/</loc>
-        <lastmod>2026-03-03</lastmod>
+        <lastmod>2026-09-09</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="he" href="https://nirfit.co.il/"/>
+    </url>
+
+    <!-- City landing: Afula -->
+    <url>
+        <loc>https://nirfit.co.il/afula</loc>
+        <lastmod>2026-09-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="he" href="https://nirfit.co.il/afula"/>
+    </url>
+
+    <!-- City landing: Kiryat Bialik -->
+    <url>
+        <loc>https://nirfit.co.il/kiryat-bialik</loc>
+        <lastmod>2026-09-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="he" href="https://nirfit.co.il/kiryat-bialik"/>
     </url>
 
     <!-- Privacy Policy -->

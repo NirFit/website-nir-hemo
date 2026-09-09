@@ -435,6 +435,22 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
         return match ? match[1].trim().split(/\s+/) : [];
     }
 
+    it('city landing pages include the same measurement connect-src hosts as the homepage', () => {
+        ['afula/index.html', 'kiryat-bialik/index.html'].forEach((name) => {
+            const html = fs.readFileSync(path.join(root, name), 'utf8');
+            const csp = cspContent(html);
+            const hosts = connectSrcHosts(csp);
+            [
+                'https://www.googletagmanager.com',
+                'https://analytics.google.com',
+                'https://www.googleadservices.com',
+                'https://ad.doubleclick.net'
+            ].forEach((host) => {
+                assert.ok(hosts.includes(host), name + ' connect-src missing ' + host);
+            });
+        });
+    });
+
     it('index.html connect-src allows GTM, analytics.google.com, and ad.doubleclick.net', () => {
         const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
         const csp = cspContent(html);
@@ -473,7 +489,7 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
 
 describe('static audit of removed duplication and fake values', () => {
     it('production scripts no longer emit overlapping lead events or ₪40/30/25 values', () => {
-        const files = ['script.js', 'measurement.js', 'index.html', 'whatsapp.html']
+        const files = ['script.js', 'measurement.js', 'index.html', 'whatsapp.html', 'afula/index.html', 'kiryat-bialik/index.html']
             .map((name) => ({ name, src: fs.readFileSync(path.join(root, name), 'utf8') }));
 
         files.forEach((file) => {
@@ -507,7 +523,7 @@ describe('static audit of removed duplication and fake values', () => {
         assert.match(html, /AW-933342010/);
     });
 
-    it('homepage city WhatsApp CTAs carry exact Hebrew text and data-city without new city pages', () => {
+    it('homepage city WhatsApp CTAs keep exact Hebrew text, data-city, and link to city pages', () => {
         const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
         const afulaText = 'היי, מתעניין/ת באימון אישי 1:1 בעפולה — פגישת היכרות ובדיקת גוף בחינם';
         const kiryatText = 'היי, מתעניין/ת באימון אישי 1:1 בסטודיו בקריית ביאליק — פגישת היכרות ובדיקת גוף בחינם';
@@ -524,10 +540,159 @@ describe('static audit of removed duplication and fake values', () => {
         assert.match(html, /data-city="kiryat-bialik"/);
         assert.equal((html.match(/data-city="afula"/g) || []).length, 2);
         assert.equal((html.match(/data-city="kiryat-bialik"/g) || []).length, 2);
-        assert.doesNotMatch(html, /href="\/afula"|href="\/kiryat-bialik"/);
+        assert.match(html, /href="\/afula"/);
+        assert.match(html, /href="\/kiryat-bialik"/);
+    });
+});
 
-        const files = fs.readdirSync(root);
-        assert.equal(files.includes('afula.html'), false);
-        assert.equal(files.includes('kiryat-bialik.html'), false);
+describe('city landing pages for Ads Final-URL remap', () => {
+    const afulaText = 'היי, מתעניין/ת באימון אישי 1:1 בעפולה — פגישת היכרות ובדיקת גוף בחינם';
+    const kiryatText = 'היי, מתעניין/ת באימון אישי 1:1 בסטודיו בקריית ביאליק — פגישת היכרות ובדיקת גוף בחינם';
+
+    function readCityPage(name) {
+        return fs.readFileSync(path.join(root, name, 'index.html'), 'utf8');
+    }
+
+    function decodedWaTexts(html) {
+        return [...html.matchAll(/href="(https:\/\/wa\.me\/972542063967[^"]*)"/g)].map((m) => {
+            const query = m[1].split('?text=')[1] || '';
+            return decodeURIComponent(query);
+        });
+    }
+
+    function cspContent(html) {
+        const match = html.match(/http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
+        return match ? match[1] : '';
+    }
+
+    it('publishes /afula and /kiryat-bialik with city H1, static 770/13 stats, and no prices', () => {
+        const afula = readCityPage('afula');
+        const kiryat = readCityPage('kiryat-bialik');
+
+        assert.match(afula, /<h1>אימון אישי 1:1 בחדר כושר בעפולה/);
+        assert.match(kiryat, /<h1>אימון אישי 1:1 בסטודיו בקריית ביאליק/);
+        assert.match(afula, /data-city="afula"/);
+        assert.match(kiryat, /data-city="kiryat-bialik"/);
+        assert.match(afula, /<body[^>]*data-city="afula"/);
+        assert.match(kiryat, /<body[^>]*data-city="kiryat-bialik"/);
+
+        [afula, kiryat].forEach((html) => {
+            assert.match(html, />770</);
+            assert.match(html, />13</);
+            assert.match(html, /770 לקוחות/);
+            assert.match(html, /13 שנות ניסיון/);
+            assert.doesNotMatch(html, /data-target="/);
+            assert.doesNotMatch(html, /class="stat-number">0</);
+            assert.doesNotMatch(html, /₪|שקל|ש"ח/);
+            assert.doesNotMatch(html, /value\s*:\s*\d+/);
+            assert.match(html, /id="contactForm"/);
+            assert.match(html, /name="name"/);
+            assert.match(html, /name="phone"/);
+            assert.match(html, /name="city"/);
+            assert.match(html, /name="location"/);
+            assert.match(html, /<script src="\/measurement\.js"><\/script>/);
+            assert.match(html, /AW-933342010/);
+            assert.match(html, /gtag\/js\?id=G-F41R697N61/);
+        });
+    });
+
+    it('uses the same city WhatsApp copy as homepage cards and tags every WA/phone link', () => {
+        const afula = readCityPage('afula');
+        const kiryat = readCityPage('kiryat-bialik');
+
+        const afulaWa = decodedWaTexts(afula);
+        const kiryatWa = decodedWaTexts(kiryat);
+        assert.ok(afulaWa.length >= 2);
+        assert.ok(kiryatWa.length >= 2);
+        afulaWa.forEach((text) => assert.equal(text, afulaText));
+        kiryatWa.forEach((text) => assert.equal(text, kiryatText));
+
+        assert.equal((afula.match(/href="https:\/\/wa\.me\/972542063967[^"]*"[^>]*data-city="afula"/g) || []).length, afulaWa.length);
+        assert.equal((kiryat.match(/href="https:\/\/wa\.me\/972542063967[^"]*"[^>]*data-city="kiryat-bialik"/g) || []).length, kiryatWa.length);
+
+        const afulaTel = afula.match(/href="tel:\+972542063967"/g) || [];
+        const kiryatTel = kiryat.match(/href="tel:\+972542063967"/g) || [];
+        assert.ok(afulaTel.length >= 2);
+        assert.ok(kiryatTel.length >= 2);
+        assert.equal((afula.match(/href="tel:\+972542063967"[^>]*data-city="afula"/g) || []).length, afulaTel.length);
+        assert.equal((kiryat.match(/href="tel:\+972542063967"[^>]*data-city="kiryat-bialik"/g) || []).length, kiryatTel.length);
+    });
+
+    it('keeps Consent Mode default-denied before gtag and the homepage Ads WhatsApp label', () => {
+        ['afula', 'kiryat-bialik'].forEach((name) => {
+            const html = readCityPage(name);
+            const defaultAt = html.indexOf("gtag('consent', 'default'");
+            const tagAt = html.indexOf('https://www.googletagmanager.com/gtag/js?id=G-F41R697N61');
+            const deniedAt = html.indexOf("'ad_storage': 'denied'");
+            assert.ok(defaultAt !== -1 && tagAt !== -1 && defaultAt < tagAt, name + ' consent default must precede gtag');
+            assert.ok(deniedAt !== -1 && deniedAt < tagAt, name + ' must deny ad_storage before gtag');
+            assert.match(html, /cookieConsent[\s\S]*accepted[\s\S]*granted/);
+            assert.match(html, /cookieConsent[\s\S]*essential[\s\S]*denied/);
+            const csp = cspContent(html);
+            assert.ok(csp.includes('https://ad.doubleclick.net'));
+            assert.ok(csp.includes('https://analytics.google.com'));
+        });
+        const measurementSrc = fs.readFileSync(path.join(root, 'measurement.js'), 'utf8');
+        assert.match(measurementSrc, /V4FuCNuUsJEcELrWhr0D/);
+        assert.equal(measurementSrc.includes('1pMZCKfLr5EcELrWhr0D'), false);
+    });
+
+    it('lists city pages in sitemap.xml', () => {
+        const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+        assert.match(sitemap, /<loc>https:\/\/nirfit\.co\.il\/afula<\/loc>/);
+        assert.match(sitemap, /<loc>https:\/\/nirfit\.co\.il\/kiryat-bialik<\/loc>/);
+    });
+
+    it('binds city-page WhatsApp and phone links into events without a monetary Ads value', () => {
+        const gtag = createGtagRecorder();
+        const wa = createLink(
+            'https://wa.me/972542063967?text=' + encodeURIComponent(afulaText),
+            'btn-whatsapp',
+            { attrs: { 'data-city': 'afula' } }
+        );
+        const phone = createLink('tel:+972542063967', 'sticky-cta-phone', {
+            attrs: { 'data-city': 'afula' }
+        });
+        const doc = createDoc([wa, phone]);
+        doc.body = { getAttribute(key) { return key === 'data-city' ? 'afula' : null; } };
+
+        measurement.init({
+            document: doc,
+            gtag,
+            navigate() {},
+            force: true,
+            fallbackMs: 0,
+            location: { search: '', pathname: '/afula' }
+        });
+        wa.click();
+        phone.click();
+
+        assert.equal(eventCalls(gtag, 'whatsapp_click').length, 1);
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[0][2].city, 'afula');
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[0][2].page_path, '/afula');
+        assert.equal(eventCalls(gtag, 'conversion').length, 1);
+        assert.equal(eventCalls(gtag, 'conversion')[0][2].send_to, 'AW-933342010/V4FuCNuUsJEcELrWhr0D');
+        assert.equal(eventCalls(gtag, 'conversion')[0][2].value, undefined);
+        assert.equal(eventCalls(gtag, 'phone_click').length, 1);
+        assert.equal(eventCalls(gtag, 'phone_click')[0][2].city, 'afula');
+        assert.equal(eventCalls(gtag, 'phone_click')[0][2].value, undefined);
+    });
+
+    it('reads page city from body data-city for phone_click when the link has no data-city', () => {
+        const gtag = createGtagRecorder();
+        const phone = createLink('tel:+972542063967', 'sticky-cta-phone');
+        const doc = createDoc([phone]);
+        doc.body = { getAttribute(key) { return key === 'data-city' ? 'kiryat-bialik' : null; } };
+
+        measurement.init({
+            document: doc,
+            gtag,
+            navigate() {},
+            force: true,
+            fallbackMs: 0,
+            location: { search: '', pathname: '/kiryat-bialik' }
+        });
+        phone.click();
+        assert.equal(eventCalls(gtag, 'phone_click')[0][2].city, 'kiryat-bialik');
     });
 });

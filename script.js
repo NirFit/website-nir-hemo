@@ -432,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==============================
     const particlesContainer = document.getElementById('particles');
 
+    if (particlesContainer) {
     for (let i = 0; i < 25; i++) {
         const particle = document.createElement('div');
         const size = Math.random() * 4 + 1;
@@ -448,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         particlesContainer.appendChild(particle);
     }
+    }
 
     // ==============================
     // BMI Calculator
@@ -458,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bmiCategory = document.getElementById('bmiCategory');
     const bmiNote = document.getElementById('bmiNote');
 
-    calcBtn.addEventListener('click', () => {
+    if (calcBtn) calcBtn.addEventListener('click', () => {
         const height = parseFloat(document.getElementById('calcHeight').value);
         const weight = parseFloat(document.getElementById('calcWeight').value);
 
@@ -541,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const locationMap = {
             'krayot': 'סטודיו קריית ביאליק',
+            'kiryat-bialik': 'סטודיו קריית ביאליק',
             'afula': 'חדר כושר עפולה',
             'both': 'שניהם'
         };
@@ -588,6 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         phone: formData.get('phone'),
                         location: formData.get('location'),
                         goal: formData.get('goal'),
+                        city: formData.get('city') || window.NirFitMeasurement.getPageCity(document) || '',
                         pagePath: window.location.pathname
                     });
                 }

@@ -2318,6 +2318,28 @@ textarea:focus-visible {
     font-weight: 700;
 }
 
+.location-card h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.location-card h3 a:hover {
+    color: var(--primary);
+}
+
+.location-page-link {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-decoration: none;
+}
+
+.location-page-link:hover {
+    text-decoration: underline;
+}
+
 .location-desc {
     color: var(--text-muted);
     margin-bottom: 20px;

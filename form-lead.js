@@ -44,6 +44,24 @@
         return 'NirFit ליד | ' + trimStr(fields.date) + ' | ' + trimStr(fields.name) + ' | ' + trimStr(fields.phone) + ' | ' + trimStr(fields.city) + ' | ' + trimStr(fields.page);
     }
 
+    function utf8ToBase64(value) {
+        if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
+            return Buffer.from(value, 'utf8').toString('base64');
+        }
+        return btoa(unescape(encodeURIComponent(value)));
+    }
+
+    // Browsers reject non-ISO-8859-1 fetch headers. ntfy decodes RFC 2047.
+    function encodeHeaderValue(value) {
+        value = trimStr(value);
+        for (var i = 0; i < value.length; i++) {
+            if (value.charCodeAt(i) > 255) {
+                return '=?UTF-8?B?' + utf8ToBase64(value) + '?=';
+            }
+        }
+        return value;
+    }
+
     function resolveWebhookUrl(options) {
         options = options || {};
         var win = options.window != null ? options.window : (typeof window !== 'undefined' ? window : null);
@@ -74,7 +92,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'text/plain; charset=utf-8',
-                    'Title': 'NirFit ליד',
+                    'Title': encodeHeaderValue('NirFit ליד'),
                     'Tags': 'envelope',
                     'Priority': 'default'
                 },
@@ -128,6 +146,7 @@
         buildSubject: buildSubject,
         buildEmailBody: buildEmailBody,
         buildWebhookBody: buildWebhookBody,
+        encodeHeaderValue: encodeHeaderValue,
         resolveWebhookUrl: resolveWebhookUrl,
         notifyWebhook: notifyWebhook,
         enrichFormData: enrichFormData

@@ -79,6 +79,14 @@ describe('canonical page and email subject', () => {
             'NirFit ליד | 2026-09-12T18:22:00.000Z | דנה | 0542063967 | afula | /afula/'
         );
     });
+
+    it('RFC-2047-encodes Hebrew header values so browsers can send them', () => {
+        const encoded = formLead.encodeHeaderValue('NirFit ליד');
+        assert.equal(encoded, '=?UTF-8?B?' + Buffer.from('NirFit ליד', 'utf8').toString('base64') + '?=');
+        assert.equal([...encoded].every((ch) => ch.charCodeAt(0) <= 255), true);
+        assert.equal(formLead.encodeHeaderValue('envelope'), 'envelope');
+        assert.equal(formLead.encodeHeaderValue('default'), 'default');
+    });
 });
 
 describe('enrichFormData for Web3Forms', () => {
@@ -191,7 +199,8 @@ describe('optional manager webhook', () => {
         assert.equal(calls[0].opts.method, 'POST');
         assert.equal(calls[0].opts.keepalive, true);
         assert.equal(calls[0].opts.headers['Content-Type'], 'text/plain; charset=utf-8');
-        assert.equal(calls[0].opts.headers.Title, 'NirFit ליד');
+        assert.equal(calls[0].opts.headers.Title, formLead.encodeHeaderValue('NirFit ליד'));
+        assert.equal([...calls[0].opts.headers.Title].every((ch) => ch.charCodeAt(0) <= 255), true);
         assert.equal(calls[0].opts.headers.Tags, 'envelope');
         assert.equal(calls[0].opts.headers.Priority, 'default');
         assert.equal(
@@ -228,7 +237,7 @@ describe('static HTML and script wiring', () => {
         assert.ok(script.indexOf("window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/") < script.indexOf('Preloader'));
         assert.match(helper, /keepalive:\s*true/);
         assert.match(helper, /text\/plain; charset=utf-8/);
-        assert.match(helper, /Title': 'NirFit ליד'/);
+        assert.match(helper, /encodeHeaderValue\('NirFit ליד'\)/);
         assert.match(helper, /Tags': 'envelope'/);
         assert.match(helper, /Priority': 'default'/);
         assert.match(script, /source:\s*'contact_form'/);

@@ -657,7 +657,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'text/plain; charset=utf-8',
-                                    'Title': 'NirFit ליד',
+                                    'Title': (leadHelpers && leadHelpers.encodeHeaderValue)
+                                        ? leadHelpers.encodeHeaderValue('NirFit ליד')
+                                        : 'NirFit lead',
                                     'Tags': 'envelope',
                                     'Priority': 'default'
                                 },

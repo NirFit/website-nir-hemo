@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: "22"
       - name: Run Stage 1 measurement tests
-        run: node --test tests/measurement.test.js
+        run: node --test tests/measurement.test.js tests/form-lead.test.js

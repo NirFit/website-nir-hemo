@@ -1,3 +1,7 @@
+// Paste the manager webhook URL here after the alert routine is created.
+// Empty = skip the second POST silently. Also accepts <meta name="nirfit-form-webhook">.
+window.NIRFIT_FORM_WEBHOOK = '';
+
 // ==============================
 // Preloader — hide as soon as content is ready (critical for paid mobile traffic)
 // ==============================
@@ -561,7 +565,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const goal = formData.get('goal');
         if (location) formData.set('location', locationMap[location] || location);
         if (goal) formData.set('goal', goalMap[goal] || goal);
-        formData.append('subject', 'פנייה חדשה מהאתר - NIRFIT');
+
+        const dateIso = new Date().toISOString();
+        const pageCity = (window.NirFitMeasurement && window.NirFitMeasurement.getPageCity)
+            ? (window.NirFitMeasurement.getPageCity(document) || '')
+            : '';
+        if (!(formData.get('city') || '').trim() && pageCity) {
+            formData.set('city', pageCity);
+        }
+
+        const leadHelpers = window.NirFitFormLead;
+        const lead = leadHelpers
+            ? leadHelpers.enrichFormData(formData, {
+                date: dateIso,
+                city: pageCity,
+                pathname: window.location.pathname
+            })
+            : {
+                date: dateIso,
+                name: String(formData.get('name') || '').trim(),
+                phone: String(formData.get('phone') || '').trim(),
+                city: String(formData.get('city') || pageCity || '').trim(),
+                page: String(formData.get('page') || window.location.pathname || '/'),
+                source: 'contact_form'
+            };
+
+        if (!leadHelpers) {
+            formData.set('city', lead.city);
+            formData.set('page', lead.page);
+            formData.set('date', lead.date);
+            formData.set('subject', 'NirFit ליד | ' + lead.city + ' | ' + lead.page + ' | ' + lead.name);
+            const leadBody = 'date: ' + lead.date + '\nname: ' + lead.name + '\nphone: ' + lead.phone + '\ncity: ' + lead.city + '\npage: ' + lead.page;
+            const existingMessage = String(formData.get('message') || '').trim();
+            formData.set('message', existingMessage ? (leadBody + '\n\n' + existingMessage) : leadBody);
+        }
 
         const accessKey = formData.get('access_key');
         if (!accessKey || accessKey === 'YOUR_ACCESS_KEY_HERE') {
@@ -604,6 +641,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
                 submitBtn.style.background = '#25d366';
                 submitBtn.style.borderColor = '#25d366';
+
+                // Optional manager webhook — never blocks the success UI.
+                var webhookUrl = leadHelpers && leadHelpers.resolveWebhookUrl
+                    ? leadHelpers.resolveWebhookUrl({ window: window, document: document })
+                    : String(window.NIRFIT_FORM_WEBHOOK || '').trim();
+                if (!webhookUrl) {
+                    var webhookMeta = document.querySelector('meta[name="nirfit-form-webhook"]');
+                    if (webhookMeta) webhookUrl = String(webhookMeta.getAttribute('content') || '').trim();
+                }
+                if (webhookUrl) {
+                    try {
+                        fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                date: lead.date,
+                                name: lead.name,
+                                phone: lead.phone,
+                                city: lead.city,
+                                page: lead.page,
+                                source: 'contact_form'
+                            }),
+                            keepalive: true
+                        }).catch(function () { /* ignore webhook failures */ });
+                    } catch (e) { /* ignore webhook failures */ }
+                }
             } else {
                 submitBtn.innerHTML = '<i class="fas fa-times"></i> שגיאה, נסו שוב';
                 submitBtn.style.background = '#e74c3c';

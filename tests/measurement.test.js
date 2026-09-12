@@ -489,7 +489,7 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
 
 describe('static audit of removed duplication and fake values', () => {
     it('production scripts no longer emit overlapping lead events or ₪40/30/25 values', () => {
-        const files = ['script.js', 'measurement.js', 'index.html', 'whatsapp.html', 'afula/index.html', 'kiryat-bialik/index.html']
+        const files = ['script.js', 'measurement.js', 'form-lead.js', 'index.html', 'whatsapp.html', 'afula/index.html', 'kiryat-bialik/index.html']
             .map((name) => ({ name, src: fs.readFileSync(path.join(root, name), 'utf8') }));
 
         files.forEach((file) => {
@@ -603,6 +603,7 @@ describe('city landing pages for Ads Final-URL remap', () => {
             assert.match(html, /name="name"/);
             assert.match(html, /name="phone"/);
             assert.match(html, /name="city"/);
+            assert.match(html, /name="page"/);
             assert.match(html, /name="location"/);
             assert.match(html, /<script src="\/measurement\.js"><\/script>/);
             assert.match(html, /AW-933342010/);

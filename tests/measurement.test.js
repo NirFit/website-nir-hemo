@@ -565,6 +565,20 @@ describe('city landing pages for Ads Final-URL remap', () => {
         return match ? match[1] : '';
     }
 
+    it('locks the Kiryat Bialik catchment line next to the studio offer without changing Afula or H1', () => {
+        const afula = readCityPage('afula');
+        const kiryat = readCityPage('kiryat-bialik');
+        const line = 'מגיעים גם מקריית אתא, ים, חיים ומוצקין — הסטודיו בקריית ביאליק.';
+
+        assert.equal((kiryat.split(line).length - 1), 1);
+        assert.ok(kiryat.includes('about-intro'));
+        assert.ok(kiryat.indexOf(line) > kiryat.indexOf('about-intro'));
+        assert.ok(kiryat.indexOf(line) < kiryat.indexOf('כל מסלול מתחיל בפגישת היכרות'));
+        assert.equal(afula.includes(line), false);
+        assert.match(kiryat, /<h1>אימון אישי 1:1 בסטודיו בקריית ביאליק — פגישת היכרות חינם<\/h1>/);
+        assert.match(afula, /<h1>אימון אישי 1:1 בחדר כושר בעפולה — פגישת היכרות חינם<\/h1>/);
+    });
+
     it('publishes /afula and /kiryat-bialik with city H1, static 770/13 stats, and no prices', () => {
         const afula = readCityPage('afula');
         const kiryat = readCityPage('kiryat-bialik');

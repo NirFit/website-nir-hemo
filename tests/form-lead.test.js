@@ -66,6 +66,19 @@ describe('canonical page and email subject', () => {
         assert.match(body, /city: afula/);
         assert.match(body, /page: \/afula\//);
     });
+
+    it('builds a single UTF-8 ntfy line for the manager webhook', () => {
+        assert.equal(
+            formLead.buildWebhookBody({
+                date: '2026-09-12T18:22:00.000Z',
+                name: 'דנה',
+                phone: '0542063967',
+                city: 'afula',
+                page: '/afula/'
+            }),
+            'NirFit ליד | 2026-09-12T18:22:00.000Z | דנה | 0542063967 | afula | /afula/'
+        );
+    });
 });
 
 describe('enrichFormData for Web3Forms', () => {
@@ -153,7 +166,7 @@ describe('optional manager webhook', () => {
         assert.equal(url, 'https://example.test/meta');
     });
 
-    it('POSTs JSON with keepalive and does not throw when fetch rejects', async () => {
+    it('POSTs a plain-text ntfy line with keepalive and does not throw when fetch rejects', async () => {
         const calls = [];
         const result = formLead.notifyWebhook(
             {
@@ -165,7 +178,7 @@ describe('optional manager webhook', () => {
                 source: 'contact_form'
             },
             {
-                url: 'https://example.test/hook',
+                url: 'https://ntfy.sh/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121',
                 fetch(url, opts) {
                     calls.push({ url, opts });
                     return Promise.reject(new Error('network down'));
@@ -174,11 +187,18 @@ describe('optional manager webhook', () => {
         );
         assert.equal(result.sent, true);
         assert.equal(calls.length, 1);
-        assert.equal(calls[0].url, 'https://example.test/hook');
+        assert.equal(calls[0].url, 'https://ntfy.sh/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121');
         assert.equal(calls[0].opts.method, 'POST');
         assert.equal(calls[0].opts.keepalive, true);
-        assert.equal(JSON.parse(calls[0].opts.body).source, 'contact_form');
-        assert.equal(JSON.parse(calls[0].opts.body).city, 'afula');
+        assert.equal(calls[0].opts.headers['Content-Type'], 'text/plain; charset=utf-8');
+        assert.equal(calls[0].opts.headers.Title, 'NirFit ליד');
+        assert.equal(calls[0].opts.headers.Tags, 'envelope');
+        assert.equal(calls[0].opts.headers.Priority, 'default');
+        assert.equal(
+            calls[0].opts.body,
+            'NirFit ליד | 2026-09-12T18:22:00.000Z | דנה | 0542063967 | afula | /afula/'
+        );
+        assert.equal(calls[0].opts.body.includes('{'), false);
         await Promise.resolve();
     });
 
@@ -198,11 +218,19 @@ describe('optional manager webhook', () => {
 });
 
 describe('static HTML and script wiring', () => {
-    it('keeps an empty NIRFIT_FORM_WEBHOOK constant at the top of script.js', () => {
+    it('wires the public ntfy.sh sink at the top of script.js', () => {
         const script = read('script.js');
-        assert.match(script, /window\.NIRFIT_FORM_WEBHOOK\s*=\s*'';/);
-        assert.ok(script.indexOf("window.NIRFIT_FORM_WEBHOOK = '';") < script.indexOf('Preloader'));
-        assert.match(script, /keepalive:\s*true/);
+        const helper = read('form-lead.js');
+        assert.match(
+            script,
+            /window\.NIRFIT_FORM_WEBHOOK\s*=\s*'https:\/\/ntfy\.sh\/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121';/
+        );
+        assert.ok(script.indexOf("window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/") < script.indexOf('Preloader'));
+        assert.match(helper, /keepalive:\s*true/);
+        assert.match(helper, /text\/plain; charset=utf-8/);
+        assert.match(helper, /Title': 'NirFit ליד'/);
+        assert.match(helper, /Tags': 'envelope'/);
+        assert.match(helper, /Priority': 'default'/);
         assert.match(script, /source:\s*'contact_form'/);
         assert.match(script, /NirFit ליד/);
         assert.match(script, /nirfit-form-webhook/);
@@ -210,6 +238,8 @@ describe('static HTML and script wiring', () => {
         assert.equal(script.includes('close_convert_lead'), false);
         assert.equal(script.includes('generate_lead'), false);
         assert.doesNotMatch(script, /send_to:\s*'AW-/);
+        assert.equal(script.includes('crsr_'), false);
+        assert.equal(helper.includes('crsr_'), false);
     });
 
     it('adds hidden city and page fields on homepage and both city forms', () => {
@@ -227,6 +257,11 @@ describe('static HTML and script wiring', () => {
         [home, afula, kiryat].forEach((html) => {
             assert.match(html, /id="contactForm"/);
             assert.match(html, /form-lead\.js/);
+            assert.match(
+                html,
+                /<meta name="nirfit-form-webhook" content="https:\/\/ntfy\.sh\/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121">/
+            );
+            assert.equal(html.includes('crsr_'), false);
         });
     });
 
@@ -242,11 +277,11 @@ describe('static HTML and script wiring', () => {
         });
     });
 
-    it('does not add an unknown webhook host to connect-src', () => {
+    it('allows https://ntfy.sh in connect-src and keeps web3forms', () => {
         ['index.html', 'afula/index.html', 'kiryat-bialik/index.html'].forEach((name) => {
             const hosts = connectSrcHosts(cspContent(read(name)));
             assert.ok(hosts.includes('https://api.web3forms.com'), name + ' must keep web3forms');
-            assert.equal(hosts.some((host) => /webhook|hooks\./i.test(host)), false);
+            assert.ok(hosts.includes('https://ntfy.sh'), name + ' connect-src must allow ntfy.sh');
         });
     });
 });

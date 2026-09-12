@@ -39,6 +39,11 @@
         ].join('\n');
     }
 
+    function buildWebhookBody(fields) {
+        fields = fields || {};
+        return 'NirFit ליד | ' + trimStr(fields.date) + ' | ' + trimStr(fields.name) + ' | ' + trimStr(fields.phone) + ' | ' + trimStr(fields.city) + ' | ' + trimStr(fields.page);
+    }
+
     function resolveWebhookUrl(options) {
         options = options || {};
         var win = options.window != null ? options.window : (typeof window !== 'undefined' ? window : null);
@@ -68,10 +73,12 @@
             var req = fetchFn(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'text/plain; charset=utf-8',
+                    'Title': 'NirFit ליד',
+                    'Tags': 'envelope',
+                    'Priority': 'default'
                 },
-                body: JSON.stringify(payload),
+                body: buildWebhookBody(payload),
                 keepalive: true
             });
             if (req && typeof req.catch === 'function') {
@@ -120,6 +127,7 @@
         canonicalPage: canonicalPage,
         buildSubject: buildSubject,
         buildEmailBody: buildEmailBody,
+        buildWebhookBody: buildWebhookBody,
         resolveWebhookUrl: resolveWebhookUrl,
         notifyWebhook: notifyWebhook,
         enrichFormData: enrichFormData

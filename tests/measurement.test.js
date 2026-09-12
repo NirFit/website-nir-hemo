@@ -444,7 +444,8 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
                 'https://www.googletagmanager.com',
                 'https://analytics.google.com',
                 'https://www.googleadservices.com',
-                'https://ad.doubleclick.net'
+                'https://ad.doubleclick.net',
+                'https://ntfy.sh'
             ].forEach((host) => {
                 assert.ok(hosts.includes(host), name + ' connect-src missing ' + host);
             });
@@ -472,6 +473,7 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
         });
         assert.ok(hosts.includes("'self'"));
         assert.ok(hosts.includes('https://api.web3forms.com'));
+        assert.ok(hosts.includes('https://ntfy.sh'));
         assert.equal(hosts.includes('https://www.google.co.il'), false);
         assert.equal(hosts.includes('https://google.com'), false);
     });

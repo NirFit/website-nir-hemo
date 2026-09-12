@@ -1,6 +1,6 @@
-// Paste the manager webhook URL here after the alert routine is created.
-// Empty = skip the second POST silently. Also accepts <meta name="nirfit-form-webhook">.
-window.NIRFIT_FORM_WEBHOOK = '';
+// Public ntfy.sh sink for form-lead alerts. Grok Bot cron polls this topic.
+// Also accepted via <meta name="nirfit-form-webhook">. Empty still skips the POST.
+window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121';
 
 // ==============================
 // Preloader — hide as soon as content is ready (critical for paid mobile traffic)
@@ -642,33 +642,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.style.background = '#25d366';
                 submitBtn.style.borderColor = '#25d366';
 
-                // Optional manager webhook — never blocks the success UI.
-                var webhookUrl = leadHelpers && leadHelpers.resolveWebhookUrl
-                    ? leadHelpers.resolveWebhookUrl({ window: window, document: document })
-                    : String(window.NIRFIT_FORM_WEBHOOK || '').trim();
-                if (!webhookUrl) {
-                    var webhookMeta = document.querySelector('meta[name="nirfit-form-webhook"]');
-                    if (webhookMeta) webhookUrl = String(webhookMeta.getAttribute('content') || '').trim();
-                }
-                if (webhookUrl) {
-                    try {
-                        fetch(webhookUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                date: lead.date,
-                                name: lead.name,
-                                phone: lead.phone,
-                                city: lead.city,
-                                page: lead.page,
-                                source: 'contact_form'
-                            }),
-                            keepalive: true
-                        }).catch(function () { /* ignore webhook failures */ });
-                    } catch (e) { /* ignore webhook failures */ }
+                // ntfy.sh sink — never blocks the success UI. Failures stay silent.
+                if (leadHelpers && leadHelpers.notifyWebhook) {
+                    leadHelpers.notifyWebhook(lead, { window: window, document: document });
+                } else {
+                    var webhookUrl = String(window.NIRFIT_FORM_WEBHOOK || '').trim();
+                    if (!webhookUrl) {
+                        var webhookMeta = document.querySelector('meta[name="nirfit-form-webhook"]');
+                        if (webhookMeta) webhookUrl = String(webhookMeta.getAttribute('content') || '').trim();
+                    }
+                    if (webhookUrl) {
+                        try {
+                            fetch(webhookUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'text/plain; charset=utf-8',
+                                    'Title': (leadHelpers && leadHelpers.encodeHeaderValue)
+                                        ? leadHelpers.encodeHeaderValue('NirFit ליד')
+                                        : 'NirFit lead',
+                                    'Tags': 'envelope',
+                                    'Priority': 'default'
+                                },
+                                body: 'NirFit ליד | ' + lead.date + ' | ' + lead.name + ' | ' + lead.phone + ' | ' + lead.city + ' | ' + lead.page,
+                                keepalive: true
+                            }).catch(function () { /* ignore webhook failures */ });
+                        } catch (e) { /* ignore webhook failures */ }
+                    }
                 }
             } else {
                 submitBtn.innerHTML = '<i class="fas fa-times"></i> שגיאה, נסו שוב';

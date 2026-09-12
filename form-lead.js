@@ -39,6 +39,29 @@
         ].join('\n');
     }
 
+    function buildWebhookBody(fields) {
+        fields = fields || {};
+        return 'NirFit ליד | ' + trimStr(fields.date) + ' | ' + trimStr(fields.name) + ' | ' + trimStr(fields.phone) + ' | ' + trimStr(fields.city) + ' | ' + trimStr(fields.page);
+    }
+
+    function utf8ToBase64(value) {
+        if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
+            return Buffer.from(value, 'utf8').toString('base64');
+        }
+        return btoa(unescape(encodeURIComponent(value)));
+    }
+
+    // Browsers reject non-ISO-8859-1 fetch headers. ntfy decodes RFC 2047.
+    function encodeHeaderValue(value) {
+        value = trimStr(value);
+        for (var i = 0; i < value.length; i++) {
+            if (value.charCodeAt(i) > 255) {
+                return '=?UTF-8?B?' + utf8ToBase64(value) + '?=';
+            }
+        }
+        return value;
+    }
+
     function resolveWebhookUrl(options) {
         options = options || {};
         var win = options.window != null ? options.window : (typeof window !== 'undefined' ? window : null);
@@ -68,10 +91,12 @@
             var req = fetchFn(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'text/plain; charset=utf-8',
+                    'Title': encodeHeaderValue('NirFit ליד'),
+                    'Tags': 'envelope',
+                    'Priority': 'default'
                 },
-                body: JSON.stringify(payload),
+                body: buildWebhookBody(payload),
                 keepalive: true
             });
             if (req && typeof req.catch === 'function') {
@@ -120,6 +145,8 @@
         canonicalPage: canonicalPage,
         buildSubject: buildSubject,
         buildEmailBody: buildEmailBody,
+        buildWebhookBody: buildWebhookBody,
+        encodeHeaderValue: encodeHeaderValue,
         resolveWebhookUrl: resolveWebhookUrl,
         notifyWebhook: notifyWebhook,
         enrichFormData: enrichFormData

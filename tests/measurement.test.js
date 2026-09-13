@@ -578,14 +578,49 @@ describe('city landing pages for Ads Final-URL remap', () => {
         assert.ok(kiryat.indexOf(line) < kiryat.indexOf('כל מסלול מתחיל בפגישת היכרות'));
         assert.equal(afula.includes(line), false);
         assert.match(kiryat, /<h1>אימון אישי 1:1 בסטודיו בקריית ביאליק — פגישת היכרות חינם<\/h1>/);
-        assert.match(afula, /<h1>אימון אישי 1:1 בחדר כושר בעפולה — פגישת היכרות חינם<\/h1>/);
+        assert.match(afula, /<h1>אימון אישי 1:1 בעפולה — פגישת היכרות חינם<\/h1>/);
+    });
+
+    it('sells Afula as personal training 1:1, not a gym offer', () => {
+        const afula = readCityPage('afula');
+        const kiryat = readCityPage('kiryat-bialik');
+        const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+        const script = fs.readFileSync(path.join(root, 'script.js'), 'utf8');
+        const afulaCard = home.slice(home.indexOf('data-city="afula"'), home.indexOf('data-city="afula"') + 1800);
+
+        assert.match(afula, /<h1>אימון אישי 1:1 בעפולה — פגישת היכרות חינם<\/h1>/);
+        assert.match(afula, /אימון אחד-על-אחד של 45 דק׳ בעפולה/);
+        assert.match(afula, /אימון 1:1 בעפולה/);
+        assert.match(afula, /<span class="text-primary">בעפולה<\/span>/);
+        assert.match(afula, /אימונים אישיים אחד-על-אחד — תוכנית מותאמת/);
+        assert.match(afula, /מקום אימון בעפולה/);
+        assert.match(afula, /<option value="afula" selected>עפולה — אימון אישי 1:1<\/option>/);
+        assert.match(afula, /אימון אישי 1:1 בעפולה\.<br>פגישת היכרות ובדיקת גוף חינם\./);
+        assert.doesNotMatch(afula, /חדר כושר/);
+
+        assert.match(kiryat, /<option value="kiryat-bialik" selected>קריית ביאליק — סטודיו<\/option>/);
+        assert.doesNotMatch(kiryat, /<option value="krayot"/);
+        assert.match(kiryat, /<option value="afula">עפולה — אימון אישי 1:1<\/option>/);
+        assert.doesNotMatch(kiryat, /עפולה — חדר כושר/);
+        assert.match(kiryat, /<h1>אימון אישי 1:1 בסטודיו בקריית ביאליק — פגישת היכרות חינם<\/h1>/);
+
+        assert.match(afulaCard, /אימון אישי 1:1 - עפולה/);
+        assert.match(afulaCard, /אימונים אישיים 1:1 בעפולה/);
+        assert.doesNotMatch(afulaCard, /חדר כושר/);
+
+        assert.match(script, /'afula': 'אימון אישי 1:1 בעפולה'/);
+        assert.doesNotMatch(script, /חדר כושר עפולה/);
+
+        const waBeforeForm = afula.indexOf('ווטסאפ — עפולה') < afula.indexOf('id="contactForm"');
+        assert.equal(waBeforeForm, true);
+        assert.doesNotMatch(afula, /₪|שקל|ש"ח/);
     });
 
     it('publishes /afula and /kiryat-bialik with city H1, static 770/13 stats, and no prices', () => {
         const afula = readCityPage('afula');
         const kiryat = readCityPage('kiryat-bialik');
 
-        assert.match(afula, /<h1>אימון אישי 1:1 בחדר כושר בעפולה/);
+        assert.match(afula, /<h1>אימון אישי 1:1 בעפולה/);
         assert.match(kiryat, /<h1>אימון אישי 1:1 בסטודיו בקריית ביאליק/);
         assert.match(afula, /data-city="afula"/);
         assert.match(kiryat, /data-city="kiryat-bialik"/);

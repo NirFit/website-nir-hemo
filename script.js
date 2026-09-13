@@ -548,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const locationMap = {
             'krayot': 'סטודיו קריית ביאליק',
             'kiryat-bialik': 'סטודיו קריית ביאליק',
-            'afula': 'חדר כושר עפולה',
+            'afula': 'אימון אישי 1:1 בעפולה',
             'both': 'שניהם'
         };
 

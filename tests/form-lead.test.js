@@ -19,6 +19,14 @@ function hiddenValue(html, name) {
     return value ? value[1] : '';
 }
 
+function selectedOptionValue(html, selectId) {
+    const select = html.match(new RegExp('<select[^>]*id="' + selectId + '"[^>]*>[\\s\\S]*?<\\/select>', 'i'));
+    if (!select) return null;
+    const selected = select[0].match(/<option[^>]*value="([^"]*)"[^>]*selected/i)
+        || select[0].match(/<option[^>]*selected[^>]*value="([^"]*)"/i);
+    return selected ? selected[1] : null;
+}
+
 function cspContent(html) {
     const match = html.match(/http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i);
     return match ? match[1] : '';
@@ -262,6 +270,10 @@ describe('static HTML and script wiring', () => {
         assert.equal(hiddenValue(afula, 'page'), '/afula/');
         assert.equal(hiddenValue(kiryat, 'city'), 'kiryat-bialik');
         assert.equal(hiddenValue(kiryat, 'page'), '/kiryat-bialik/');
+        assert.equal(selectedOptionValue(afula, 'contactLocation'), 'afula');
+        assert.equal(selectedOptionValue(kiryat, 'contactLocation'), 'kiryat-bialik');
+        assert.match(kiryat, /<option value="kiryat-bialik" selected>קריית ביאליק — סטודיו<\/option>/);
+        assert.doesNotMatch(kiryat, /<option value="krayot"/);
 
         [home, afula, kiryat].forEach((html) => {
             assert.match(html, /id="contactForm"/);

@@ -194,7 +194,7 @@ describe('optional manager webhook', () => {
                 source: 'contact_form'
             },
             {
-                url: 'https://ntfy.sh/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121',
+                url: 'https://ntfy.sh/nirfit-leads-67427db2ff47a4d64f27a8936f546da8',
                 fetch(url, opts) {
                     calls.push({ url, opts });
                     return Promise.reject(new Error('network down'));
@@ -203,7 +203,7 @@ describe('optional manager webhook', () => {
         );
         assert.equal(result.sent, true);
         assert.equal(calls.length, 1);
-        assert.equal(calls[0].url, 'https://ntfy.sh/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121');
+        assert.equal(calls[0].url, 'https://ntfy.sh/nirfit-leads-67427db2ff47a4d64f27a8936f546da8');
         assert.equal(calls[0].opts.method, 'POST');
         assert.equal(calls[0].opts.keepalive, true);
         assert.equal(calls[0].opts.headers['Content-Type'], 'text/plain; charset=utf-8');
@@ -240,7 +240,7 @@ describe('static HTML and script wiring', () => {
         const helper = read('form-lead.js');
         assert.match(
             script,
-            /window\.NIRFIT_FORM_WEBHOOK\s*=\s*'https:\/\/ntfy\.sh\/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121';/
+            /window\.NIRFIT_FORM_WEBHOOK\s*=\s*'https:\/\/ntfy\.sh\/nirfit-leads-67427db2ff47a4d64f27a8936f546da8';/
         );
         assert.ok(script.indexOf("window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/") < script.indexOf('Preloader'));
         assert.match(helper, /keepalive:\s*true/);
@@ -280,7 +280,7 @@ describe('static HTML and script wiring', () => {
             assert.match(html, /form-lead\.js/);
             assert.match(
                 html,
-                /<meta name="nirfit-form-webhook" content="https:\/\/ntfy\.sh\/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121">/
+                /<meta name="nirfit-form-webhook" content="https:\/\/ntfy\.sh\/nirfit-leads-67427db2ff47a4d64f27a8936f546da8">/
             );
             assert.equal(html.includes('crsr_'), false);
         });

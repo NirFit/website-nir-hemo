@@ -1,6 +1,6 @@
 // Public ntfy.sh sink for form-lead alerts. Grok Bot cron polls this topic.
 // Also accepted via <meta name="nirfit-form-webhook">. Empty still skips the POST.
-window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/nirfit-leads-51c1b3a4b8910d6309d9553bcf4c8121';
+window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/nirfit-leads-67427db2ff47a4d64f27a8936f546da8';
 
 // ==============================
 // Preloader — hide as soon as content is ready (critical for paid mobile traffic)

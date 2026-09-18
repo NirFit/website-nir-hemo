@@ -1,6 +1,6 @@
 /**
  * Contact-form lead payload helpers.
- * Enriches the Web3Forms email and an optional manager webhook.
+ * Enriches the Web3Forms email with structured lead data.
  * lead_submit stays GA4-only in measurement.js — this file never talks to Ads.
  */
 (function (root, factory) {
@@ -37,75 +37,6 @@
             'city: ' + trimStr(fields.city),
             'page: ' + trimStr(fields.page)
         ].join('\n');
-    }
-
-    function buildWebhookBody(fields) {
-        fields = fields || {};
-        return 'NirFit ליד | ' + trimStr(fields.date) + ' | ' + trimStr(fields.name) + ' | ' + trimStr(fields.phone) + ' | ' + trimStr(fields.city) + ' | ' + trimStr(fields.page);
-    }
-
-    function utf8ToBase64(value) {
-        if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
-            return Buffer.from(value, 'utf8').toString('base64');
-        }
-        return btoa(unescape(encodeURIComponent(value)));
-    }
-
-    // Browsers reject non-ISO-8859-1 fetch headers. ntfy decodes RFC 2047.
-    function encodeHeaderValue(value) {
-        value = trimStr(value);
-        for (var i = 0; i < value.length; i++) {
-            if (value.charCodeAt(i) > 255) {
-                return '=?UTF-8?B?' + utf8ToBase64(value) + '?=';
-            }
-        }
-        return value;
-    }
-
-    function resolveWebhookUrl(options) {
-        options = options || {};
-        var win = options.window != null ? options.window : (typeof window !== 'undefined' ? window : null);
-        var doc = options.document != null ? options.document : (typeof document !== 'undefined' ? document : null);
-        try {
-            if (win && trimStr(win.NIRFIT_FORM_WEBHOOK)) {
-                return trimStr(win.NIRFIT_FORM_WEBHOOK);
-            }
-            var meta = doc && doc.querySelector && doc.querySelector('meta[name="nirfit-form-webhook"]');
-            if (meta) {
-                var content = trimStr(meta.getAttribute ? meta.getAttribute('content') : meta.content);
-                if (content) return content;
-            }
-        } catch (e) { /* empty webhook must stay silent */ }
-        return '';
-    }
-
-    function notifyWebhook(payload, options) {
-        options = options || {};
-        var url = trimStr(options.url != null ? options.url : resolveWebhookUrl(options));
-        if (!url) return { sent: false, reason: 'empty' };
-
-        var fetchFn = options.fetch || (typeof fetch !== 'undefined' ? fetch : null);
-        if (!fetchFn) return { sent: false, reason: 'no-fetch' };
-
-        try {
-            var req = fetchFn(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'text/plain; charset=utf-8',
-                    'Title': encodeHeaderValue('NirFit ליד'),
-                    'Tags': 'envelope',
-                    'Priority': 'default'
-                },
-                body: buildWebhookBody(payload),
-                keepalive: true
-            });
-            if (req && typeof req.catch === 'function') {
-                req.catch(function () { /* webhook must never block success UI */ });
-            }
-            return { sent: true };
-        } catch (e) {
-            return { sent: false, reason: 'error' };
-        }
     }
 
     function enrichFormData(formData, options) {
@@ -145,10 +76,6 @@
         canonicalPage: canonicalPage,
         buildSubject: buildSubject,
         buildEmailBody: buildEmailBody,
-        buildWebhookBody: buildWebhookBody,
-        encodeHeaderValue: encodeHeaderValue,
-        resolveWebhookUrl: resolveWebhookUrl,
-        notifyWebhook: notifyWebhook,
         enrichFormData: enrichFormData
     };
 });

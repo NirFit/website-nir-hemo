@@ -74,27 +74,6 @@ describe('canonical page and email subject', () => {
         assert.match(body, /city: afula/);
         assert.match(body, /page: \/afula\//);
     });
-
-    it('builds a single UTF-8 ntfy line for the manager webhook', () => {
-        assert.equal(
-            formLead.buildWebhookBody({
-                date: '2026-09-12T18:22:00.000Z',
-                name: 'דנה',
-                phone: '0542063967',
-                city: 'afula',
-                page: '/afula/'
-            }),
-            'NirFit ליד | 2026-09-12T18:22:00.000Z | דנה | 0542063967 | afula | /afula/'
-        );
-    });
-
-    it('RFC-2047-encodes Hebrew header values so browsers can send them', () => {
-        const encoded = formLead.encodeHeaderValue('NirFit ליד');
-        assert.equal(encoded, '=?UTF-8?B?' + Buffer.from('NirFit ליד', 'utf8').toString('base64') + '?=');
-        assert.equal([...encoded].every((ch) => ch.charCodeAt(0) <= 255), true);
-        assert.equal(formLead.encodeHeaderValue('envelope'), 'envelope');
-        assert.equal(formLead.encodeHeaderValue('default'), 'default');
-    });
 });
 
 describe('enrichFormData for Web3Forms', () => {
@@ -136,121 +115,18 @@ describe('enrichFormData for Web3Forms', () => {
     });
 });
 
-describe('optional manager webhook', () => {
-    it('skips silently when the window constant and meta tag are empty', () => {
-        const calls = [];
-        const result = formLead.notifyWebhook(
-            { date: '2026-09-12T18:22:00.000Z', source: 'contact_form' },
-            {
-                window: { NIRFIT_FORM_WEBHOOK: '' },
-                document: { querySelector() { return null; } },
-                fetch: () => { calls.push('fetch'); }
-            }
-        );
-        assert.equal(result.sent, false);
-        assert.equal(result.reason, 'empty');
-        assert.equal(calls.length, 0);
-        assert.equal(formLead.resolveWebhookUrl({
-            window: { NIRFIT_FORM_WEBHOOK: '' },
-            document: { querySelector() { return null; } }
-        }), '');
-    });
-
-    it('prefers window.NIRFIT_FORM_WEBHOOK over the meta tag', () => {
-        const url = formLead.resolveWebhookUrl({
-            window: { NIRFIT_FORM_WEBHOOK: 'https://example.test/hook' },
-            document: {
-                querySelector() {
-                    return { getAttribute() { return 'https://example.test/meta'; } };
-                }
-            }
-        });
-        assert.equal(url, 'https://example.test/hook');
-    });
-
-    it('falls back to meta[name="nirfit-form-webhook"] when the constant is empty', () => {
-        const url = formLead.resolveWebhookUrl({
-            window: { NIRFIT_FORM_WEBHOOK: '' },
-            document: {
-                querySelector(sel) {
-                    return sel === 'meta[name="nirfit-form-webhook"]'
-                        ? { getAttribute() { return 'https://example.test/meta'; } }
-                        : null;
-                }
-            }
-        });
-        assert.equal(url, 'https://example.test/meta');
-    });
-
-    it('POSTs a plain-text ntfy line with keepalive and does not throw when fetch rejects', async () => {
-        const calls = [];
-        const result = formLead.notifyWebhook(
-            {
-                date: '2026-09-12T18:22:00.000Z',
-                name: 'דנה',
-                phone: '0542063967',
-                city: 'afula',
-                page: '/afula/',
-                source: 'contact_form'
-            },
-            {
-                url: 'https://ntfy.sh/nirfit-leads-67427db2ff47a4d64f27a8936f546da8',
-                fetch(url, opts) {
-                    calls.push({ url, opts });
-                    return Promise.reject(new Error('network down'));
-                }
-            }
-        );
-        assert.equal(result.sent, true);
-        assert.equal(calls.length, 1);
-        assert.equal(calls[0].url, 'https://ntfy.sh/nirfit-leads-67427db2ff47a4d64f27a8936f546da8');
-        assert.equal(calls[0].opts.method, 'POST');
-        assert.equal(calls[0].opts.keepalive, true);
-        assert.equal(calls[0].opts.headers['Content-Type'], 'text/plain; charset=utf-8');
-        assert.equal(calls[0].opts.headers.Title, formLead.encodeHeaderValue('NirFit ליד'));
-        assert.equal([...calls[0].opts.headers.Title].every((ch) => ch.charCodeAt(0) <= 255), true);
-        assert.equal(calls[0].opts.headers.Tags, 'envelope');
-        assert.equal(calls[0].opts.headers.Priority, 'default');
-        assert.equal(
-            calls[0].opts.body,
-            'NirFit ליד | 2026-09-12T18:22:00.000Z | דנה | 0542063967 | afula | /afula/'
-        );
-        assert.equal(calls[0].opts.body.includes('{'), false);
-        await Promise.resolve();
-    });
-
-    it('swallows a synchronous fetch throw so success UI can still run', () => {
-        assert.doesNotThrow(() => {
-            const result = formLead.notifyWebhook(
-                { source: 'contact_form' },
-                {
-                    url: 'https://example.test/hook',
-                    fetch() { throw new Error('blocked'); }
-                }
-            );
-            assert.equal(result.sent, false);
-            assert.equal(result.reason, 'error');
-        });
-    });
-});
-
 describe('static HTML and script wiring', () => {
-    it('wires the public ntfy.sh sink at the top of script.js', () => {
+    it('script.js has no public ntfy.sh webhook and form-lead.js delivers via Web3Forms only', () => {
         const script = read('script.js');
         const helper = read('form-lead.js');
-        assert.match(
-            script,
-            /window\.NIRFIT_FORM_WEBHOOK\s*=\s*'https:\/\/ntfy\.sh\/nirfit-leads-67427db2ff47a4d64f27a8936f546da8';/
-        );
-        assert.ok(script.indexOf("window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/") < script.indexOf('Preloader'));
-        assert.match(helper, /keepalive:\s*true/);
-        assert.match(helper, /text\/plain; charset=utf-8/);
-        assert.match(helper, /encodeHeaderValue\('NirFit ליד'\)/);
-        assert.match(helper, /Tags': 'envelope'/);
-        assert.match(helper, /Priority': 'default'/);
+        // ntfy must be gone from client code
+        assert.equal(script.includes('ntfy.sh'), false, 'script.js must not reference ntfy.sh');
+        assert.equal(script.includes('NIRFIT_FORM_WEBHOOK'), false, 'script.js must not set NIRFIT_FORM_WEBHOOK');
+        assert.equal(helper.includes('ntfy.sh'), false, 'form-lead.js must not reference ntfy.sh');
+        assert.equal(helper.includes('notifyWebhook'), false, 'form-lead.js must not export notifyWebhook');
+        // Web3Forms wiring stays intact
         assert.match(script, /source:\s*'contact_form'/);
         assert.match(script, /NirFit ליד/);
-        assert.match(script, /nirfit-form-webhook/);
         assert.match(script, /NirFitMeasurement\.trackLeadSubmit/);
         assert.equal(script.includes('close_convert_lead'), false);
         assert.equal(script.includes('generate_lead'), false);
@@ -278,10 +154,8 @@ describe('static HTML and script wiring', () => {
         [home, afula, kiryat].forEach((html) => {
             assert.match(html, /id="contactForm"/);
             assert.match(html, /form-lead\.js/);
-            assert.match(
-                html,
-                /<meta name="nirfit-form-webhook" content="https:\/\/ntfy\.sh\/nirfit-leads-67427db2ff47a4d64f27a8936f546da8">/
-            );
+            // ntfy meta tag must be gone from all pages
+            assert.equal(html.includes('nirfit-form-webhook'), false, 'ntfy meta tag must not appear in ' + html.slice(0, 50));
             assert.equal(html.includes('crsr_'), false);
         });
     });
@@ -298,11 +172,11 @@ describe('static HTML and script wiring', () => {
         });
     });
 
-    it('allows https://ntfy.sh in connect-src and keeps web3forms', () => {
+    it('connect-src allows web3forms but NOT ntfy.sh', () => {
         ['index.html', 'afula/index.html', 'kiryat-bialik/index.html'].forEach((name) => {
             const hosts = connectSrcHosts(cspContent(read(name)));
             assert.ok(hosts.includes('https://api.web3forms.com'), name + ' must keep web3forms');
-            assert.ok(hosts.includes('https://ntfy.sh'), name + ' connect-src must allow ntfy.sh');
+            assert.equal(hosts.includes('https://ntfy.sh'), false, name + ' must NOT expose ntfy.sh in connect-src');
         });
     });
 });

@@ -1,7 +1,3 @@
-// Public ntfy.sh sink for form-lead alerts. Grok Bot cron polls this topic.
-// Also accepted via <meta name="nirfit-form-webhook">. Empty still skips the POST.
-window.NIRFIT_FORM_WEBHOOK = 'https://ntfy.sh/nirfit-leads-67427db2ff47a4d64f27a8936f546da8';
-
 // ==============================
 // Preloader — hide as soon as content is ready (critical for paid mobile traffic)
 // ==============================
@@ -642,33 +638,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.style.background = '#25d366';
                 submitBtn.style.borderColor = '#25d366';
 
-                // ntfy.sh sink — never blocks the success UI. Failures stay silent.
-                if (leadHelpers && leadHelpers.notifyWebhook) {
-                    leadHelpers.notifyWebhook(lead, { window: window, document: document });
-                } else {
-                    var webhookUrl = String(window.NIRFIT_FORM_WEBHOOK || '').trim();
-                    if (!webhookUrl) {
-                        var webhookMeta = document.querySelector('meta[name="nirfit-form-webhook"]');
-                        if (webhookMeta) webhookUrl = String(webhookMeta.getAttribute('content') || '').trim();
-                    }
-                    if (webhookUrl) {
-                        try {
-                            fetch(webhookUrl, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'text/plain; charset=utf-8',
-                                    'Title': (leadHelpers && leadHelpers.encodeHeaderValue)
-                                        ? leadHelpers.encodeHeaderValue('NirFit ליד')
-                                        : 'NirFit lead',
-                                    'Tags': 'envelope',
-                                    'Priority': 'default'
-                                },
-                                body: 'NirFit ליד | ' + lead.date + ' | ' + lead.name + ' | ' + lead.phone + ' | ' + lead.city + ' | ' + lead.page,
-                                keepalive: true
-                            }).catch(function () { /* ignore webhook failures */ });
-                        } catch (e) { /* ignore webhook failures */ }
-                    }
-                }
             } else {
                 submitBtn.innerHTML = '<i class="fas fa-times"></i> שגיאה, נסו שוב';
                 submitBtn.style.background = '#e74c3c';

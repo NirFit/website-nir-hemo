@@ -292,9 +292,22 @@
     }
 
     function getGtag(options) {
-        if (options && options.gtag) return options.gtag;
-        if (typeof gtag === 'function') return gtag;
+        if (options && typeof options.gtag === 'function') return options.gtag;
+        var globalObj = typeof window !== 'undefined' ? window
+            : (typeof globalThis !== 'undefined' ? globalThis : null);
+        if (globalObj && typeof globalObj.gtag === 'function') return globalObj.gtag;
         return null;
+    }
+
+    // Live CTAs use target=_blank. Hijacking them with preventDefault +
+    // location.href unloads the landing page before gtag flushes
+    // whatsapp_click / AW conversion (event_callback fires in ~10ms).
+    function isNewTabClick(link, event) {
+        if (event) {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return true;
+            if (event.button === 1) return true;
+        }
+        return !!(link && link.target === '_blank');
     }
 
     function fireGa4(gtagFn, eventName, params, extra) {
@@ -476,7 +489,8 @@
             bindOnce(link, 'click', function (e) {
                 var liveGtag = getGtag(options);
                 if (!hasGtag(liveGtag)) return;
-                e.preventDefault();
+                var keepPage = isNewTabClick(link, e);
+                if (!keepPage) e.preventDefault();
                 trackWhatsAppClick({
                     href: link.href,
                     source: whatsappSource(link),
@@ -485,8 +499,8 @@
                     gtag: liveGtag,
                     attribution: state.attribution,
                     lockKey: 'el-wa-' + (link.href || '') + '-' + whatsappSource(link),
-                    navigate: options.navigate,
-                    fallbackMs: options.fallbackMs
+                    navigate: keepPage ? function () {} : options.navigate,
+                    fallbackMs: keepPage ? 0 : options.fallbackMs
                 });
             });
         });
@@ -546,6 +560,7 @@
         messageContainsSensitiveIds: messageContainsSensitiveIds,
         getPageCity: getPageCity,
         cityFromElement: cityFromElement,
+        isNewTabClick: isNewTabClick,
         trackWhatsAppClick: trackWhatsAppClick,
         trackPhoneClick: trackPhoneClick,
         trackLeadSubmit: trackLeadSubmit,

@@ -52,6 +52,7 @@ function createLink(href, className, extras) {
     const el = {
         href,
         id: extras.id || '',
+        target: extras.target || '',
         parentElement: extras.parent || null,
         classList: {
             contains(name) { return classList.has(name); }
@@ -71,13 +72,18 @@ function createLink(href, className, extras) {
             listeners[type] = listeners[type] || [];
             listeners[type].push(fn);
         },
-        click() {
-            const event = {
+        click(overrides) {
+            const event = Object.assign({
                 defaultPrevented: false,
                 preventDefault() { event.defaultPrevented = true; },
                 currentTarget: el,
-                target: el
-            };
+                target: el,
+                metaKey: false,
+                ctrlKey: false,
+                shiftKey: false,
+                altKey: false,
+                button: 0
+            }, overrides || {});
             (listeners.click || []).forEach((fn) => fn(event));
             return event;
         }
@@ -311,6 +317,93 @@ describe('one activation = one canonical event', () => {
         assert.equal(eventCalls(gtag, 'whatsapp_click').length, 1);
         assert.equal(eventCalls(gtag, 'conversion').length, 1);
         assert.equal(eventCalls(gtag, 'phone_click').length, 1);
+    });
+
+    it('does not unload a target=_blank WhatsApp CTA, but still fires both conversion events once', () => {
+        const gtag = createGtagRecorder();
+        const navigations = [];
+        const wa = createLink(
+            'https://wa.me/972542063967?text=hi',
+            'btn-whatsapp',
+            { target: '_blank', attrs: { 'data-city': 'afula' } }
+        );
+        const doc = createDoc([wa]);
+        measurement.init({
+            document: doc,
+            gtag,
+            navigate: (url) => navigations.push(url),
+            force: true,
+            fallbackMs: 900,
+            location: { search: '', pathname: '/afula' }
+        });
+
+        const event = wa.click();
+        assert.equal(event.defaultPrevented, false);
+        assert.equal(navigations.length, 0);
+        assert.equal(eventCalls(gtag, 'whatsapp_click').length, 1);
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[0][2].city, 'afula');
+        assert.equal(eventCalls(gtag, 'whatsapp_click')[0][2].page_path, '/afula');
+        assert.equal(eventCalls(gtag, 'conversion').length, 1);
+        assert.equal(eventCalls(gtag, 'conversion')[0][2].send_to, 'AW-933342010/V4FuCNuUsJEcELrWhr0D');
+        assert.equal(eventCalls(gtag, 'conversion')[0][2].value, undefined);
+    });
+
+    it('still hijacks same-tab WhatsApp links so the hit can flush before navigate', () => {
+        const gtag = createGtagRecorder();
+        const navigations = [];
+        const wa = createLink('https://wa.me/972542063967?text=hi', 'btn-whatsapp');
+        const doc = createDoc([wa]);
+        measurement.init({
+            document: doc,
+            gtag,
+            navigate: (url) => navigations.push(url),
+            force: true,
+            fallbackMs: 0,
+            location: { search: '', pathname: '/' }
+        });
+
+        const event = wa.click();
+        assert.equal(event.defaultPrevented, true);
+        assert.equal(navigations.length, 1);
+        assert.equal(eventCalls(gtag, 'whatsapp_click').length, 1);
+        assert.equal(eventCalls(gtag, 'conversion').length, 1);
+    });
+
+    it('resolves gtag from the global object when init is not given a gtag option', () => {
+        const gtag = createGtagRecorder();
+        const previous = global.gtag;
+        global.gtag = gtag;
+        try {
+            const wa = createLink(
+                'https://wa.me/972542063967?text=hi',
+                'btn-whatsapp',
+                { target: '_blank', attrs: { 'data-city': 'kiryat-bialik' } }
+            );
+            const doc = createDoc([wa]);
+            measurement.init({
+                document: doc,
+                navigate() {},
+                force: true,
+                fallbackMs: 0,
+                location: { search: '', pathname: '/kiryat-bialik' }
+            });
+            wa.click();
+            assert.equal(eventCalls(gtag, 'whatsapp_click').length, 1);
+            assert.equal(eventCalls(gtag, 'whatsapp_click')[0][2].city, 'kiryat-bialik');
+            assert.equal(eventCalls(gtag, 'conversion').length, 1);
+        } finally {
+            global.gtag = previous;
+        }
+    });
+
+    it('treats modifier / middle clicks and target=_blank as new-tab activations', () => {
+        const blank = createLink('https://wa.me/972542063967?text=hi', 'btn-whatsapp', { target: '_blank' });
+        const sameTab = createLink('https://wa.me/972542063967?text=hi', 'btn-whatsapp');
+        assert.equal(measurement.isNewTabClick(blank, { button: 0 }), true);
+        assert.equal(measurement.isNewTabClick(sameTab, { button: 0 }), false);
+        assert.equal(measurement.isNewTabClick(sameTab, { ctrlKey: true, button: 0 }), true);
+        assert.equal(measurement.isNewTabClick(sameTab, { metaKey: true, button: 0 }), true);
+        assert.equal(measurement.isNewTabClick(sameTab, { button: 1 }), true);
     });
 
     it('includes city only when the page or element actually provides it', () => {

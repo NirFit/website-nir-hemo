@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typingEl) {
         const phrases = [
             'ניר חמו | מאמן כושר אישי מקצועי',
-            '13+ שנות ניסיון | מאות לקוחות מרוצים',
+            '13 שנות ניסיון | מאות לקוחות מרוצים',
             'סטודיו בקריות | אימונים בעפולה',
             'פגישת היכרות + בדיקת גוף - חינם!'
         ];
@@ -65,20 +65,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const stickyCta = document.getElementById('stickyCta');
     if (stickyCta) {
         const isMobile = () => window.innerWidth <= 768;
+        const syncStickyFocus = () => {
+            const shown = stickyCta.classList.contains('visible');
+            stickyCta.inert = !shown;
+            stickyCta.setAttribute('aria-hidden', shown ? 'false' : 'true');
+        };
         // On mobile the quick call / WhatsApp bar is available immediately — no need to scroll first.
         if (isMobile()) stickyCta.classList.add('visible');
         let stickyShown = isMobile();
+        syncStickyFocus();
         window.addEventListener('scroll', () => {
             if (isMobile()) {
-                if (!stickyShown) { stickyCta.classList.add('visible'); stickyShown = true; }
+                if (!stickyShown) { stickyCta.classList.add('visible'); stickyShown = true; syncStickyFocus(); }
                 return;
             }
             if (window.scrollY > 300 && !stickyShown) {
                 stickyCta.classList.add('visible');
                 stickyShown = true;
+                syncStickyFocus();
             } else if (window.scrollY <= 300 && stickyShown) {
                 stickyCta.classList.remove('visible');
                 stickyShown = false;
+                syncStickyFocus();
             }
         }, { passive: true });
     }
@@ -224,22 +232,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.getElementById('navLinks');
 
     if (navToggle && navLinks) {
+        const setNavOpen = (open) => {
+            navToggle.classList.toggle('active', open);
+            navLinks.classList.toggle('active', open);
+            navToggle.setAttribute('aria-expanded', open);
+            navToggle.setAttribute('aria-label', open ? 'סגור תפריט ניווט' : 'פתח תפריט ניווט');
+            document.body.style.overflow = open ? 'hidden' : '';
+            navLinks.inert = window.innerWidth <= 768 && !open;
+        };
+        setNavOpen(false);
+
         navToggle.addEventListener('click', () => {
-            const isOpen = navLinks.classList.contains('active');
-            navToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            navToggle.setAttribute('aria-expanded', !isOpen);
-            navToggle.setAttribute('aria-label', isOpen ? 'פתח תפריט ניווט' : 'סגור תפריט ניווט');
-            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            setNavOpen(!navLinks.classList.contains('active'));
         });
 
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-                document.body.style.overflow = '';
+                setNavOpen(false);
             });
         });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.inert = false;
+            } else if (!navLinks.classList.contains('active')) {
+                navLinks.inert = true;
+            }
+        }, { passive: true });
     }
 
     // ==============================

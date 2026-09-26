@@ -295,7 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', animateCounters, { passive: true });
-    animateCounters();
 
     // ==============================
     // Testimonials slider

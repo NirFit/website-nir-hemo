@@ -1888,6 +1888,10 @@ textarea:focus-visible {
     gap: 4px;
 }
 
+a.testimonial-badge {
+    text-decoration: none;
+}
+
 .testimonial-text {
     font-size: 1.1rem;
     line-height: 1.9;

@@ -617,6 +617,8 @@ describe('static audit of removed duplication and fake values', () => {
         assert.match(html, /AW-933342010/);
         assert.match(html, /מאות לקוחות מרוצים/);
         assert.match(html, /13 שנות ניסיון/);
+        assert.match(html, /data-target="13">13</);
+        assert.doesNotMatch(html, /data-target="13">0</);
         assert.doesNotMatch(html, /770/);
         assert.doesNotMatch(html, /data-target="96"/);
         assert.doesNotMatch(html, /אחוזי הצלחה/);
@@ -689,11 +691,11 @@ describe('city landing pages for Ads Final-URL remap', () => {
         assert.match(afula, /אימון אחד-על-אחד של 45 דק׳ בעפולה/);
         assert.match(afula, /אימון 1:1 בעפולה/);
         assert.match(afula, /<span class="text-primary">בעפולה<\/span>/);
-        assert.match(afula, /אימונים אישיים אחד-על-אחד — תוכנית מותאמת/);
-        assert.match(afula, /מקום אימון בעפולה/);
+        assert.match(afula, /אימונים אישיים אחד-על-אחד בחדר כושר — תוכנית מותאמת/);
+        assert.match(afula, /אימון אישי בחדר כושר/);
         assert.match(afula, /<option value="afula" selected>עפולה — אימון אישי 1:1<\/option>/);
         assert.match(afula, /אימון אישי 1:1 בעפולה\.<br>פגישת היכרות ובדיקת גוף חינם\./);
-        assert.doesNotMatch(afula, /חדר כושר/);
+        assert.match(afula, /חניה חינם/);
 
         assert.match(kiryat, /<option value="kiryat-bialik" selected>קריית ביאליק — סטודיו<\/option>/);
         assert.doesNotMatch(kiryat, /<option value="krayot"/);
@@ -703,7 +705,7 @@ describe('city landing pages for Ads Final-URL remap', () => {
 
         assert.match(afulaCard, /אימון אישי 1:1 - עפולה/);
         assert.match(afulaCard, /אימונים אישיים 1:1 בעפולה/);
-        assert.doesNotMatch(afulaCard, /חדר כושר/);
+        assert.match(afulaCard, /בחדר כושר/);
 
         assert.match(script, /'afula': 'אימון אישי 1:1 בעפולה'/);
         assert.doesNotMatch(script, /חדר כושר עפולה/);

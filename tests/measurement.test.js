@@ -604,6 +604,8 @@ describe('static audit of removed duplication and fake values', () => {
         assert.equal(measurementSrc.includes('nnPNCKTBu78cELrWhr0D'), false);
         assert.equal(scriptSrc.includes('querySelectorAll(\'a[href*="wa.me"]\')'), false);
         assert.equal(scriptSrc.includes('querySelectorAll(\'a[href^="tel:"]\')'), false);
+        assert.equal(scriptSrc.includes('animateCounters'), false, 'count-up animation must be removed');
+        assert.equal(scriptSrc.includes('[data-target]'), false, 'counter data-target listener must be removed');
     });
 
     it('index.html still has the live WhatsApp, phone and form CTAs that measurement binds', () => {
@@ -617,8 +619,9 @@ describe('static audit of removed duplication and fake values', () => {
         assert.match(html, /AW-933342010/);
         assert.match(html, /מאות לקוחות מרוצים/);
         assert.match(html, /13 שנות ניסיון/);
-        assert.match(html, /data-target="13">13</);
-        assert.doesNotMatch(html, /data-target="13">0</);
+        assert.match(html, /class="stat-number">13</);
+        assert.doesNotMatch(html, /data-target="/);
+        assert.doesNotMatch(html, /class="stat-number">0</);
         assert.doesNotMatch(html, /770/);
         assert.doesNotMatch(html, /data-target="96"/);
         assert.doesNotMatch(html, /אחוזי הצלחה/);

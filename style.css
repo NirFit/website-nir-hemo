@@ -3773,6 +3773,19 @@ a.contact-item:hover .contact-icon {
     font-size: 2.25rem;
     display: block;
     margin-bottom: 10px;
+    line-height: 1;
+}
+
+.comparison-emoji i {
+    color: inherit;
+}
+
+.comparison-column.with-nir .comparison-emoji {
+    color: var(--primary);
+}
+
+.comparison-column.alone .comparison-emoji {
+    color: var(--text-muted);
 }
 
 .comparison-result p {

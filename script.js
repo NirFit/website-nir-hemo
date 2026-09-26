@@ -280,42 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==============================
-    // Counter animation
-    // ==============================
-    const animateCounters = () => {
-        const counters = document.querySelectorAll('[data-target]');
-
-        counters.forEach(counter => {
-            if (counter.dataset.animated) return;
-
-            const rect = counter.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.85) {
-                counter.dataset.animated = 'true';
-                const target = parseInt(counter.dataset.target);
-                const duration = 2000;
-                const startTime = performance.now();
-
-                const updateCounter = (currentTime) => {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    counter.textContent = Math.floor(target * easeOut);
-
-                    if (progress < 1) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-
-                requestAnimationFrame(updateCounter);
-            }
-        });
-    };
-
-    window.addEventListener('scroll', animateCounters, { passive: true });
-
-    // ==============================
     // Testimonials slider
     // ==============================
     const track = document.getElementById('testimonialsTrack');

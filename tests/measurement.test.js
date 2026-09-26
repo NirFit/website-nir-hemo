@@ -529,7 +529,7 @@ describe('CSP allows GA4 and Google Ads measurement beacons', () => {
     }
 
     it('city landing pages include the same measurement connect-src hosts as the homepage', () => {
-        ['afula/index.html', 'kiryat-bialik/index.html'].forEach((name) => {
+        ['afula/index.html', 'kiryat-bialik/index.html', '404.html'].forEach((name) => {
             const html = fs.readFileSync(path.join(root, name), 'utf8');
             const csp = cspContent(html);
             const hosts = connectSrcHosts(csp);
@@ -615,6 +615,11 @@ describe('static audit of removed duplication and fake values', () => {
         assert.match(html, /id="contactForm"/);
         assert.match(html, /id="G-F41R697N61"|gtag\/js\?id=G-F41R697N61/);
         assert.match(html, /AW-933342010/);
+        assert.match(html, /מאות לקוחות מרוצים/);
+        assert.match(html, /13 שנות ניסיון/);
+        assert.doesNotMatch(html, /770/);
+        assert.doesNotMatch(html, /data-target="96"/);
+        assert.doesNotMatch(html, /אחוזי הצלחה/);
     });
 
     it('homepage city WhatsApp CTAs keep exact Hebrew text, data-city, and link to city pages', () => {
@@ -708,7 +713,7 @@ describe('city landing pages for Ads Final-URL remap', () => {
         assert.doesNotMatch(afula, /₪|שקל|ש"ח/);
     });
 
-    it('publishes /afula and /kiryat-bialik with city H1, static 770/13 stats, and no prices', () => {
+    it('publishes /afula and /kiryat-bialik with city H1, static hundreds-of-clients / 13 stats, and no prices', () => {
         const afula = readCityPage('afula');
         const kiryat = readCityPage('kiryat-bialik');
 
@@ -720,10 +725,11 @@ describe('city landing pages for Ads Final-URL remap', () => {
         assert.match(kiryat, /<body[^>]*data-city="kiryat-bialik"/);
 
         [afula, kiryat].forEach((html) => {
-            assert.match(html, />770</);
+            assert.match(html, /מאות לקוחות מרוצים/);
             assert.match(html, />13</);
-            assert.match(html, /770 לקוחות/);
             assert.match(html, /13 שנות ניסיון/);
+            assert.doesNotMatch(html, /770/);
+            assert.doesNotMatch(html, /אחוזי הצלחה/);
             assert.doesNotMatch(html, /data-target="/);
             assert.doesNotMatch(html, /class="stat-number">0</);
             assert.doesNotMatch(html, /₪|שקל|ש"ח/);
@@ -738,6 +744,30 @@ describe('city landing pages for Ads Final-URL remap', () => {
             assert.match(html, /AW-933342010/);
             assert.match(html, /gtag\/js\?id=G-F41R697N61/);
         });
+    });
+
+    it('404.html is noindex, uses homepage measurement snippets, and has a generic WhatsApp CTA', () => {
+        const html = fs.readFileSync(path.join(root, '404.html'), 'utf8');
+        assert.match(html, /lang="he"/);
+        assert.match(html, /dir="rtl"/);
+        assert.match(html, /name="robots" content="noindex"/);
+        assert.match(html, /<h1>הדף לא נמצא<\/h1>/);
+        assert.match(html, /מחפשים אימון אישי 1:1\? בחרו אזור:/);
+        assert.match(html, /href="\/afula\/"[^>]*>עפולה</);
+        assert.match(html, /href="\/kiryat-bialik\/"[^>]*>קריית ביאליק והקריות</);
+        assert.match(html, /כתבו בוואטסאפ/);
+        assert.match(html, /href="https:\/\/wa\.me\/972542063967/);
+        assert.match(html, /class="btn btn-whatsapp btn-lg"/);
+        assert.doesNotMatch(html, /data-city=/);
+        assert.match(html, /<script src="\/measurement\.js"><\/script>/);
+        assert.match(html, /<script src="\/security\.js"><\/script>/);
+        assert.match(html, /href="\/style\.css"/);
+        const defaultAt = html.indexOf("gtag('consent', 'default'");
+        const tagAt = html.indexOf('https://www.googletagmanager.com/gtag/js?id=G-F41R697N61');
+        assert.ok(defaultAt !== -1 && tagAt !== -1 && defaultAt < tagAt);
+        assert.match(html, /AW-933342010/);
+        assert.match(html, /id="cookieBanner"/);
+        assert.match(html, /http-equiv="Content-Security-Policy"/);
     });
 
     it('uses the same city WhatsApp copy as homepage cards and tags every WA/phone link', () => {

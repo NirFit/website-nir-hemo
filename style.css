@@ -756,6 +756,15 @@ textarea:focus-visible {
     margin-top: 4px;
 }
 
+.stat-static {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.35;
+    max-width: 9.5em;
+}
+
 .stat-divider {
     width: 1px;
     height: 40px;
@@ -2799,6 +2808,37 @@ a.contact-item:hover .contact-icon {
     font-size: 0.85rem;
 }
 
+.legal-page {
+    padding: 140px 0 80px;
+}
+
+.legal-updated {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+.legal-section {
+    margin-bottom: 32px;
+}
+
+.not-found-page {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.not-found-page h1 {
+    margin-bottom: 16px;
+}
+
+.not-found-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 28px 0 32px;
+}
+
 /* Reviews CTA */
 .reviews-cta {
     display: flex;
@@ -3225,6 +3265,7 @@ a.contact-item:hover .contact-icon {
     }
 
     .stat-number { font-size: 2rem; }
+    .stat-static { font-size: 1.1rem; }
     .stat-divider { height: 30px; }
 
     .about-features { grid-template-columns: 1fr; }
@@ -3311,6 +3352,11 @@ a.contact-item:hover .contact-icon {
     }
 
     .stat-number { font-size: 1.8rem; }
+
+    .stat-static {
+        font-size: 1.05rem;
+        max-width: none;
+    }
 
     .stat-divider {
         width: 40px;

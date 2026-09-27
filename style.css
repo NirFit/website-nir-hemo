@@ -2901,6 +2901,12 @@ a.contact-item:hover .contact-icon {
 .testimonials-grid .testimonial-card {
     min-width: 0;
     max-width: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonials-grid .testimonial-text {
+    flex: 1;
 }
 
 .testimonials-compact .testimonial-card {

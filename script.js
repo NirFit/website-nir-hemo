@@ -291,6 +291,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCards = cards.length;
     let autoSlideInterval;
 
+    const showMoreBtn = document.getElementById('testimonialsShowMore');
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', () => {
+            const expanded = showMoreBtn.getAttribute('aria-expanded') === 'true';
+            document.querySelectorAll('#testimonialsTrack .testimonial-more').forEach((card) => {
+                card.hidden = expanded;
+            });
+            showMoreBtn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            showMoreBtn.textContent = expanded ? 'הצג עוד ביקורות' : 'הצג פחות ביקורות';
+        });
+    }
+
     if (track && prevBtn && nextBtn && dotsContainer && totalCards > 0) {
     function getVisibleCards() {
         if (window.innerWidth <= 600) return 1;

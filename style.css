@@ -2884,6 +2884,99 @@ a.contact-item:hover .contact-icon {
     margin: 0 0 24px;
 }
 
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonials-track.testimonials-grid {
+    transform: none !important;
+    transition: none;
+    touch-action: auto;
+}
+
+.testimonials-grid .testimonial-card {
+    min-width: 0;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonials-grid .testimonial-text {
+    flex: 1;
+}
+
+.testimonials-compact .testimonial-card {
+    padding: 24px;
+}
+
+.testimonials-compact .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.testimonials-show-more {
+    display: block;
+    margin: 28px auto 0;
+    padding: 10px 22px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.testimonials-show-more:hover,
+.testimonials-show-more:focus-visible {
+    border-color: var(--primary);
+    color: var(--text-light);
+}
+
+.reviews-platforms {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 28px 0 8px;
+}
+
+.reviews-links {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0 0 8px;
+}
+
+.reviews-links a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.reviews-links a:hover,
+.reviews-links a:focus-visible {
+    color: var(--text);
+}
+
+@media (max-width: 992px) {
+    .testimonials-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
 
 /* ==============================
    WhatsApp Float

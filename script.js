@@ -134,6 +134,15 @@ document.addEventListener('DOMContentLoaded', () => {
         cookieDecline.addEventListener('click', () => {
             closeCookieBanner('essential');
         });
+
+        // Footer "הגדרות עוגיות" – reopen the banner so the visitor can change their choice
+        const cookieSettingsLink = document.getElementById('cookieSettingsLink');
+        if (cookieSettingsLink) {
+            cookieSettingsLink.addEventListener('click', () => {
+                cookieBanner.classList.add('visible');
+                cookieAccept.focus();
+            });
+        }
     }
 
     // ==============================

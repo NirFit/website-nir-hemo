@@ -2819,6 +2819,22 @@ a.contact-item:hover .contact-icon {
     color: var(--primary);
 }
 
+.footer-cookie-settings {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.footer-cookie-settings:hover,
+.footer-cookie-settings:focus-visible {
+    color: var(--primary);
+}
+
 .footer-sep {
     color: var(--text-muted);
     margin: 0 10px;
